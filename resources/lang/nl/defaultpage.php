@@ -19,5 +19,7 @@ return [
     'remember-me' => 'Onthouden',
     'forgot-password' => 'Wachtwoord vergeten?',
     'history' => 'Geschiedenis',
+    'name' => 'Naam',
+    'confirm-password' => 'Wachtwoord bevestigen',
 
 ];

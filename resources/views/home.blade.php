@@ -48,3 +48,7 @@
     </div>
 </div>
 @endsection
+
+@section('javascript')
+
+@endsection

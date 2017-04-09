@@ -11,12 +11,13 @@
 |
 */
 
-Route::get('/history', 'HomeController@history');
-
 Auth::routes();
 
 Route::get('/', function () {
     return Redirect::to('/home');
 });
-
+Route::get('/history', 'HomeController@history');
 Route::get('/home', 'HomeController@index');
+
+// Ajax routes
+Route::get('/test', 'AjaxController@getTestData');

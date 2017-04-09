@@ -19,4 +19,6 @@ return [
     'remember-me' => 'Remember me',
     'forgot-password' => 'Forgot Your Password?',
     'history' => 'History',
+    'name' => 'Naam',
+    'confirm-password' => 'Confirm Password'
 ];
