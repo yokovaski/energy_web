@@ -1,47 +1,35 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="col-md-8 col-md-offset-2">
-
-    </div>
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+<div class="container col-sm-12">
+    <div class="col-sm-8 col-sm-offset-2 col-xs-12">
+        <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Stroom</div>
+                <div class="panel-heading">
+                    Heading 3
+                </div>
                 <div class="panel-body">
-                    Hier moet iets van een grafiek komen
+                    Body
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading">Huidige gebruiksgegevens</div>
-
+                <div class="panel-heading">
+                    Heading 1
+                </div>
                 <div class="panel-body">
-                    You are logged in!
+                    body
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="col-md-6 panel panel-default">
-                <div class="panel-heading">Huidige gebruiksgegevens</div>
-
-                <div class="panel-body">
-                    Some body
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Heading 2
                 </div>
-            </div>
-            <div class="col-md-6 panel panel-default">
-                <div class="panel-heading">Huidige gebruiksgegevens</div>
-
                 <div class="panel-body">
-                    You are logged in!
+                    Body
                 </div>
             </div>
         </div>
