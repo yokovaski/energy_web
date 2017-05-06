@@ -19,5 +19,9 @@ Route::get('/', function () {
 Route::get('/history', 'HomeController@history');
 Route::get('/home', 'HomeController@index');
 
-// Ajax routes
-Route::get('/test', 'AjaxController@getTestData');
+/**
+ * Ajax routes
+ */
+Route::group(['prefix' => '/api'], function () {
+    Route::get('/test', 'AjaxController@getTestData');
+});
