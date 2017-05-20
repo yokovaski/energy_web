@@ -40,3 +40,5 @@ class CreateTenSecondMetricsTable extends Migration
         Schema::dropIfExists('ten_second_metrics');
     }
 }
+
+

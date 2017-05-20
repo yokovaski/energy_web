@@ -150,6 +150,39 @@
                                 </td>
                             </tr>
                         </table>
+                        <br>
+                        <table class="table table-responsive table-hover">
+                            <tr>
+                                <th>
+                                    Week gemiddelde
+                                </th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Stroomopname
+                                </td>
+                                <td>
+                                    403
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Stroomlevering
+                                </td>
+                                <td>
+                                    732
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Gas
+                                </td>
+                                <td>
+                                    3
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
