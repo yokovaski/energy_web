@@ -11,7 +11,7 @@
                     </div>
                     <div class="panel-body">
                         <h4>
-                            382 Wh
+                            {{ $lastMetric->usage_now }} Wh
                         </h4>
                     </div>
                 </div>
@@ -23,7 +23,7 @@
                     </div>
                     <div class="panel-body">
                         <h4>
-                            874 Wh
+                            {{ $lastMetric->solar_now }} Wh
                         </h4>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                     </div>
                     <div class="panel-body">
                         <h4>
-                            -508 Wh
+                            {{ $lastMetric->redelivery_now }} Wh
                         </h4>
                     </div>
                 </div>
@@ -94,18 +94,34 @@
                             </tr>
                             <tr>
                                 <td>
-                                    Stroomopname
+                                    Stroomopname hoog
                                 </td>
                                 <td>
-                                    42845642
+                                    {{ $lastMetric->usage_total_high }}
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    Stroomlevering
+                                    Stroomopname laag
                                 </td>
                                 <td>
-                                    42845642
+                                    {{ $lastMetric->usage_total_low }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Stroomlevering hoog
+                                </td>
+                                <td>
+                                    {{ $lastMetric->redelivery_total_high }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Stroomlevering laag
+                                </td>
+                                <td>
+                                    {{ $lastMetric->redelivery_total_low }}
                                 </td>
                             </tr>
                             <tr>
@@ -113,7 +129,7 @@
                                     Gas
                                 </td>
                                 <td>
-                                    42845642
+                                    {{ $lastMetric->usage_gas_total }}
                                 </td>
                             </tr>
                         </table>

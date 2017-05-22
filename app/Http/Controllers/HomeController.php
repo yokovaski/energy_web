@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\DayMetric;
+use App\TenSecondMetric;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,7 +25,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $lastMetric = TenSecondMetric::orderBy('created_at', 'desc')->first();
+
+        // Calculate energy use from solar panel.
+        $differenceSolarAndRedelivery = ($lastMetric->solar_now - $lastMetric->redeliver_now);
+        $lastMetric->usage_now += $differenceSolarAndRedelivery;
+
+        return view('home', ['lastMetric' => $lastMetric]);
     }
 
     /**
@@ -33,6 +41,14 @@ class HomeController extends Controller
      */
     public function history()
     {
+        $metric = DayMetric::orderBy('created_at', 'desc')->first();
+
+        dd($metric);
+
+//        foreach ($metrics as $metric) {
+//            dd($metric->usage_now);
+//        }
+
         return view('history');
     }
 }

@@ -1,12 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container col-sm-12">
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Geschiedenis</div>
-                    <div id="test" class="panel-body">
+            <div class="col-lg-8 col-lg-offset-2 col-md-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        History
+                    </div>
+                    <div class="panel-body">
+                        Not yet implemented
+                        <canvas id="chartjsTest" height=150></canvas>
                     </div>
                 </div>
             </div>
