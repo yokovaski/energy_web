@@ -1,19 +1,16 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
-    | Authentication Language Lines
+    | Pagination Language Lines
     |--------------------------------------------------------------------------
     |
-    | The following language lines are used during authentication for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
+    | The following language lines are used by the paginator library to build
+    | the simple pagination links. You are free to change them to anything
+    | you want to customize your views to better match your application.
     |
     */
-
-    'failed' => 'Deze gegevens komen niet overeen met de opgeslagen gegevens.',
-    'throttle' => 'Teveel login pogingen. Probeer het weer in :seconds seconden.',
-
+    'previous' => '&laquo; Vorige',
+    'next'     => 'Volgende &raquo;',
 ];
