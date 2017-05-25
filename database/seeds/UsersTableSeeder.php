@@ -12,7 +12,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $user = \App\User::create([
+        $user = \App\Models\User::create([
             'name' => 'Erwin Lenting',
             'email' => 'erwinlenting@outlook.com',
             'password' => bcrypt(env('ADMIN_USER_PASSWORD', 'password')),

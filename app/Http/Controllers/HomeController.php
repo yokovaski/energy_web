@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\DayMetric;
-use App\TenSecondMetric;
+use App\Models\DayMetric;
+use App\Models\TenSecondMetric;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller

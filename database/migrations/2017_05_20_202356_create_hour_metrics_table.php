@@ -15,6 +15,7 @@ class CreateHourMetricsTable extends Migration
     {
         Schema::create('hour_metrics', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('raspberry_pi_id');
             $table->integer('mode');
             $table->integer('usage_now');
             $table->integer('redelivery_now');
