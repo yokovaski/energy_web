@@ -16,8 +16,9 @@ Auth::routes();
 Route::get('/', function () {
     return Redirect::to('/home');
 });
-Route::get('/history', 'HomeController@history');
+Route::get('/history', 'HistoryController@index');
 Route::get('/home', 'HomeController@index');
+Route::get('/admin', 'AdminController@index');
 
 /**
  * Ajax routes
