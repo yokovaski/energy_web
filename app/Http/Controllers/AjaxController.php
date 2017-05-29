@@ -29,8 +29,9 @@ class AjaxController extends Controller
     {
         $metrics = TenSecondMetric::where('raspberry_pi_id', 1)
             ->orderBy('created_at', 'DESC')
-            ->take(50)
-            ->get();
+            ->take(360)
+            ->get()
+            ->reverse();
 
         $data = array();
 
