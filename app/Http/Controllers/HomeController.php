@@ -3,8 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\DayMetric;
+use App\Models\RaspberryPi;
 use App\Models\TenSecondMetric;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
 class HomeController extends Controller
 {
@@ -23,8 +28,31 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $id = Auth::user()->id;
+        $currentUser = User::find($id);
+
+
+        if (empty($currentUser->raspberryPi)) {
+            // No raspberryPi connected to User
+            $raspberryPis = RaspberryPi::all();
+            $availableRaspberryPi = null;
+
+            foreach ($raspberryPis as $raspberryPi) {
+                if ($raspberryPi->ip_address == $request->getClientIp() && empty($raspberryPi->user)) {
+                    $availableRaspberryPi = $raspberryPi;
+                }
+            }
+
+            if ($availableRaspberryPi instanceof RaspberryPi) {
+                $currentUser->raspberryPi()->save($availableRaspberryPi);
+            } else {
+                App::abort(404);
+            }
+        }
+
+
         $lastMetric = TenSecondMetric::orderBy('created_at', 'desc')->first();
 
         // Calculate energy use from solar panel.
