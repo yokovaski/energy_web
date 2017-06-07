@@ -10,7 +10,7 @@
                         Energieverbruik
                     </div>
                     <div class="panel-body">
-                        <h4>
+                        <h4 id="usage_now">
                             {{ $lastMetric->usage_now }} Wh
                         </h4>
                     </div>
@@ -22,7 +22,7 @@
                         Energieopwekking
                     </div>
                     <div class="panel-body">
-                        <h4>
+                        <h4 id="solar_now">
                             {{ $lastMetric->solar_now }} Wh
                         </h4>
                     </div>
@@ -34,7 +34,7 @@
                         Energielevering
                     </div>
                     <div class="panel-body">
-                        <h4>
+                        <h4 id="redelivery_now">
                             {{ $lastMetric->redelivery_now }} Wh
                         </h4>
                     </div>

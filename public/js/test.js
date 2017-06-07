@@ -1,92 +1,10 @@
 $(window).on('load', function() {
-    console.log("window is loaded");
-    // chartjsTest();
-    getAjaxTest();
-    // chartjsLineChartTest();
+    getEnergyDataOfLastHours(1);
     chartjsDoughnutTest();
+    updateChart();
 });
 
 var lineChart;
-
-function chartjsTest() {
-    console.log('some stuff');
-    var ctx = document.querySelector("#chartjsTest").getContext("2d");
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.5)',
-                    'rgba(54, 162, 235, 0.5)',
-                    'rgba(255, 206, 86, 0.5)',
-                    'rgba(75, 192, 192, 0.5)',
-                    'rgba(153, 102, 255, 0.5)',
-                    'rgba(255, 159, 64, 0.5)'
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            }
-        }
-    });
-}
-
-function chartjsLineChartTest() {
-    var ctx = document.querySelector("#chartjsTest").getContext("2d");
-
-    var data = {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
-        datasets: [
-            {
-                label: "Months",
-                responsive: true,
-                maintainAspectRatio: true,
-                fill: true,
-                lineTension: 0.1,
-                backgroundColor: "rgba(75,192,192,0.4)",
-                borderColor: "rgba(75,192,192,1)",
-                borderCapStyle: 'butt',
-                borderDash: [],
-                borderDashOffset: 0.0,
-                borderJoinStyle: 'miter',
-                pointBorderColor: "rgba(75,192,192,1)",
-                pointBackgroundColor: "#fff",
-                pointBorderWidth: 1,
-                pointHoverRadius: 5,
-                pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                pointHoverBorderColor: "rgba(220,220,220,1)",
-                pointHoverBorderWidth: 2,
-                pointRadius: 1,
-                pointHitRadius: 10,
-                data: [65, 59, 80, 81, 56, 55, 40],
-                spanGaps: false,
-            }
-        ]
-    };
-
-    lineChart = new Chart(ctx, {
-        type: 'line',
-        data: data
-    });
-}
 
 function addPoint() {
     console.log("button clicked");
@@ -188,32 +106,86 @@ function getAjaxTest() {
         });
 }
 
-function drawLineChart() {
+function updateChart() {
+    setInterval(function() {
+        getLastEnergyUpdate();
+    }, 10000);
+}
+
+function getLastEnergyUpdate() {
     $.ajax(
         {
-            // Post select to url.
             type : 'GET',
-            url : "api/test",
+            url : 'api/energy/last',
             dataType : 'JSON',
-            success : function(data) {
-                var wrapper = new google.visualization.ChartWrapper({
-                    chartType: 'LineChart',
-                    dataTable: new google.visualization.DataTable(data),
-                    options: {
-                        'title': 'Energie (kWh)',
-                        'height': 300,
-                        chartArea: {width: "50%",
-                            height: "70%"},
-                        colors: ['#ff0000', '#00cc00']},
-                    containerId: 'test'
-                });
-                wrapper.draw();
+            success : function(response) {
+                $("#usage_now").html(response.data.usage[0] + " Wh");
+                $("#redelivery_now").html(response.data.redelivery[0] + " Wh");
+
+                var dataLength = lineChart.data.datasets[0].data.length;
+                var labelsLength = lineChart.data.labels.length;
+
+                lineChart.data.datasets[0].data[dataLength] = response.data.usage[0];
+                lineChart.data.labels[labelsLength] = response.data.timestamps[0];
+
+                lineChart.update();
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                console.log("ajax call to get_chart_data results into error");
+                console.log("ajax call to get_current_data results into error");
                 console.log(xhr.status);
                 console.log(thrownError);
             }
-        }
-    );
+        });
+}
+
+function getEnergyDataOfLastHours(hours) {
+    $.ajax(
+        {
+            type : 'GET',
+            url : 'api/energy/hours/' + hours,
+            dataType : 'JSON',
+            success : function(response) {
+                var ctx = document.querySelector("#chartjsTest").getContext("2d");
+
+                var data = {
+                    labels: response.data.timestamps,
+                    datasets: [
+                        {
+                            label: "Gebruik",
+                            responsive: true,
+                            maintainAspectRatio: true,
+                            fill: true,
+                            lineTension: 0.1,
+                            backgroundColor: "rgba(75,192,192,0.4)",
+                            borderColor: "rgba(75,192,192,1)",
+                            borderCapStyle: 'butt',
+                            borderDash: [],
+                            borderDashOffset: 0.0,
+                            borderJoinStyle: 'miter',
+                            pointBorderColor: "rgba(75,192,192,1)",
+                            pointBackgroundColor: "#fff",
+                            pointBorderWidth: 1,
+                            pointHoverRadius: 5,
+                            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                            pointHoverBorderColor: "rgba(220,220,220,1)",
+                            pointHoverBorderWidth: 2,
+                            pointRadius: 1,
+                            pointHitRadius: 10,
+                            data: response.data.usage,
+                            spanGaps: false,
+                        }
+                    ]
+                };
+
+                lineChart = new Chart(ctx, {
+                    type: 'line',
+                    data: data
+                });
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log("ajax call to get_current_data results into error");
+                console.log(xhr.status);
+                console.log(thrownError);
+            }
+        });
 }
