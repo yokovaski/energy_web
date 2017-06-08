@@ -44,7 +44,7 @@ class AjaxController extends Controller
         $metrics = TenSecondMetric::where(
             [
                 ['raspberry_pi_id', '=', $raspberryPi->id],
-                ['created_at', '>=', \Carbon\Carbon::now()->subHours(intval($hours))],
+                ['created_at', '>=', \Carbon\Carbon::now(env('TIMEZONE'))->subHours(intval($hours))],
             ])
             ->orderBy('created_at', 'DESC')
             ->get()
@@ -85,7 +85,7 @@ class AjaxController extends Controller
         $metrics = TenSecondMetric::where(
             [
                 ['raspberry_pi_id', '=', $raspberryPi->id],
-                ['created_at', '>=', \Carbon\Carbon::now()->subMinutes(intval($minutes))],
+                ['created_at', '>=', \Carbon\Carbon::now(env('TIMEZONE'))->subMinutes(intval($minutes))],
             ])
             ->orderBy('created_at', 'DESC')
             ->get()
