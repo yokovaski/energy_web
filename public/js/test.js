@@ -125,8 +125,18 @@ function getLastEnergyUpdate() {
                 var dataLength = lineChart.data.datasets[0].data.length;
                 var labelsLength = lineChart.data.labels.length;
 
-                lineChart.data.datasets[0].data[dataLength] = response.data.usage[0];
-                lineChart.data.labels[labelsLength] = response.data.timestamps[0];
+                var tempData = lineChart.data.datasets[0].data;
+                var tempLabels = lineChart.data.labels;
+
+                tempData.push(response.data.usage[0]);
+                tempLabels.push(response.data.timestamps[0]);
+
+                // Remove first element
+                tempData.shift();
+                tempLabels.shift();
+
+                lineChart.data.datasets[0].data = tempData;
+                lineChart.data.labels = tempLabels;
 
                 lineChart.update();
             },
