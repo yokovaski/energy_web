@@ -120,10 +120,9 @@ function getLastEnergyUpdate() {
             dataType : 'JSON',
             success : function(response) {
                 $("#usage_now").html(response.data.usage[0] + " Wh");
+                $("#solar_now").html(response.data.solar[0] + " Wh");
                 $("#redelivery_now").html(response.data.redelivery[0] + " Wh");
-
-                var dataLength = lineChart.data.datasets[0].data.length;
-                var labelsLength = lineChart.data.labels.length;
+                $("#intake_now").html(response.data.intake[0] + " Wh");
 
                 var tempData = lineChart.data.datasets[0].data;
                 var tempLabels = lineChart.data.labels;
