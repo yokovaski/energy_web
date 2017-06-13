@@ -50,7 +50,7 @@
                                 Heading graph
                             </div>
                             <div class="panel-body">
-                                <canvas id="chartjsTest" height=150></canvas>
+                                <canvas id="chartjsTest" style="height:800px"></canvas>
                             </div>
                         </div>
                     </div>
