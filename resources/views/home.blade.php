@@ -29,11 +29,11 @@
                 </div>
             </div>
             <div class="col-sm-3">
-                <div class="panel panel-info">
+                <div class="panel panel-warning">
                     <div class="panel-heading">
                         Energielevering
                     </div>
-                    <div class="panel-warning">
+                    <div class="panel-body">
                         <h4 id="redelivery_now">
                             {{ $lastMetric->redelivery_now }} Wh
                         </h4>
