@@ -4,8 +4,8 @@
 <div class="container col-sm-12">
     <div class="col-lg-8 col-lg-offset-2 col-md-12">
         <div class="row">
-            <div class="col-sm-4">
-                <div class="panel panel-warning">
+            <div class="col-sm-3">
+                <div class="panel panel-primary">
                     <div class="panel-heading">
                         Energieverbruik
                     </div>
@@ -16,7 +16,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <div class="panel panel-success">
                     <div class="panel-heading">
                         Energieopwekking
@@ -28,14 +28,26 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4">
-                <div class="panel panel-danger">
+            <div class="col-sm-3">
+                <div class="panel panel-info">
                     <div class="panel-heading">
                         Energielevering
                     </div>
                     <div class="panel-body">
                         <h4 id="redelivery_now">
                             {{ $lastMetric->redelivery_now }} Wh
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        Energieopname
+                    </div>
+                    <div class="panel-body">
+                        <h4 id="redelivery_now">
+                            {{ $lastMetric->intake_now }} Wh
                         </h4>
                     </div>
                 </div>
