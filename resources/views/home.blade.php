@@ -46,7 +46,7 @@
                         Energieopname
                     </div>
                     <div class="panel-body">
-                        <h4 id="redelivery_now">
+                        <h4 id="intake_now">
                             {{ $lastMetric->intake_now }} Wh
                         </h4>
                     </div>
