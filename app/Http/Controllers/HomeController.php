@@ -52,15 +52,17 @@ class HomeController extends Controller
             }
         }
 
+        $currentUser = User::find($id);
 
-        $lastMetric = TenSecondMetric::orderBy('created_at', 'desc')->first();
+        $metric = TenSecondMetric::where('raspberry_pi_id', '=', $currentUser->raspberryPi->id)
+            ->orderBy('created_at', 'DESC')
+            ->first();
 
         // Calculate energy use from solar panel.
-        $differenceSolarAndRedelivery = ($lastMetric->solar_now - $lastMetric->redeliver_now);
-        $lastMetric['intake_now'] = $lastMetric->usage_now;
-        $lastMetric->usage_now += $differenceSolarAndRedelivery;
+        $differenceSolarAndRedelivery = ($metric->solar_now - $metric->redeliver_now);
+        $metric->usage_now += $differenceSolarAndRedelivery;
 
-        return view('home', ['lastMetric' => $lastMetric]);
+        return view('home', ['lastMetric' => $metric]);
     }
 
     /**

@@ -64,4 +64,24 @@ class RaspberryPi extends Model
     {
         return $this->hasMany('App\Models\DayMetric');
     }
+
+    /**
+     * A Raspberry Pi has many Day Metrics
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function raspberryPiCommand()
+    {
+        return $this->hasOne('App\Models\RaspberryPiCommand');
+    }
+
+    /**
+     * A Raspberry Pi has many Raspberry Pi Errors
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function raspberryPiError()
+    {
+        return $this->hasMany('App\Models\RaspberryPiError');
+    }
 }
