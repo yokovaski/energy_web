@@ -60,6 +60,7 @@ class HomeController extends Controller
 
         // Calculate energy use from solar panel.
         $differenceSolarAndRedelivery = ($metric->solar_now - $metric->redeliver_now);
+        $metric['intake_now'] = $metric->usage_now;
         $metric->usage_now += $differenceSolarAndRedelivery;
 
         return view('home', ['lastMetric' => $metric]);
