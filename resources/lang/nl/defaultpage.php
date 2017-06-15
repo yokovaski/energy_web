@@ -22,6 +22,8 @@ return [
     'history' => 'Geschiedenis',
     'admin' => 'Beheer',
     'name' => 'Naam',
+    'mac-address' => 'MAC-adres',
+    'owner' => 'Eigenaar',
     'confirm-password' => 'Wachtwoord bevestigen',
 
 ];

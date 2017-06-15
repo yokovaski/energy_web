@@ -22,5 +22,7 @@ return [
     'history' => 'History',
     'admin' => 'Admin',
     'name' => 'Naam',
+    'mac-address' => 'MAC address',
+    'owner' => 'Owner',
     'confirm-password' => 'Confirm Password'
 ];

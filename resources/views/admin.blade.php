@@ -53,10 +53,13 @@
                                     <p>ID</p>
                                 </th>
                                 <th>
+                                    <p>@lang('defaultpage.owner')</p>
+                                </th>
+                                <th>
                                     <p>@lang('defaultpage.ip-address')</p>
                                 </th>
                                 <th>
-                                    <p>@lang('defaultpage.name')</p>
+                                    <p>@lang('defaultpage.mac-address')</p>
                                 </th>
                             </tr>
                             </thead>
@@ -67,10 +70,13 @@
                                         <p>{{$raspberryPi->id}}</p>
                                     </td>
                                     <td>
+                                        <p>{{$raspberryPi->user->name}}</p>
+                                    </td>
+                                    <td>
                                         <p>{{$raspberryPi->ip_address}}</p>
                                     </td>
                                     <td>
-                                        <p>{{$raspberryPi->name}}</p>
+                                        <p>{{$raspberryPi->mac_address}}</p>
                                     </td>
                                 </tr>
                             @endforeach

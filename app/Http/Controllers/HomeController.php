@@ -65,22 +65,4 @@ class HomeController extends Controller
 
         return view('home', ['lastMetric' => $metric]);
     }
-
-    /**
-     * Show the application history dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function history()
-    {
-        $metric = DayMetric::orderBy('created_at', 'desc')->first();
-
-        dd($metric);
-
-//        foreach ($metrics as $metric) {
-//            dd($metric->usage_now);
-//        }
-
-        return view('history');
-    }
 }
