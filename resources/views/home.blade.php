@@ -94,118 +94,112 @@
             <div class="col-md-4">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        Energie gegevens
+                        Meterstanden
                     </div>
                     <div class="panel-body">
                         <table class="table table-responsive table-hover">
                             <tr>
                                 <th>
-                                    Meterstanden
-                                </th>
-                                <th></th>
-                            </tr>
-                            <tr>
-                                <td>
                                     Stroomopname hoog
-                                </td>
+                                </th>
                                 <td>
                                     {{ $lastMetric->usage_total_high }}
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <th>
                                     Stroomopname laag
-                                </td>
+                                </th>
                                 <td>
                                     {{ $lastMetric->usage_total_low }}
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <th>
                                     Stroomlevering hoog
-                                </td>
+                                </th>
                                 <td>
                                     {{ $lastMetric->redelivery_total_high }}
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <th>
                                     Stroomlevering laag
-                                </td>
+                                </th>
                                 <td>
                                     {{ $lastMetric->redelivery_total_low }}
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <th>
                                     Gas
-                                </td>
+                                </th>
                                 <td>
                                     {{ $lastMetric->usage_gas_total }}
                                 </td>
                             </tr>
                         </table>
-                        <br>
+                    </div>
+                </div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        Dag gemiddelde
+                    </div>
+                    <div class="panel-body">
                         <table class="table table-responsive table-hover">
                             <tr>
                                 <th>
-                                    Dag gemiddelde
-                                </th>
-                                <th></th>
-                            </tr>
-                            <tr>
-                                <td>
                                     Stroomopname
-                                </td>
+                                </th>
                                 <td>
                                     428
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <th>
                                     Stroomlevering
-                                </td>
+                                </th>
                                 <td>
                                     654
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <th>
                                     Gas
-                                </td>
+                                </th>
                                 <td>
                                     4
                                 </td>
                             </tr>
                         </table>
-                        <br>
+                    </div>
+                </div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        Week gemiddelde
+                    </div>
+                    <div class="panel-body">
                         <table class="table table-responsive table-hover">
                             <tr>
                                 <th>
-                                    Week gemiddelde
-                                </th>
-                                <th></th>
-                            </tr>
-                            <tr>
-                                <td>
                                     Stroomopname
-                                </td>
+                                </th>
                                 <td>
                                     403
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <th>
                                     Stroomlevering
-                                </td>
+                                </th>
                                 <td>
                                     732
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <th>
                                     Gas
-                                </td>
+                                </th>
                                 <td>
                                     3
                                 </td>
