@@ -16,10 +16,14 @@ return [
     'password' => 'Wachtwoord',
     'register' => 'Registreren',
     'email-address' => 'Emailadres',
+    'ip-address' => 'IP-adres',
     'remember-me' => 'Onthouden',
     'forgot-password' => 'Wachtwoord vergeten?',
     'history' => 'Geschiedenis',
+    'admin' => 'Beheer',
     'name' => 'Naam',
+    'mac-address' => 'MAC-adres',
+    'owner' => 'Eigenaar',
     'confirm-password' => 'Wachtwoord bevestigen',
 
 ];

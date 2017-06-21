@@ -16,8 +16,15 @@ Auth::routes();
 Route::get('/', function () {
     return Redirect::to('/home');
 });
-Route::get('/history', 'HomeController@history');
+Route::get('/history', 'HistoryController@index');
 Route::get('/home', 'HomeController@index');
+Route::get('/admin', 'AdminController@index');
 
-// Ajax routes
-Route::get('/test', 'AjaxController@getTestData');
+/**
+ * Ajax routes
+ */
+Route::group(['prefix' => '/api'], function () {
+    Route::get('/energy/hours/{hours}', 'AjaxController@getDataOfLastHours');
+    Route::get('/energy/minutes/{minutes}', 'AjaxController@getDataOfLastMinutes');
+    Route::get('/energy/last', 'AjaxController@getDataOfLastUpdate');
+});

@@ -23,7 +23,7 @@
 <body>
     <div id="app">
         <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
+            <div class="container-fluid">
 
                 <div class="navbar-header">
 
@@ -36,7 +36,7 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
+                    <a class="navbar-brand navbar-left" href="{{ url('/') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
@@ -46,6 +46,7 @@
                     <ul class="nav navbar-nav">
                         @if (!Auth::guest())
                             <li><a href="{{ url('history') }}">@lang('defaultpage.history')</a></li>
+                            <li><a href="{{ url('admin') }}">@lang('defaultpage.admin')</a></li>
                         @endif
                     </ul>
 
