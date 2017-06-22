@@ -92,11 +92,164 @@
                 </div>
             </div>
             <div class="col-md-4">
+
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        Meterstanden
+                        <p class="panel-title pull-left">Dag gemiddelde</p>
+                        <button data-toggle="collapse" data-target="#day-average" class="btn btn-xs btn-default pull-right" onclick="this.blur();">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                        <div class="clearfix"></div>
                     </div>
-                    <div class="panel-body">
+                    <div id="day-average" class="panel-body collapse in">
+                        <table class="table table-responsive table-hover">
+                            <tr>
+                                <th>
+                                    Stroomopname
+                                </th>
+                                <td>
+                                    428
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Stroomlevering
+                                </th>
+                                <td>
+                                    654
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Gas
+                                </th>
+                                <td>
+                                    4
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <p class="panel-title pull-left">Dag totaal</p>
+                        <button data-toggle="collapse" data-target="#day-total" class="btn btn-xs btn-default pull-right" onclick="this.blur();">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div id="day-total" class="panel-body collapse in">
+                        <table class="table table-responsive table-hover">
+                            <tr>
+                                <th>
+                                    Stroomopname
+                                </th>
+                                <td>
+                                    428
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Stroomlevering
+                                </th>
+                                <td>
+                                    654
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Gas
+                                </th>
+                                <td>
+                                    4
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <p class="panel-title pull-left">Week gemiddelde</p>
+                        <button data-toggle="collapse" data-target="#week-average" class="btn btn-xs btn-default pull-right" onclick="this.blur();">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div id="week-average" class="panel-body collapse">
+                        <table class="table table-responsive table-hover">
+                            <tr>
+                                <th>
+                                    Stroomopname
+                                </th>
+                                <td>
+                                    428
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Stroomlevering
+                                </th>
+                                <td>
+                                    654
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Gas
+                                </th>
+                                <td>
+                                    4
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <p class="panel-title pull-left">Week totaal</p>
+                        <button data-toggle="collapse" data-target="#week-total" class="btn btn-xs btn-default pull-right" onclick="this.blur();">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div id="week-total" class="panel-body collapse">
+                        <table class="table table-responsive table-hover">
+                            <tr>
+                                <th>
+                                    Stroomopname
+                                </th>
+                                <td>
+                                    428
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Stroomlevering
+                                </th>
+                                <td>
+                                    654
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Gas
+                                </th>
+                                <td>
+                                    4
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <p class="panel-title pull-left">Meterstanden</p>
+                        <button data-toggle="collapse" data-target="#meter-reading" class="btn btn-xs btn-default pull-right" onclick="this.blur();">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div id="meter-reading" class="panel-body collapse">
                         <table class="table table-responsive table-hover">
                             <tr>
                                 <th>
@@ -136,72 +289,6 @@
                                 </th>
                                 <td>
                                     {{ $lastMetric->usage_gas_total }}
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        Dag gemiddelde
-                    </div>
-                    <div class="panel-body">
-                        <table class="table table-responsive table-hover">
-                            <tr>
-                                <th>
-                                    Stroomopname
-                                </th>
-                                <td>
-                                    428
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    Stroomlevering
-                                </th>
-                                <td>
-                                    654
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    Gas
-                                </th>
-                                <td>
-                                    4
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        Week gemiddelde
-                    </div>
-                    <div class="panel-body">
-                        <table class="table table-responsive table-hover">
-                            <tr>
-                                <th>
-                                    Stroomopname
-                                </th>
-                                <td>
-                                    403
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    Stroomlevering
-                                </th>
-                                <td>
-                                    732
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    Gas
-                                </th>
-                                <td>
-                                    3
                                 </td>
                             </tr>
                         </table>
