@@ -128,7 +128,7 @@ class AjaxController extends Controller
         $data['timestamps'][] = Carbon::createFromFormat('Y-m-d H:i:s', $metric->created_at)
             ->format('H:i:s');
 
-        $differenceSolarAndRedelivery = ($metric->solar_now - $metric->redeliver_now);
+        $differenceSolarAndRedelivery = ($metric->solar_now - $metric->redelivery_now);
         $data['intake'][] = $metric->usage_now;
         $data['usage'][] = $metric->usage_now + $differenceSolarAndRedelivery;
         $data['redelivery'][]= $metric->redelivery_now;
