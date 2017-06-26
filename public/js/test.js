@@ -1,6 +1,6 @@
 $(window).on('load', function() {
     getEnergyDataOfLastHours(1);
-    chartjsDoughnutTest();
+    // chartjsDoughnutTest();
     updateChart();
 });
 
