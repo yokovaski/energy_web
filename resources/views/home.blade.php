@@ -133,7 +133,7 @@
                                         Gas
                                     </th>
                                     <td>
-                                        null
+
                                     </td>
                                 </tr>
                             </table>
@@ -156,7 +156,7 @@
                                         Stroomopname
                                     </th>
                                     <td>
-                                        15884
+
                                     </td>
                                 </tr>
                                 <tr>
@@ -164,15 +164,15 @@
                                         Stroomlevering
                                     </th>
                                     <td>
-                                        654
+
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        Gas
+
                                     </th>
                                     <td>
-                                        4
+
                                     </td>
                                 </tr>
                             </table>
@@ -195,7 +195,7 @@
                                         Stroomopname
                                     </th>
                                     <td>
-                                        428
+
                                     </td>
                                 </tr>
                                 <tr>
@@ -203,7 +203,7 @@
                                         Stroomlevering
                                     </th>
                                     <td>
-                                        654
+
                                     </td>
                                 </tr>
                                 <tr>
@@ -211,7 +211,7 @@
                                         Gas
                                     </th>
                                     <td>
-                                        4
+
                                     </td>
                                 </tr>
                             </table>
@@ -234,7 +234,7 @@
                                         Stroomopname
                                     </th>
                                     <td>
-                                        428
+
                                     </td>
                                 </tr>
                                 <tr>
@@ -242,7 +242,7 @@
                                         Stroomlevering
                                     </th>
                                     <td>
-                                        654
+
                                     </td>
                                 </tr>
                                 <tr>
@@ -250,7 +250,7 @@
                                         Gas
                                     </th>
                                     <td>
-                                        4
+
                                     </td>
                                 </tr>
                             </table>
