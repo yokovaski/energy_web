@@ -84,7 +84,6 @@
                                 Heading metrics second
                             </div>
                             <div class="panel-body">
-                                <input type="button" class="button" value="Update" onclick="addPoint()">
                                 <canvas id="chartjsTest3"></canvas>
                             </div>
                         </div>
