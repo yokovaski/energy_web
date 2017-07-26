@@ -109,7 +109,7 @@
                                         Stroomopname
                                     </th>
                                     <td>
-                                        {{--{{ $lastMetric->avg_day_usage_now }} Wh--}}
+                                        {{ $lastMetric->avg_usage_now_today }} Wh
                                     </td>
                                 </tr>
                                 <tr>
@@ -117,7 +117,7 @@
                                         Stroomopwekking
                                     </th>
                                     <td>
-                                        {{--{{ $lastMetric->avg_daysolar_now }} Wh--}}
+                                        {{ $lastMetric->avg_solar_now_today }} Wh
                                     </td>
                                 </tr>
                                 <tr>
@@ -125,7 +125,7 @@
                                         Stroomlevering
                                     </th>
                                     <td>
-                                        {{--{{ $lastMetric->avg_dayredelivery_now }} Wh--}}
+                                        {{ $lastMetric->avg_redelivery_now_today }} Wh
                                     </td>
                                 </tr>
                                 <tr>
@@ -133,7 +133,7 @@
                                         Gas
                                     </th>
                                     <td>
-                                        null
+                                        {{ $lastMetric->avg_usage_gas_now_today }} Wh
                                     </td>
                                 </tr>
                             </table>
@@ -156,7 +156,15 @@
                                         Stroomopname
                                     </th>
                                     <td>
-                                        15884
+                                        {{ $lastMetric->sum_usage_now_today }} Wh
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Stroomopwekking
+                                    </th>
+                                    <td>
+                                        {{ $lastMetric->sum_solar_now_today }} Wh
                                     </td>
                                 </tr>
                                 <tr>
@@ -164,7 +172,7 @@
                                         Stroomlevering
                                     </th>
                                     <td>
-                                        654
+                                        {{ $lastMetric->sum_redelivery_now_today }} Wh
                                     </td>
                                 </tr>
                                 <tr>
@@ -172,7 +180,7 @@
                                         Gas
                                     </th>
                                     <td>
-                                        4
+                                        {{ $lastMetric->sum_usage_gas_now_today }} Wh
                                     </td>
                                 </tr>
                             </table>
@@ -195,7 +203,15 @@
                                         Stroomopname
                                     </th>
                                     <td>
-                                        428
+                                        {{ $lastMetric->avg_usage_now_week }} Wh
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Stroomopwekking
+                                    </th>
+                                    <td>
+                                        {{ $lastMetric->avg_solar_now_week }} Wh
                                     </td>
                                 </tr>
                                 <tr>
@@ -203,7 +219,7 @@
                                         Stroomlevering
                                     </th>
                                     <td>
-                                        654
+                                        {{ $lastMetric->avg_redelivery_now_week }} Wh
                                     </td>
                                 </tr>
                                 <tr>
@@ -211,7 +227,7 @@
                                         Gas
                                     </th>
                                     <td>
-                                        4
+                                        {{ $lastMetric->avg_usage_gas_now_week }} Wh
                                     </td>
                                 </tr>
                             </table>
@@ -234,7 +250,15 @@
                                         Stroomopname
                                     </th>
                                     <td>
-                                        428
+                                        {{ $lastMetric->sum_usage_now_week }} Wh
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        Stroomopwekking
+                                    </th>
+                                    <td>
+                                        {{ $lastMetric->sum_solar_now_week}} Wh
                                     </td>
                                 </tr>
                                 <tr>
@@ -242,7 +266,7 @@
                                         Stroomlevering
                                     </th>
                                     <td>
-                                        654
+                                        {{ $lastMetric->sum_redelivery_now_week }} Wh
                                     </td>
                                 </tr>
                                 <tr>
@@ -250,7 +274,7 @@
                                         Gas
                                     </th>
                                     <td>
-                                        4
+                                        {{ $lastMetric->sum_usage_gas_now_week }} Wh
                                     </td>
                                 </tr>
                             </table>
