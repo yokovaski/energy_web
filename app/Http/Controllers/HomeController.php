@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -64,14 +65,55 @@ class HomeController extends Controller
         $metric['intake_now'] = $metric->usage_now;
         $metric->usage_now += $differenceSolarAndRedelivery;
 
-//        $averageToDay = TenSecondMetric::whereDate('created_at', Carbon::now()->day)
-//            ->select(DB::raw('avg(usage_now) avg_day_usage_now, avg(solar_now) avg_daysolar_now,
-//                avg(redelivery_now) avg_dayredelivery_now'))
-//            ->first();
-//
-//        $metric['avg_day_usage_now'] = $averageToDay->avg_day_usage_now;
-//        $metric['avg_daysolar_now'] = $averageToDay->avg_daysolar_now;
-//        $metric['avg_dayredelivery_now'] = $averageToDay->avg_dayredelivery_now;
+        // Get data of today
+        $dataToday = TenSecondMetric::whereDate('created_at', '=', Carbon::today()->toDateString())
+            ->select(DB::raw(
+                    'avg(usage_now) avg_usage_now_today, 
+                    avg(solar_now) avg_solar_now_today, 
+                    avg(redelivery_now) avg_redelivery_now_today, 
+                    avg(usage_gas_now) avg_usage_gas_now_today, 
+                    sum(usage_now) sum_usage_now_today,
+                    sum(solar_now) sum_solar_now_today,
+                    sum(redelivery_now) sum_redelivery_now_today,
+                    sum(usage_gas_now) sum_usage_gas_now_today'))
+            ->first();
+
+        // Set avg today
+        $metric['avg_usage_now_today'] = round($dataToday->avg_usage_now_today, 1);
+        $metric['avg_solar_now_today'] = round($dataToday->avg_solar_now_today, 1);
+        $metric['avg_redelivery_now_today'] = round($dataToday->avg_redelivery_now_today, 1);
+        $metric['avg_usage_gas_now_today'] = round($dataToday->avg_usage_gas_now_today, 1);
+
+        // Set sum today
+        $metric['sum_usage_now_today'] = $dataToday->sum_usage_now_today;
+        $metric['sum_solar_now_today'] = $dataToday->sum_solar_now_today;
+        $metric['sum_redelivery_now_today'] = $dataToday->sum_redelivery_now_today;
+        $metric['sum_usage_gas_now_today'] = $dataToday->sum_usage_gas_now_today;
+
+        // Get data of past week
+        $dataPastWeek = TenSecondMetric::whereDate('created_at', '>', Carbon::now()->subDays(7)->toDateString())
+            ->select(DB::raw(
+                'avg(usage_now) avg_usage_now_week, 
+                    avg(solar_now) avg_solar_now_week, 
+                    avg(redelivery_now) avg_redelivery_now_week, 
+                    avg(usage_gas_now) avg_usage_gas_now_week, 
+                    sum(usage_now) sum_usage_now_week,
+                    sum(solar_now) sum_solar_now_week,
+                    sum(redelivery_now) sum_redelivery_now_week,
+                    sum(usage_gas_now) sum_usage_gas_now_week'))
+            ->first();
+
+        // Set avg past week
+        $metric['avg_usage_now_week'] = round($dataPastWeek->avg_usage_now_week, 1);
+        $metric['avg_solar_now_week'] = round($dataPastWeek->avg_solar_now_week, 1);
+        $metric['avg_redelivery_now_week'] = round($dataPastWeek->avg_redelivery_now_week, 1);
+        $metric['avg_usage_gas_now_week'] = round($dataPastWeek->avg_usage_gas_now_week, 1);
+
+        // Set sum past week
+        $metric['sum_usage_now_week'] = $dataPastWeek->sum_usage_now_week;
+        $metric['sum_solar_now_week'] = $dataPastWeek->sum_solar_now_week;
+        $metric['sum_redelivery_now_week'] = $dataPastWeek->sum_redelivery_now_week;
+        $metric['sum_usage_gas_now_week'] = $dataPastWeek->sum_usage_gas_now_week;
 
         return view('home', ['lastMetric' => $metric]);
     }
