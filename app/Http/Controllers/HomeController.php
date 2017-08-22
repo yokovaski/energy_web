@@ -149,6 +149,8 @@ class HomeController extends Controller
             ->where('raspberry_pi_id', '=', $raspberryPiId)
             ->first();
 
+        dd([$firstRecord, $lastRecord]);
+
         $lastRecordTotalUsage = $lastRecord->usage_total_high + $lastRecord->usage_total_low;
         $firstRecordTotalUsage = $firstRecord->usage_total_high + $firstRecord->usage_total_low;
         $lastRecordTotalRedelivery = $lastRecord->redelivery_total_high + $lastRecord->redelivery_total_low;
