@@ -94,20 +94,13 @@ class HomeController extends Controller
         $metric = [];
 
         // Get data of today
-        $dataToday = TenSecondMetric::whereDate('created_at', '=', Carbon::today()->toDateString())
-            ->where('raspberry_pi_id', '=', $raspberryPiId)
-            ->select(DB::raw(
-                'avg(usage_now) avg_usage_now_today, 
-                    avg(solar_now) avg_solar_now_today, 
-                    avg(redelivery_now) avg_redelivery_now_today, 
-                    avg(usage_gas_now) avg_usage_gas_now_today'))
-            ->first();
+        $dataToday = $this->getAveragePastDays(0, $raspberryPiId);
 
         // Set avg today
-        $metric['avg_usage_now_today'] = round($dataToday->avg_usage_now_today, 1);
-        $metric['avg_solar_now_today'] = round($dataToday->avg_solar_now_today, 1);
-        $metric['avg_redelivery_now_today'] = round($dataToday->avg_redelivery_now_today, 1);
-        $metric['avg_usage_gas_now_today'] = round($dataToday->avg_usage_gas_now_today, 1);
+        $metric['avg_usage_now_today'] = $dataToday['avg_usage_now_days'];
+        $metric['avg_solar_now_today'] = $dataToday['avg_solar_now_days'];
+        $metric['avg_redelivery_now_today'] = $dataToday['avg_redelivery_now_days'];
+        $metric['avg_usage_gas_now_today'] = $dataToday['avg_usage_gas_now_days'];
 
         return $metric;
     }
@@ -115,27 +108,12 @@ class HomeController extends Controller
     public function getTotalToday(TenSecondMetric $lastRecordToday, $raspberryPiId)
     {
         $metric = [];
+        $dataToday = $this->getTotalPastDays(0, $lastRecordToday, $raspberryPiId);
 
-        $firstRecordToday = TenSecondMetric::where('raspberry_pi_id', '=', $raspberryPiId)
-            ->orderBy('created_at', 'ASC')
-            ->first();
-
-        // Set avg today
-
-        $lastRecordTotalUsage = $lastRecordToday->usage_total_high + $lastRecordToday->usage_total_low;
-        $firstRecordTotalUsage = $firstRecordToday->usage_total_high + $firstRecordToday->usage_total_low;
-        $lastRecordTotalRedelivery = $lastRecordToday->redelivery_total_high + $lastRecordToday->redelivery_total_low;
-        $firstRecordTotalRedelivery = $firstRecordToday->redelivery_total_high + $firstRecordToday->redelivery_total_low;
-
-        $totalUsage = $lastRecordTotalUsage - $firstRecordTotalUsage;
-        $totalRedelivery = $lastRecordTotalRedelivery - $firstRecordTotalRedelivery;
-        $totalSolar = $lastRecordToday->solar_total - $firstRecordToday->solar_total;
-        $totalGas = $lastRecordToday->usage_gas_total - $firstRecordToday->usage_gas_total;
-
-        $metric['total_usage_now_today'] = round($totalUsage, 1);
-        $metric['total_solar_now_today'] = round($totalSolar, 1);
-        $metric['total_redelivery_now_today'] = round($totalRedelivery, 1);
-        $metric['total_usage_gas_now_today'] = round($totalGas, 1);
+        $metric['total_usage_now_today'] = $dataToday['total_usage_now_days'];
+        $metric['total_solar_now_today'] = $dataToday['total_solar_now_days'];
+        $metric['total_redelivery_now_today'] = $dataToday['total_redelivery_now_days'];
+        $metric['total_usage_gas_now_today'] = $dataToday['total_usage_gas_now_days'];
 
         return $metric;
     }
@@ -143,7 +121,7 @@ class HomeController extends Controller
     public function getAveragePastDays($days, $raspberryPiId)
     {
         // Get data of past week
-        $dataPastWeek = TenSecondMetric::whereDate('created_at', '>', Carbon::now()->subDays($days)->toDateString())
+        $dataPastWeek = TenSecondMetric::whereDate('created_at', '>=', Carbon::now()->subDays($days)->toDateString())
             ->where('raspberry_pi_id', '=', $raspberryPiId)
             ->select(DB::raw(
                 'avg(usage_now) avg_usage_now, 
@@ -166,7 +144,7 @@ class HomeController extends Controller
         $metric = [];
 
         // Get data of past week
-        $firstRecord = TenSecondMetric::whereDate('created_at', '>', Carbon::now()->subDays($days)->toDateString())
+        $firstRecord = TenSecondMetric::whereDate('created_at', '>=', Carbon::now()->subDays($days)->toDateString())
             ->orderBy('created_at', 'ASC')
             ->where('raspberry_pi_id', '=', $raspberryPiId)
             ->first();
