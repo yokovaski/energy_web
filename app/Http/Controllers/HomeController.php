@@ -184,10 +184,10 @@ class HomeController extends Controller
         $totalSolar = $lastRecord->solar_total - $firstRecord->solar_total;
         $totalGas = $lastRecord->usage_gas_total - $firstRecord->usage_gas_total;
 
-        $metric['total_usage_now_days'] = round($totalUsage, 1);
-        $metric['total_solar_now_days'] = round($totalSolar, 1);
-        $metric['total_redelivery_now_days'] = round($totalRedelivery, 1);
-        $metric['total_usage_gas_now_days'] = round($totalGas, 1);
+        $metric['total_usage_now_days'] = round($totalUsage, 0) / 1000;
+        $metric['total_solar_now_days'] = round($totalSolar, 0) / 1000;
+        $metric['total_redelivery_now_days'] = round($totalRedelivery, 0) / 1000;
+        $metric['total_usage_gas_now_days'] = round($totalGas, 0) / 1000;
 
         return $metric;
     }
