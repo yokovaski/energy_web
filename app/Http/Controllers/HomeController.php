@@ -131,9 +131,9 @@ class HomeController extends Controller
             ->first();
 
         // Set avg past week
-        $metric['avg_usage_now_days'] = round($dataPastWeek->avg_usage_now, 1);
-        $metric['avg_solar_now_days'] = round($dataPastWeek->avg_solar_now, 1);
-        $metric['avg_redelivery_now_days'] = round($dataPastWeek->avg_redelivery_now, 1);
+        $metric['avg_usage_now_days'] = round($dataPastWeek->avg_usage_now, 0) / 1000;
+        $metric['avg_solar_now_days'] = round($dataPastWeek->avg_solar_now, 0) / 1000;
+        $metric['avg_redelivery_now_days'] = round($dataPastWeek->avg_redelivery_now, 0) / 1000;
         $metric['avg_usage_gas_now_days'] = $this->getAverageGasPastDays($days, $raspberryPiId);
 
         return $metric;
@@ -155,11 +155,11 @@ class HomeController extends Controller
         $timeFirst  = strtotime($firstDataRow->created_at);
         $timeSecond = strtotime($lastDataRow->created_at);
         $differenceInSeconds = $timeSecond - $timeFirst;
-        $tenSecondDivider = round(($differenceInSeconds / 10), 1);
+        $tenSecondDivider = round(($differenceInSeconds / 10), 0);
 
         // Set avg past week
         $avgGasUse = ($lastDataRow->usage_gas_total - $firstDataRow->usage_gas_total) / $tenSecondDivider;
-        return round($avgGasUse, 1);
+        return round($avgGasUse, 1) / 1000;
     }
 
     public function getTotalPastDays($days, TenSecondMetric $lastRecord, $raspberryPiId)

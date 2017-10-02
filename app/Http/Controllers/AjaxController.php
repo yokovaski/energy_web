@@ -57,10 +57,10 @@ class AjaxController extends Controller
                 ->format('H:i:s');
 
             $differenceSolarAndRedelivery = ($metric->solar_now - $metric->redelivery_now);
-            $data['intake'][] = $metric->usage_now;
-            $data['usage'][] = $metric->usage_now + $differenceSolarAndRedelivery;
-            $data['redelivery'][]= $metric->redelivery_now;
-            $data['solar'][]= $metric->solar_now;
+            $data['intake'][] = $metric->usage_now / 1000;
+            $data['usage'][] = ($metric->usage_now + $differenceSolarAndRedelivery) / 1000;
+            $data['redelivery'][]= $metric->redelivery_now / 1000;
+            $data['solar'][]= $metric->solar_now / 1000;
         }
 
         return response()->json(['data' => $data], Response::HTTP_OK);
@@ -102,10 +102,10 @@ class AjaxController extends Controller
                 ->format('H:i:s');
 
             $differenceSolarAndRedelivery = ($metric->solar_now - $metric->redelivery_now);
-            $data['intake'][] = $metric->usage_now;
-            $data['usage'][] = $metric->usage_now + $differenceSolarAndRedelivery;
-            $data['redelivery'][]= $metric->redelivery_now;
-            $data['solar'][]= $metric->solar_now;
+            $data['intake'][] = $metric->usage_now / 1000;
+            $data['usage'][] = ($metric->usage_now + $differenceSolarAndRedelivery) / 1000;
+            $data['redelivery'][]= $metric->redelivery_now / 1000;
+            $data['solar'][]= $metric->solar_now / 1000;
         }
 
         return response()->json(['data' => $data], Response::HTTP_OK);
@@ -129,10 +129,10 @@ class AjaxController extends Controller
             ->format('H:i:s');
 
         $differenceSolarAndRedelivery = ($metric->solar_now - $metric->redelivery_now);
-        $data['intake'][] = $metric->usage_now;
-        $data['usage'][] = $metric->usage_now + $differenceSolarAndRedelivery;
-        $data['redelivery'][]= $metric->redelivery_now;
-        $data['solar'][]= $metric->solar_now;
+        $data['intake'][] = $metric->usage_now / 1000;
+        $data['usage'][] = ($metric->usage_now + $differenceSolarAndRedelivery) / 1000;
+        $data['redelivery'][]= $metric->redelivery_now / 1000;
+        $data['solar'][]= $metric->solar_now / 1000;
 
         return response()->json(['data' => $data], Response::HTTP_OK);
     }

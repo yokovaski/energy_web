@@ -11,7 +11,7 @@
                     </div>
                     <div class="panel-body">
                         <h4 id="usage_now">
-                            {{ $metrics['usage_now'] }} Wh
+                            {{ $metrics['usage_now'] / 1000 }} kW
                         </h4>
                     </div>
                 </div>
@@ -23,7 +23,7 @@
                     </div>
                     <div class="panel-body">
                         <h4 id="solar_now">
-                            {{ $metrics['solar_now'] }} Wh
+                            {{ $metrics['solar_now'] / 1000 }} kW
                         </h4>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                     </div>
                     <div class="panel-body">
                         <h4 id="redelivery_now">
-                            {{ $metrics['redelivery_now'] }} Wh
+                            {{ $metrics['redelivery_now'] / 1000 }} kW
                         </h4>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="panel-body">
                         <h4 id="intake_now">
-                            {{ $metrics['intake_now'] }} Wh
+                            {{ $metrics['intake_now'] / 1000 }} kW
                         </h4>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                                         Stroomopname
                                     </th>
                                     <td>
-                                        {{ $metrics['avg_usage_now_today'] }} Wh
+                                        {{ $metrics['avg_usage_now_today'] }} kWh
                                     </td>
                                 </tr>
                                 <tr>
@@ -116,7 +116,7 @@
                                         Stroomopwekking
                                     </th>
                                     <td>
-                                        {{ $metrics['avg_solar_now_today'] }} Wh
+                                        {{ $metrics['avg_solar_now_today'] }} kWh
                                     </td>
                                 </tr>
                                 <tr>
@@ -124,7 +124,7 @@
                                         Stroomlevering
                                     </th>
                                     <td>
-                                        {{ $metrics['avg_redelivery_now_today'] }} Wh
+                                        {{ $metrics['avg_redelivery_now_today'] }} kWh
                                     </td>
                                 </tr>
                                 <tr>
@@ -132,7 +132,7 @@
                                         Gas
                                     </th>
                                     <td>
-                                        {{ $metrics['avg_usage_gas_now_today'] }}
+                                        {{ $metrics['avg_usage_gas_now_today'] }} m3
                                     </td>
                                 </tr>
                             </table>
@@ -155,7 +155,7 @@
                                         Stroomopname
                                     </th>
                                     <td>
-                                        {{ $metrics['total_usage_now_today'] }} Wh
+                                        {{ $metrics['total_usage_now_today'] }} kWh
                                     </td>
                                 </tr>
                                 <tr>
@@ -163,7 +163,7 @@
                                         Stroomopwekking
                                     </th>
                                     <td>
-                                        {{ $metrics['total_solar_now_today'] }} Wh
+                                        {{ $metrics['total_solar_now_today'] }} kWh
                                     </td>
                                 </tr>
                                 <tr>
@@ -171,7 +171,7 @@
                                         Stroomlevering
                                     </th>
                                     <td>
-                                        {{ $metrics['total_redelivery_now_today'] }} Wh
+                                        {{ $metrics['total_redelivery_now_today'] }} kWh
                                     </td>
                                 </tr>
                                 <tr>
@@ -179,7 +179,7 @@
                                         Gas
                                     </th>
                                     <td>
-                                        {{ $metrics['total_usage_gas_now_today'] }}
+                                        {{ $metrics['total_usage_gas_now_today'] }} m3
                                     </td>
                                 </tr>
                             </table>
@@ -202,7 +202,7 @@
                                         Stroomopname
                                     </th>
                                     <td>
-                                        {{ $metrics['avg_usage_now_days'] }} Wh
+                                        {{ $metrics['avg_usage_now_days'] }} kWh
                                     </td>
                                 </tr>
                                 <tr>
@@ -210,7 +210,7 @@
                                         Stroomopwekking
                                     </th>
                                     <td>
-                                        {{ $metrics['avg_solar_now_days'] }} Wh
+                                        {{ $metrics['avg_solar_now_days'] }} kWh
                                     </td>
                                 </tr>
                                 <tr>
@@ -218,7 +218,7 @@
                                         Stroomlevering
                                     </th>
                                     <td>
-                                        {{ $metrics['avg_redelivery_now_days'] }} Wh
+                                        {{ $metrics['avg_redelivery_now_days'] }} kWh
                                     </td>
                                 </tr>
                                 <tr>
@@ -226,7 +226,7 @@
                                         Gas
                                     </th>
                                     <td>
-                                        {{ $metrics['avg_usage_gas_now_days'] }}
+                                        {{ $metrics['avg_usage_gas_now_days'] }} m3
                                     </td>
                                 </tr>
                             </table>
@@ -249,7 +249,7 @@
                                         Stroomopname
                                     </th>
                                     <td>
-                                        {{ $metrics['total_usage_now_days'] }} Wh
+                                        {{ $metrics['total_usage_now_days'] }} kWh
                                     </td>
                                 </tr>
                                 <tr>
@@ -257,7 +257,7 @@
                                         Stroomopwekking
                                     </th>
                                     <td>
-                                        {{ $metrics['total_solar_now_days'] }} Wh
+                                        {{ $metrics['total_solar_now_days'] }} kWh
                                     </td>
                                 </tr>
                                 <tr>
@@ -265,7 +265,7 @@
                                         Stroomlevering
                                     </th>
                                     <td>
-                                        {{ $metrics['total_redelivery_now_days'] }} Wh
+                                        {{ $metrics['total_redelivery_now_days'] }} kWh
                                     </td>
                                 </tr>
                                 <tr>
@@ -273,7 +273,7 @@
                                         Gas
                                     </th>
                                     <td>
-                                        {{ $metrics['total_usage_gas_now_days'] }}
+                                        {{ $metrics['total_usage_gas_now_days'] }} m3
                                     </td>
                                 </tr>
                             </table>
