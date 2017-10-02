@@ -100,7 +100,7 @@ class HomeController extends Controller
         $metric['avg_usage_now_today'] = $dataToday['avg_usage_now_days'];
         $metric['avg_solar_now_today'] = $dataToday['avg_solar_now_days'];
         $metric['avg_redelivery_now_today'] = $dataToday['avg_redelivery_now_days'];
-        $metric['avg_usage_gas_now_today'] = $dataToday['avg_usage_gas_now_days'];
+        $metric['avg_usage_gas_now_today'] = $this->getAverageGasPastDays(0, $raspberryPiId);
 
         return $metric;
     }
@@ -134,9 +134,32 @@ class HomeController extends Controller
         $metric['avg_usage_now_days'] = round($dataPastWeek->avg_usage_now, 1);
         $metric['avg_solar_now_days'] = round($dataPastWeek->avg_solar_now, 1);
         $metric['avg_redelivery_now_days'] = round($dataPastWeek->avg_redelivery_now, 1);
-        $metric['avg_usage_gas_now_days'] = round($dataPastWeek->avg_usage_gas_now, 1);
+        $metric['avg_usage_gas_now_days'] = $this->getAverageGasPastDays($days, $raspberryPiId);
 
         return $metric;
+    }
+
+    public function getAverageGasPastDays($days, $raspberryPiId)
+    {
+        // Get data of past week
+        $firstDataRow = TenSecondMetric::whereDate('created_at', '>=', Carbon::now()->subDays($days)->toDateString())
+            ->where('raspberry_pi_id', '=', $raspberryPiId)
+            ->first();
+
+        // Get data of past week
+        $lastDataRow = TenSecondMetric::whereDate('created_at', '>=', Carbon::now()->subDays($days)->toDateString())
+            ->where('raspberry_pi_id', '=', $raspberryPiId)
+            ->orderBy('created_at', 'DESC')
+            ->first();
+
+        $timeFirst  = strtotime($firstDataRow->created_at);
+        $timeSecond = strtotime($lastDataRow->created_at);
+        $differenceInSeconds = $timeSecond - $timeFirst;
+        $tenSecondDivider = round(($differenceInSeconds / 10), 1);
+
+        // Set avg past week
+        $avgGasUse = ($lastDataRow->usage_gas_total - $firstDataRow->usage_gas_total) / $tenSecondDivider;
+        return round($avgGasUse, 1);
     }
 
     public function getTotalPastDays($days, TenSecondMetric $lastRecord, $raspberryPiId)

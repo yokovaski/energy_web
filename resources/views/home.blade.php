@@ -132,7 +132,7 @@
                                         Gas
                                     </th>
                                     <td>
-                                        {{ $metrics['avg_usage_gas_now_today'] }} Wh
+                                        {{ $metrics['avg_usage_gas_now_today'] }}
                                     </td>
                                 </tr>
                             </table>
@@ -179,7 +179,7 @@
                                         Gas
                                     </th>
                                     <td>
-                                        {{ $metrics['total_usage_gas_now_today'] }} Wh
+                                        {{ $metrics['total_usage_gas_now_today'] }}
                                     </td>
                                 </tr>
                             </table>
@@ -226,7 +226,7 @@
                                         Gas
                                     </th>
                                     <td>
-                                        {{ $metrics['avg_usage_gas_now_days'] }} Wh
+                                        {{ $metrics['avg_usage_gas_now_days'] }}
                                     </td>
                                 </tr>
                             </table>
@@ -273,7 +273,7 @@
                                         Gas
                                     </th>
                                     <td>
-                                        {{ $metrics['total_usage_gas_now_days'] }} Wh
+                                        {{ $metrics['total_usage_gas_now_days'] }}
                                     </td>
                                 </tr>
                             </table>
