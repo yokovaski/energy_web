@@ -50,7 +50,7 @@ class HomeController extends Controller
             if ($availableRaspberryPi instanceof RaspberryPi) {
                 $currentUser->raspberryPi()->save($availableRaspberryPi);
             } else {
-                App::abort(404);
+                App::abort(400);
             }
         }
 
@@ -149,7 +149,7 @@ class HomeController extends Controller
             ->where('raspberry_pi_id', '=', $raspberryPiId)
             ->first();
 
-        dd([$firstRecord, $lastRecord]);
+//        dd([$firstRecord, $lastRecord]);
 
         $lastRecordTotalUsage = $lastRecord->usage_total_high + $lastRecord->usage_total_low;
         $firstRecordTotalUsage = $firstRecord->usage_total_high + $firstRecord->usage_total_low;
