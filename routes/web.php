@@ -24,6 +24,7 @@ Route::get('/admin', 'AdminController@index');
  * Ajax routes
  */
 Route::group(['prefix' => '/api'], function () {
+    Route::get('/energy/days/{days}', 'AjaxController@getDataOfLastDays');
     Route::get('/energy/hours/{hours}', 'AjaxController@getDataOfLastHours');
     Route::get('/energy/minutes/{minutes}', 'AjaxController@getDataOfLastMinutes');
     Route::get('/energy/last', 'AjaxController@getDataOfLastUpdate');

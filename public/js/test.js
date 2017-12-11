@@ -5,19 +5,41 @@ $(window).on('load', function() {
 });
 
 var lineChart;
+var stopUpdating = false;
 
-function addPoint() {
-    console.log("button clicked");
-    console.log(lineChart.data);
+$(".chartRangeSelector").click(function(){
+    $(".chartRangeSelector").removeClass('active');
 
-    var dataLength = lineChart.data.datasets[0].data.length;
-    var labelsLength = lineChart.data.labels.length;
+    var id = this.id;
 
-    lineChart.data.datasets[0].data[dataLength] = 60;
-    lineChart.data.labels[labelsLength] = "August";
+    if(id === 'weekChart') {
+        $('#weekChart').addClass('active');
+        getWeekChart();
+        stopUpdating = true;
+    } else if(id === 'dayChart') {
+        $('#dayChart').addClass('active');
+        getDayChart();
+        stopUpdating = true;
+    } else  {
+        $('#hourChart').addClass('active');
+        getHourChart();
+        stopUpdating = false;
+    }
+});
 
-    console.log(lineChart.data);
-    lineChart.update();
+function getHourChart() {
+    lineChart.destroy();
+    getEnergyDataOfLastHours(1);
+}
+
+function getDayChart() {
+    lineChart.destroy();
+    getEnergyDataOfLastHours(24);
+}
+
+function getWeekChart() {
+    lineChart.destroy();
+    getEnergyDataOfLastHours(168);
 }
 
 function chartjsDoughnutTest() {
@@ -44,66 +66,12 @@ function chartjsDoughnutTest() {
         ]
     };
 
-
-
     var ctx = document.querySelector("#chartjsTest2").getContext("2d");
 
     var myDoughnutChart = new Chart(ctx, {
         type: 'doughnut',
         data: data
     });
-}
-
-function getAjaxTest() {
-    $.ajax(
-        {
-            type : 'GET',
-            url : 'api/test',
-            dataType : 'JSON',
-            success : function(response) {
-                var ctx = document.querySelector("#chartjsTest").getContext("2d");
-
-                var data = {
-                    labels: response.data.timestamps,
-                    datasets: [
-                        {
-                            label: "Gebruik",
-                            responsive: true,
-                            maintainAspectRatio: true,
-                            fill: true,
-                            lineTension: 0.1,
-                            backgroundColor: "rgba(75,192,192,0.4)",
-                            borderColor: "rgba(75,192,192,1)",
-                            borderCapStyle: 'butt',
-                            borderDash: [],
-                            borderDashOffset: 0.0,
-                            borderJoinStyle: 'miter',
-                            pointBorderColor: "rgba(75,192,192,1)",
-                            pointBackgroundColor: "#fff",
-                            pointBorderWidth: 1,
-                            pointHoverRadius: 5,
-                            pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                            pointHoverBorderColor: "rgba(220,220,220,1)",
-                            pointHoverBorderWidth: 2,
-                            pointRadius: 1,
-                            pointHitRadius: 10,
-                            data: response.data.usage,
-                            spanGaps: false,
-                        }
-                    ]
-                };
-
-                lineChart = new Chart(ctx, {
-                    type: 'line',
-                    data: data
-                });
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                console.log("ajax call to get_current_data results into error");
-                console.log(xhr.status);
-                console.log(thrownError);
-            }
-        });
 }
 
 function updateChart() {
@@ -113,6 +81,10 @@ function updateChart() {
 }
 
 function getLastEnergyUpdate() {
+    if (stopUpdating) {
+        return;
+    }
+
     $.ajax(
         {
             type : 'GET',
@@ -152,6 +124,58 @@ function getEnergyDataOfLastHours(hours) {
         {
             type : 'GET',
             url : 'api/energy/hours/' + hours,
+            dataType : 'JSON',
+            success : function(response) {
+                var ctx = document.querySelector("#chartjsTest").getContext("2d");
+
+                var data = {
+                    labels: response.data.timestamps,
+                    datasets: [
+                        {
+                            label: "Gebruik",
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            fill: true,
+                            lineTension: 0.1,
+                            backgroundColor: "rgba(75,192,192,0.4)",
+                            borderColor: "rgba(75,192,192,1)",
+                            borderCapStyle: 'butt',
+                            borderDash: [],
+                            borderDashOffset: 0.0,
+                            borderJoinStyle: 'miter',
+                            pointBorderColor: "rgba(75,192,192,1)",
+                            pointBackgroundColor: "#fff",
+                            pointBorderWidth: 1,
+                            pointHoverRadius: 5,
+                            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                            pointHoverBorderColor: "rgba(220,220,220,1)",
+                            pointHoverBorderWidth: 2,
+                            pointRadius: 1,
+                            pointHitRadius: 10,
+                            data: response.data.usage,
+                            spanGaps: false,
+                        }
+                    ]
+                };
+
+                lineChart = new Chart(ctx, {
+                    type: 'line',
+                    data: data
+                });
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log("ajax call to get_current_data results into error");
+                console.log(xhr.status);
+                console.log(thrownError);
+            }
+        });
+}
+
+function getEnergyDataOfLastDays(days) {
+    $.ajax(
+        {
+            type : 'GET',
+            url : 'api/energy/days/' + days,
             dataType : 'JSON',
             success : function(response) {
                 var ctx = document.querySelector("#chartjsTest").getContext("2d");

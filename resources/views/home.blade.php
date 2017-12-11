@@ -59,7 +59,14 @@
                     <div class="col-xs-12">
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                Heading graph
+                                <p class="panel-title pull-left">Energieverbruik</p>
+
+                                <div class="btn-group pull-right" role="group" aria-label="...">
+                                    <button id="hourChart" type="button" class="chartRangeSelector btn btn-default active" onclick="this.blur();">Uur</button>
+                                    <button id="dayChart" type="button" class="chartRangeSelector btn btn-default" onclick="this.blur();">Dag</button>
+                                    <button id="weekChart" type="button" class="chartRangeSelector btn btn-default" onclick="this.blur();">Week</button>
+                                </div>
+                                <div class="clearfix"></div>
                             </div>
                             <div class="panel-body">
                                 <canvas id="chartjsTest" style="height:800px"></canvas>
@@ -95,7 +102,7 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <p class="panel-title pull-left">Dag gemiddelde</p>
-                        <button data-toggle="collapse" data-target="#day-average" class="btn btn-xs btn-default pull-right" onclick="this.blur();">
+                        <button data-toggle="collapse" data-target="#day-average" class="btn btn-sm btn-default pull-right" onclick="this.blur();">
                             <span class="glyphicon glyphicon-plus"></span>
                         </button>
                         <div class="clearfix"></div>
@@ -142,7 +149,7 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <p class="panel-title pull-left">Dag totaal</p>
-                        <button data-toggle="collapse" data-target="#day-total" class="btn btn-xs btn-default pull-right" onclick="this.blur();">
+                        <button data-toggle="collapse" data-target="#day-total" class="btn btn-sm btn-default pull-right" onclick="this.blur();">
                             <span class="glyphicon glyphicon-plus"></span>
                         </button>
                         <div class="clearfix"></div>
@@ -189,7 +196,7 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <p class="panel-title pull-left">Week gemiddelde</p>
-                        <button data-toggle="collapse" data-target="#week-average" class="btn btn-xs btn-default pull-right" onclick="this.blur();">
+                        <button data-toggle="collapse" data-target="#week-average" class="btn btn-sm btn-default pull-right" onclick="this.blur();">
                             <span class="glyphicon glyphicon-plus"></span>
                         </button>
                         <div class="clearfix"></div>
@@ -236,7 +243,7 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <p class="panel-title pull-left">Week totaal</p>
-                        <button data-toggle="collapse" data-target="#week-total" class="btn btn-xs btn-default pull-right" onclick="this.blur();">
+                        <button data-toggle="collapse" data-target="#week-total" class="btn btn-sm btn-default pull-right" onclick="this.blur();">
                             <span class="glyphicon glyphicon-plus"></span>
                         </button>
                         <div class="clearfix"></div>
@@ -283,7 +290,7 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <p class="panel-title pull-left">Meterstanden</p>
-                        <button data-toggle="collapse" data-target="#meter-reading" class="btn btn-xs btn-default pull-right" onclick="this.blur();">
+                        <button data-toggle="collapse" data-target="#meter-reading" class="btn btn-sm btn-default pull-right" onclick="this.blur();">
                             <span class="glyphicon glyphicon-plus"></span>
                         </button>
                         <div class="clearfix"></div>
