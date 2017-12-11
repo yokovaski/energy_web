@@ -78,7 +78,7 @@
 
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="panel panel-info">
+                        <div class="panel panel-success">
                             <div class="panel-heading">
                                 <p class="panel-title pull-left">Energieopwekking</p>
 
@@ -98,7 +98,7 @@
 
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="panel panel-info">
+                        <div class="panel panel-warning">
                             <div class="panel-heading">
                                 <p class="panel-title pull-left">Energielevering</p>
 
@@ -118,7 +118,7 @@
 
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="panel panel-info">
+                        <div class="panel panel-danger">
                             <div class="panel-heading">
                                 <p class="panel-title pull-left">Energieopname</p>
 
