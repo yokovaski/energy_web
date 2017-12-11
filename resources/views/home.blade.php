@@ -55,6 +55,7 @@
         </div>
         <div class="row">
             <div class="col-md-8">
+
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="panel panel-info">
@@ -62,40 +63,79 @@
                                 <p class="panel-title pull-left">Energieverbruik</p>
 
                                 <div class="btn-group pull-right" role="group" aria-label="...">
-                                    <button id="hourChart" type="button" class="chartRangeSelector btn btn-default active" onclick="this.blur();">Uur</button>
-                                    <button id="dayChart" type="button" class="chartRangeSelector btn btn-default" onclick="this.blur();">Dag</button>
-                                    <button id="weekChart" type="button" class="chartRangeSelector btn btn-default" onclick="this.blur();">Week</button>
+                                    <button type="button" class="chartRangeSelector btn-hour btn btn-default" onclick="this.blur();">Uur</button>
+                                    <button type="button" class="chartRangeSelector btn-day btn btn-default active" onclick="this.blur();">Dag</button>
+                                    <button type="button" class="chartRangeSelector btn-week btn btn-default" onclick="this.blur();">Week</button>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="panel-body">
-                                <canvas id="chartjsTest" style="height:800px"></canvas>
+                                <canvas id="chartEnergyUse" style="height:800px"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
-                    <div class="col-sm-6 col-xs-12">
+                    <div class="col-xs-12">
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                Heading metrics first
+                                <p class="panel-title pull-left">Energieopwekking</p>
+
+                                <div class="btn-group pull-right" role="group" aria-label="...">
+                                    <button type="button" class="chartRangeSelector btn-hour btn btn-default" onclick="this.blur();">Uur</button>
+                                    <button type="button" class="chartRangeSelector btn-day btn btn-default active" onclick="this.blur();">Dag</button>
+                                    <button type="button" class="chartRangeSelector btn-week btn btn-default" onclick="this.blur();">Week</button>
+                                </div>
+                                <div class="clearfix"></div>
                             </div>
                             <div class="panel-body">
-                                <canvas id="chartjsTest2"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xs-12">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                Heading metrics second
-                            </div>
-                            <div class="panel-body">
-                                <canvas id="chartjsTest3"></canvas>
+                                <canvas id="chartEnergySolar" style="height:800px"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <p class="panel-title pull-left">Energielevering</p>
+
+                                <div class="btn-group pull-right" role="group" aria-label="...">
+                                    <button type="button" class="chartRangeSelector btn-hour btn btn-default" onclick="this.blur();">Uur</button>
+                                    <button type="button" class="chartRangeSelector btn-day btn btn-default active" onclick="this.blur();">Dag</button>
+                                    <button type="button" class="chartRangeSelector btn-week btn btn-default" onclick="this.blur();">Week</button>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="panel-body">
+                                <canvas id="chartEnergyRedelivery" style="height:800px"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <p class="panel-title pull-left">Energieopname</p>
+
+                                <div class="btn-group pull-right" role="group" aria-label="...">
+                                    <button type="button" class="chartRangeSelector btn-hour btn btn-default" onclick="this.blur();">Uur</button>
+                                    <button type="button" class="chartRangeSelector btn-day btn btn-default active" onclick="this.blur();">Dag</button>
+                                    <button type="button" class="chartRangeSelector btn-week btn btn-default" onclick="this.blur();">Week</button>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="panel-body">
+                                <canvas id="chartEnergyIntake" style="height:800px"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <div class="col-md-4">
 

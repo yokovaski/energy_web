@@ -1,45 +1,175 @@
 $(window).on('load', function() {
-    getEnergyDataOfLastHours(1);
+    getEnergyDataOfLastHours(24);
+    getLastEnergyUpdate();
     // chartjsDoughnutTest();
     updateChart();
 });
 
-var lineChart;
+var dataEnergyUse = {
+    labels: null,
+    datasets: [
+        {
+            label: "Energieverbruik",
+            responsive: true,
+            maintainAspectRatio: false,
+            fill: true,
+            lineTension: 0.1,
+            backgroundColor: "rgba(75,192,192,0.4)",
+            borderColor: "rgba(75,192,192,1)",
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: "rgba(75,192,192,1)",
+            pointBackgroundColor: "#fff",
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+            pointHoverBorderColor: "rgba(220,220,220,1)",
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: null,
+            spanGaps: false,
+        }
+    ]
+};
+
+var dataEnergySolar = {
+    labels: null,
+    datasets: [
+        {
+            label: "Energieopwekking",
+            responsive: true,
+            maintainAspectRatio: false,
+            fill: true,
+            lineTension: 0.1,
+            backgroundColor: "rgba(75,192,192,0.4)",
+            borderColor: "rgba(75,192,192,1)",
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: "rgba(75,192,192,1)",
+            pointBackgroundColor: "#fff",
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+            pointHoverBorderColor: "rgba(220,220,220,1)",
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: null,
+            spanGaps: false,
+        }
+    ]
+};
+
+var dataEnergyRedelivery = {
+    labels: null,
+    datasets: [
+        {
+            label: "Energielevering",
+            responsive: true,
+            maintainAspectRatio: false,
+            fill: true,
+            lineTension: 0.1,
+            backgroundColor: "rgba(75,192,192,0.4)",
+            borderColor: "rgba(75,192,192,1)",
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: "rgba(75,192,192,1)",
+            pointBackgroundColor: "#fff",
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+            pointHoverBorderColor: "rgba(220,220,220,1)",
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: null,
+            spanGaps: false,
+        }
+    ]
+};
+
+var dataEnergyIntake = {
+    labels: null,
+    datasets: [
+        {
+            label: "Energieopname",
+            responsive: true,
+            maintainAspectRatio: false,
+            fill: true,
+            lineTension: 0.1,
+            backgroundColor: "rgba(75,192,192,0.4)",
+            borderColor: "rgba(75,192,192,1)",
+            borderCapStyle: 'butt',
+            borderDash: [],
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: "rgba(75,192,192,1)",
+            pointBackgroundColor: "#fff",
+            pointBorderWidth: 1,
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+            pointHoverBorderColor: "rgba(220,220,220,1)",
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: null,
+            spanGaps: false,
+        }
+    ]
+};
+
+var energyUseLineChart;
+var energySolarLineChart;
+var energyRedeliveryLineChart;
+var energyIntakeLineChart;
+
 var stopUpdating = false;
 
 $(".chartRangeSelector").click(function(){
     $(".chartRangeSelector").removeClass('active');
 
-    var id = this.id;
-
-    if(id === 'weekChart') {
-        $('#weekChart').addClass('active');
+    if($(this).hasClass('btn-week')) {
+        $('.btn-week').addClass('active');
         getWeekChart();
         stopUpdating = true;
-    } else if(id === 'dayChart') {
-        $('#dayChart').addClass('active');
+    } else if($(this).hasClass('btn-day')) {
+        $('.btn-day').addClass('active');
         getDayChart();
         stopUpdating = true;
     } else  {
-        $('#hourChart').addClass('active');
+        $('.btn-hour').addClass('active');
         getHourChart();
         stopUpdating = false;
     }
 });
 
 function getHourChart() {
-    lineChart.destroy();
+    destroyCharts();
     getEnergyDataOfLastHours(1);
 }
 
 function getDayChart() {
-    lineChart.destroy();
+    destroyCharts();
     getEnergyDataOfLastHours(24);
 }
 
 function getWeekChart() {
-    lineChart.destroy();
+    destroyCharts();
     getEnergyDataOfLastHours(168);
+}
+
+function destroyCharts() {
+    energyUseLineChart.destroy();
+    energySolarLineChart.destroy();
+    energyRedeliveryLineChart.destroy();
+    energyIntakeLineChart.destroy();
 }
 
 function chartjsDoughnutTest() {
@@ -96,8 +226,8 @@ function getLastEnergyUpdate() {
                 $("#redelivery_now").html(response.data.redelivery[0] + " Wh");
                 $("#intake_now").html(response.data.intake[0] + " Wh");
 
-                var tempData = lineChart.data.datasets[0].data;
-                var tempLabels = lineChart.data.labels;
+                var tempData = energyUseLineChart.data.datasets[0].data;
+                var tempLabels = energyUseLineChart.data.labels;
 
                 tempData.push(response.data.usage[0]);
                 tempLabels.push(response.data.timestamps[0]);
@@ -106,10 +236,10 @@ function getLastEnergyUpdate() {
                 tempData.shift();
                 tempLabels.shift();
 
-                lineChart.data.datasets[0].data = tempData;
-                lineChart.data.labels = tempLabels;
+                energyUseLineChart.data.datasets[0].data = tempData;
+                energyUseLineChart.data.labels = tempLabels;
 
-                lineChart.update();
+                energyUseLineChart.update();
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log("ajax call to get_current_data results into error");
@@ -126,41 +256,44 @@ function getEnergyDataOfLastHours(hours) {
             url : 'api/energy/hours/' + hours,
             dataType : 'JSON',
             success : function(response) {
-                var ctx = document.querySelector("#chartjsTest").getContext("2d");
+                var chartEnergyUse = document.querySelector("#chartEnergyUse").getContext("2d");
 
-                var data = {
-                    labels: response.data.timestamps,
-                    datasets: [
-                        {
-                            label: "Gebruik",
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            fill: true,
-                            lineTension: 0.1,
-                            backgroundColor: "rgba(75,192,192,0.4)",
-                            borderColor: "rgba(75,192,192,1)",
-                            borderCapStyle: 'butt',
-                            borderDash: [],
-                            borderDashOffset: 0.0,
-                            borderJoinStyle: 'miter',
-                            pointBorderColor: "rgba(75,192,192,1)",
-                            pointBackgroundColor: "#fff",
-                            pointBorderWidth: 1,
-                            pointHoverRadius: 5,
-                            pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                            pointHoverBorderColor: "rgba(220,220,220,1)",
-                            pointHoverBorderWidth: 2,
-                            pointRadius: 1,
-                            pointHitRadius: 10,
-                            data: response.data.usage,
-                            spanGaps: false,
-                        }
-                    ]
-                };
+                dataEnergyUse.labels = response.data.timestamps;
+                dataEnergyUse.datasets[0].data = response.data.usage;
 
-                lineChart = new Chart(ctx, {
+                energyUseLineChart = new Chart(chartEnergyUse, {
                     type: 'line',
-                    data: data
+                    data: dataEnergyUse
+                });
+
+                var chartEnergySolar = document.querySelector("#chartEnergySolar").getContext("2d");
+
+                dataEnergySolar.labels = response.data.timestamps;
+                dataEnergySolar.datasets[0].data = response.data.solar;
+
+                energySolarLineChart = new Chart(chartEnergySolar, {
+                    type: 'line',
+                    data: dataEnergySolar
+                });
+
+                var chartEnergyRedelivery = document.querySelector("#chartEnergyRedelivery").getContext("2d");
+
+                dataEnergyRedelivery.labels = response.data.timestamps;
+                dataEnergyRedelivery.datasets[0].data = response.data.redelivery;
+
+                energyRedeliveryLineChart = new Chart(chartEnergyRedelivery, {
+                    type: 'line',
+                    data: dataEnergyRedelivery
+                });
+
+                var chartEnergyIntake = document.querySelector("#chartEnergyIntake").getContext("2d");
+
+                dataEnergyIntake.labels = response.data.timestamps;
+                dataEnergyIntake.datasets[0].data = response.data.intake;
+
+                energyIntakeLineChart = new Chart(chartEnergyIntake, {
+                    type: 'line',
+                    data: dataEnergyIntake
                 });
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -210,7 +343,7 @@ function getEnergyDataOfLastDays(days) {
                     ]
                 };
 
-                lineChart = new Chart(ctx, {
+                energyUseLineChart = new Chart(ctx, {
                     type: 'line',
                     data: data
                 });
