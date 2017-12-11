@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DayMetric;
+use App\Models\HourMetric;
 use App\Models\RaspberryPi;
 use App\Models\TenSecondMetric;
 use App\Models\User;
@@ -121,7 +122,7 @@ class HomeController extends Controller
     public function getAveragePastDays($days, $raspberryPiId)
     {
         // Get data of past week
-        $dataPastWeek = TenSecondMetric::whereDate('created_at', '>=', Carbon::now()->subDays($days)->toDateString())
+        $dataPastWeek = HourMetric::whereDate('created_at', '>=', Carbon::now()->subDays($days)->toDateString())
             ->where('raspberry_pi_id', '=', $raspberryPiId)
             ->select(DB::raw(
                 'avg(usage_now) avg_usage_now, 
@@ -142,12 +143,12 @@ class HomeController extends Controller
     public function getAverageGasPastDays($days, $raspberryPiId)
     {
         // Get data of past week
-        $firstDataRow = TenSecondMetric::whereDate('created_at', '>=', Carbon::now()->subDays($days)->toDateString())
+        $firstDataRow = HourMetric::whereDate('created_at', '>=', Carbon::now()->subDays($days)->toDateString())
             ->where('raspberry_pi_id', '=', $raspberryPiId)
             ->first();
 
         // Get data of past week
-        $lastDataRow = TenSecondMetric::whereDate('created_at', '>=', Carbon::now()->subDays($days)->toDateString())
+        $lastDataRow = HourMetric::whereDate('created_at', '>=', Carbon::now()->subDays($days)->toDateString())
             ->where('raspberry_pi_id', '=', $raspberryPiId)
             ->orderBy('created_at', 'DESC')
             ->first();
@@ -167,12 +168,12 @@ class HomeController extends Controller
         $metric = [];
 
         // Get data of past week
-        $firstRecord = TenSecondMetric::whereDate('created_at', '>=', Carbon::now()->subDays($days)->toDateString())
-            ->orderBy('created_at', 'ASC')
+        $firstRecord = HourMetric::whereDate('created_at', '=', Carbon::now()->subDays($days + 1)->toDateString())
+            ->orderBy('created_at', 'DESC')
             ->where('raspberry_pi_id', '=', $raspberryPiId)
             ->first();
 
-//        dd([$firstRecord, $lastRecord]);
+//        dd([$firstRecord]);
 
         $lastRecordTotalUsage = $lastRecord->usage_total_high + $lastRecord->usage_total_low;
         $firstRecordTotalUsage = $firstRecord->usage_total_high + $firstRecord->usage_total_low;
