@@ -220,10 +220,6 @@ function updateChart() {
 }
 
 function getLastEnergyUpdate() {
-    if (stopUpdating) {
-        return;
-    }
-
     $.ajax(
         {
             type : 'GET',
@@ -234,6 +230,10 @@ function getLastEnergyUpdate() {
                 $("#solar_now").html(response.data.solar[0] + " Wh");
                 $("#redelivery_now").html(response.data.redelivery[0] + " Wh");
                 $("#intake_now").html(response.data.intake[0] + " Wh");
+
+                if (stopUpdating) {
+                    return;
+                }
 
                 var tempData = energyUseLineChart.data.datasets[0].data;
                 var tempLabels = energyUseLineChart.data.labels;
