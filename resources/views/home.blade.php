@@ -71,7 +71,7 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div class="panel-body">
-                                <canvas id="chartEnergyUse"></canvas>
+                                <canvas id="chartEnergyUse" style="height:370px"></canvas>
                             </div>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div class="panel-body">
-                                <canvas id="chartEnergySolar"></canvas>
+                                <canvas id="chartEnergySolar" style="height:370px"></canvas>
                             </div>
                         </div>
                     </div>
@@ -113,7 +113,7 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div class="panel-body">
-                                <canvas id="chartEnergyRedelivery"></canvas>
+                                <canvas id="chartEnergyRedelivery" style="height:370px"></canvas>
                             </div>
                         </div>
                     </div>
@@ -134,7 +134,7 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div class="panel-body">
-                                <canvas id="chartEnergyIntake"></canvas>
+                                <canvas id="chartEnergyIntake" style="height:370px"></canvas>
                             </div>
                         </div>
                     </div>
