@@ -159,7 +159,7 @@
                                         Stroomopname
                                     </th>
                                     <td>
-                                        {{ $metrics['avg_usage_now_today'] }} kWh
+                                        {{ $metrics['avg_usage_now_today'] }} kW
                                     </td>
                                 </tr>
                                 <tr>
@@ -167,7 +167,7 @@
                                         Stroomopwekking
                                     </th>
                                     <td>
-                                        {{ $metrics['avg_solar_now_today'] }} kWh
+                                        {{ $metrics['avg_solar_now_today'] }} kW
                                     </td>
                                 </tr>
                                 <tr>
@@ -175,7 +175,7 @@
                                         Stroomlevering
                                     </th>
                                     <td>
-                                        {{ $metrics['avg_redelivery_now_today'] }} kWh
+                                        {{ $metrics['avg_redelivery_now_today'] }} kW
                                     </td>
                                 </tr>
                                 <tr>
@@ -253,7 +253,7 @@
                                         Stroomopname
                                     </th>
                                     <td>
-                                        {{ $metrics['avg_usage_now_days'] }} kWh
+                                        {{ $metrics['avg_usage_now_days'] }} kW
                                     </td>
                                 </tr>
                                 <tr>
@@ -261,7 +261,7 @@
                                         Stroomopwekking
                                     </th>
                                     <td>
-                                        {{ $metrics['avg_solar_now_days'] }} kWh
+                                        {{ $metrics['avg_solar_now_days'] }} kW
                                     </td>
                                 </tr>
                                 <tr>
@@ -269,7 +269,7 @@
                                         Stroomlevering
                                     </th>
                                     <td>
-                                        {{ $metrics['avg_redelivery_now_days'] }} kWh
+                                        {{ $metrics['avg_redelivery_now_days'] }} kW
                                     </td>
                                 </tr>
                                 <tr>
