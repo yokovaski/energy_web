@@ -125,7 +125,7 @@ class AjaxController extends Controller
 
         if ($hours >= 24) {
             $metrics = $this->getDataFromHourMetric($raspberryPi->id, $hours);
-        } elseif ($hours > 1) {
+        } elseif ($hours >= 1) {
             $metrics = $this->getDataFromMinuteMetric($raspberryPi->id, $hours);
         } else {
             $metrics = $this->getDataFromTenSecondMetric($raspberryPi->id, $hours);
