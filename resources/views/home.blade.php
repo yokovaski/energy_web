@@ -11,7 +11,7 @@
                     </div>
                     <div class="panel-body">
                         <h4 id="usage_now">
-                            {{ $lastMetric->usage_now }} Wh
+                            {{ $metrics['usage_now'] / 1000 }} kW
                         </h4>
                     </div>
                 </div>
@@ -23,7 +23,7 @@
                     </div>
                     <div class="panel-body">
                         <h4 id="solar_now">
-                            {{ $lastMetric->solar_now }} Wh
+                            {{ $metrics['solar_now'] / 1000 }} kW
                         </h4>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                     </div>
                     <div class="panel-body">
                         <h4 id="redelivery_now">
-                            {{ $lastMetric->redelivery_now }} Wh
+                            {{ $metrics['redelivery_now'] / 1000 }} kW
                         </h4>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="panel-body">
                         <h4 id="intake_now">
-                            {{ $lastMetric->intake_now }} Wh
+                            {{ $metrics['intake_now'] / 1000 }} kW
                         </h4>
                     </div>
                 </div>
@@ -55,47 +55,98 @@
         </div>
         <div class="row">
             <div class="col-md-8">
+
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="panel panel-info">
                             <div class="panel-heading">
-                                Heading graph
+                                <p class="panel-title pull-left">Energieverbruik</p>
+
+                                <div class="btn-group pull-right" role="group" aria-label="...">
+                                    <button type="button" class="chartRangeSelector btn-now btn btn-sm btn-default" onclick="this.blur();">Nu</button>
+                                    <button type="button" class="chartRangeSelector btn-hour btn btn-sm btn-default" onclick="this.blur();">Uur</button>
+                                    <button type="button" class="chartRangeSelector btn-day btn btn-sm btn-default active" onclick="this.blur();">Dag</button>
+                                    <button type="button" class="chartRangeSelector btn-week btn btn-sm btn-default" onclick="this.blur();">Week</button>
+                                </div>
+                                <div class="clearfix"></div>
                             </div>
                             <div class="panel-body">
-                                <canvas id="chartjsTest" style="height:800px"></canvas>
+                                <canvas id="chartEnergyUse"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
-                    <div class="col-sm-6 col-xs-12">
-                        <div class="panel panel-info">
+                    <div class="col-xs-12">
+                        <div class="panel panel-success">
                             <div class="panel-heading">
-                                Heading metrics first
+                                <p class="panel-title pull-left">Energieopwekking</p>
+
+                                <div class="btn-group pull-right" role="group" aria-label="...">
+                                    <button type="button" class="chartRangeSelector btn-now btn btn-sm btn-default" onclick="this.blur();">Nu</button>
+                                    <button type="button" class="chartRangeSelector btn-hour btn btn-sm btn-default" onclick="this.blur();">Uur</button>
+                                    <button type="button" class="chartRangeSelector btn-day btn btn-sm btn-default active" onclick="this.blur();">Dag</button>
+                                    <button type="button" class="chartRangeSelector btn-week btn btn-sm btn-default" onclick="this.blur();">Week</button>
+                                </div>
+                                <div class="clearfix"></div>
                             </div>
                             <div class="panel-body">
-                                <canvas id="chartjsTest2"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xs-12">
-                        <div class="panel panel-info">
-                            <div class="panel-heading">
-                                Heading metrics second
-                            </div>
-                            <div class="panel-body">
-                                <canvas id="chartjsTest3"></canvas>
+                                <canvas id="chartEnergySolar"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading">
+                                <p class="panel-title pull-left">Energielevering</p>
+
+                                <div class="btn-group pull-right" role="group" aria-label="...">
+                                    <button type="button" class="chartRangeSelector btn-now btn btn-sm btn-default" onclick="this.blur();">Nu</button>
+                                    <button type="button" class="chartRangeSelector btn-hour btn btn-sm btn-default" onclick="this.blur();">Uur</button>
+                                    <button type="button" class="chartRangeSelector btn-day btn btn-sm btn-default active" onclick="this.blur();">Dag</button>
+                                    <button type="button" class="chartRangeSelector btn-week btn btn-sm btn-default" onclick="this.blur();">Week</button>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="panel-body">
+                                <canvas id="chartEnergyRedelivery"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel panel-danger">
+                            <div class="panel-heading">
+                                <p class="panel-title pull-left">Energieopname</p>
+
+                                <div class="btn-group pull-right" role="group" aria-label="...">
+                                    <button type="button" class="chartRangeSelector btn-now btn btn-sm btn-default" onclick="this.blur();">Nu</button>
+                                    <button type="button" class="chartRangeSelector btn-hour btn btn-sm btn-default" onclick="this.blur();">Uur</button>
+                                    <button type="button" class="chartRangeSelector btn-day btn btn-sm btn-default active" onclick="this.blur();">Dag</button>
+                                    <button type="button" class="chartRangeSelector btn-week btn btn-sm btn-default" onclick="this.blur();">Week</button>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="panel-body">
+                                <canvas id="chartEnergyIntake"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <div class="col-md-4">
 
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <p class="panel-title pull-left">Dag gemiddelde</p>
-                        <button data-toggle="collapse" data-target="#day-average" class="btn btn-xs btn-default pull-right" onclick="this.blur();">
+                        <button data-toggle="collapse" data-target="#day-average" class="btn btn-sm btn-default pull-right" onclick="this.blur();">
                             <span class="glyphicon glyphicon-plus"></span>
                         </button>
                         <div class="clearfix"></div>
@@ -108,7 +159,7 @@
                                         Stroomopname
                                     </th>
                                     <td>
-                                        {{ $lastMetric->avg_usage_now_today }} Wh
+                                        {{ $metrics['avg_usage_now_today'] }} kW
                                     </td>
                                 </tr>
                                 <tr>
@@ -116,7 +167,7 @@
                                         Stroomopwekking
                                     </th>
                                     <td>
-                                        {{ $lastMetric->avg_solar_now_today }} Wh
+                                        {{ $metrics['avg_solar_now_today'] }} kW
                                     </td>
                                 </tr>
                                 <tr>
@@ -124,7 +175,7 @@
                                         Stroomlevering
                                     </th>
                                     <td>
-                                        {{ $lastMetric->avg_redelivery_now_today }} Wh
+                                        {{ $metrics['avg_redelivery_now_today'] }} kW
                                     </td>
                                 </tr>
                                 <tr>
@@ -132,7 +183,7 @@
                                         Gas
                                     </th>
                                     <td>
-                                        {{ $lastMetric->avg_usage_gas_now_today }} Wh
+                                        {{ $metrics['avg_usage_gas_now_today'] }} m3
                                     </td>
                                 </tr>
                             </table>
@@ -142,7 +193,7 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <p class="panel-title pull-left">Dag totaal</p>
-                        <button data-toggle="collapse" data-target="#day-total" class="btn btn-xs btn-default pull-right" onclick="this.blur();">
+                        <button data-toggle="collapse" data-target="#day-total" class="btn btn-sm btn-default pull-right" onclick="this.blur();">
                             <span class="glyphicon glyphicon-plus"></span>
                         </button>
                         <div class="clearfix"></div>
@@ -155,7 +206,7 @@
                                         Stroomopname
                                     </th>
                                     <td>
-                                        {{ $lastMetric->sum_usage_now_today }} Wh
+                                        {{ $metrics['total_usage_now_today'] }} kWh
                                     </td>
                                 </tr>
                                 <tr>
@@ -163,7 +214,7 @@
                                         Stroomopwekking
                                     </th>
                                     <td>
-                                        {{ $lastMetric->sum_solar_now_today }} Wh
+                                        {{ $metrics['total_solar_now_today'] }} kWh
                                     </td>
                                 </tr>
                                 <tr>
@@ -171,7 +222,7 @@
                                         Stroomlevering
                                     </th>
                                     <td>
-                                        {{ $lastMetric->sum_redelivery_now_today }} Wh
+                                        {{ $metrics['total_redelivery_now_today'] }} kWh
                                     </td>
                                 </tr>
                                 <tr>
@@ -179,7 +230,7 @@
                                         Gas
                                     </th>
                                     <td>
-                                        {{ $lastMetric->sum_usage_gas_now_today }} Wh
+                                        {{ $metrics['total_usage_gas_now_today'] }} m3
                                     </td>
                                 </tr>
                             </table>
@@ -189,7 +240,7 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <p class="panel-title pull-left">Week gemiddelde</p>
-                        <button data-toggle="collapse" data-target="#week-average" class="btn btn-xs btn-default pull-right" onclick="this.blur();">
+                        <button data-toggle="collapse" data-target="#week-average" class="btn btn-sm btn-default pull-right" onclick="this.blur();">
                             <span class="glyphicon glyphicon-plus"></span>
                         </button>
                         <div class="clearfix"></div>
@@ -202,7 +253,7 @@
                                         Stroomopname
                                     </th>
                                     <td>
-                                        {{ $lastMetric->avg_usage_now_week }} Wh
+                                        {{ $metrics['avg_usage_now_days'] }} kW
                                     </td>
                                 </tr>
                                 <tr>
@@ -210,7 +261,7 @@
                                         Stroomopwekking
                                     </th>
                                     <td>
-                                        {{ $lastMetric->avg_solar_now_week }} Wh
+                                        {{ $metrics['avg_solar_now_days'] }} kW
                                     </td>
                                 </tr>
                                 <tr>
@@ -218,7 +269,7 @@
                                         Stroomlevering
                                     </th>
                                     <td>
-                                        {{ $lastMetric->avg_redelivery_now_week }} Wh
+                                        {{ $metrics['avg_redelivery_now_days'] }} kW
                                     </td>
                                 </tr>
                                 <tr>
@@ -226,7 +277,7 @@
                                         Gas
                                     </th>
                                     <td>
-                                        {{ $lastMetric->avg_usage_gas_now_week }} Wh
+                                        {{ $metrics['avg_usage_gas_now_days'] }} m3
                                     </td>
                                 </tr>
                             </table>
@@ -236,7 +287,7 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <p class="panel-title pull-left">Week totaal</p>
-                        <button data-toggle="collapse" data-target="#week-total" class="btn btn-xs btn-default pull-right" onclick="this.blur();">
+                        <button data-toggle="collapse" data-target="#week-total" class="btn btn-sm btn-default pull-right" onclick="this.blur();">
                             <span class="glyphicon glyphicon-plus"></span>
                         </button>
                         <div class="clearfix"></div>
@@ -249,7 +300,7 @@
                                         Stroomopname
                                     </th>
                                     <td>
-                                        {{ $lastMetric->sum_usage_now_week }} Wh
+                                        {{ $metrics['total_usage_now_days'] }} kWh
                                     </td>
                                 </tr>
                                 <tr>
@@ -257,7 +308,7 @@
                                         Stroomopwekking
                                     </th>
                                     <td>
-                                        {{ $lastMetric->sum_solar_now_week}} Wh
+                                        {{ $metrics['total_solar_now_days'] }} kWh
                                     </td>
                                 </tr>
                                 <tr>
@@ -265,7 +316,7 @@
                                         Stroomlevering
                                     </th>
                                     <td>
-                                        {{ $lastMetric->sum_redelivery_now_week }} Wh
+                                        {{ $metrics['total_redelivery_now_days'] }} kWh
                                     </td>
                                 </tr>
                                 <tr>
@@ -273,7 +324,7 @@
                                         Gas
                                     </th>
                                     <td>
-                                        {{ $lastMetric->sum_usage_gas_now_week }} Wh
+                                        {{ $metrics['total_usage_gas_now_days'] }} m3
                                     </td>
                                 </tr>
                             </table>
@@ -283,7 +334,7 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <p class="panel-title pull-left">Meterstanden</p>
-                        <button data-toggle="collapse" data-target="#meter-reading" class="btn btn-xs btn-default pull-right" onclick="this.blur();">
+                        <button data-toggle="collapse" data-target="#meter-reading" class="btn btn-sm btn-default pull-right" onclick="this.blur();">
                             <span class="glyphicon glyphicon-plus"></span>
                         </button>
                         <div class="clearfix"></div>
@@ -296,7 +347,7 @@
                                         Stroomopname hoog
                                     </th>
                                     <td>
-                                        {{ $lastMetric->usage_total_high }}
+                                        {{ $metrics['usage_total_high'] }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -304,7 +355,7 @@
                                         Stroomopname laag
                                     </th>
                                     <td>
-                                        {{ $lastMetric->usage_total_low }}
+                                        {{ $metrics['usage_total_low'] }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -312,7 +363,7 @@
                                         Stroomlevering hoog
                                     </th>
                                     <td>
-                                        {{ $lastMetric->redelivery_total_high }}
+                                        {{ $metrics['redelivery_total_high'] }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -320,7 +371,7 @@
                                         Stroomlevering laag
                                     </th>
                                     <td>
-                                        {{ $lastMetric->redelivery_total_low }}
+                                        {{ $metrics['redelivery_total_low'] }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -328,7 +379,7 @@
                                         Gas
                                     </th>
                                     <td>
-                                        {{ $lastMetric->usage_gas_total }}
+                                        {{ $metrics['usage_gas_total'] }}
                                     </td>
                                 </tr>
                             </table>

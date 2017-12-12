@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DayMetric;
+use App\Models\HourMetric;
 use App\Models\RaspberryPi;
 use App\Models\TenSecondMetric;
 use App\Models\User;
@@ -50,11 +51,12 @@ class HomeController extends Controller
             if ($availableRaspberryPi instanceof RaspberryPi) {
                 $currentUser->raspberryPi()->save($availableRaspberryPi);
             } else {
-                App::abort(404);
+                App::abort(400);
             }
         }
 
         $currentUser = User::find($id);
+        $raspberryPiId = $currentUser->raspberryPi->id;
 
         $metric = TenSecondMetric::where('raspberry_pi_id', '=', $currentUser->raspberryPi->id)
             ->orderBy('created_at', 'DESC')
@@ -65,56 +67,129 @@ class HomeController extends Controller
         $metric['intake_now'] = $metric->usage_now;
         $metric->usage_now += $differenceSolarAndRedelivery;
 
+        $metricArray = [];
+        $metricArray['usage_now'] = $metric->usage_now;
+        $metricArray['redelivery_now'] = $metric->redelivery_now;
+        $metricArray['solar_now'] = $metric->solar_now;
+        $metricArray['intake_now'] = $metric->intake_now;
+        $metricArray['usage_gas_now'] = $metric->usage_gas_now;
+        $metricArray['usage_total_high'] = $metric->usage_total_high;
+        $metricArray['redelivery_total_high'] = $metric->redelivery_total_high;
+        $metricArray['usage_total_low'] = $metric->usage_total_low;
+        $metricArray['redelivery_total_low'] = $metric->redelivery_total_low;
+        $metricArray['usage_gas_total'] = $metric->usage_gas_total;
+        $metricArray['solar_total'] = $metric->solar_total;
+        $metricArray['created_at'] = $metric->created_at;
+        $metricArray['updated_at'] = $metric->updated_at;
+
+        $metricArray = array_merge($metricArray, $this->getAverageToday($raspberryPiId));
+        $metricArray = array_merge($metricArray, $this->getTotalToday($metric, $raspberryPiId));
+        $metricArray = array_merge($metricArray, $this->getAveragePastDays(7, $raspberryPiId));
+        $metricArray = array_merge($metricArray, $this->getTotalPastDays(7, $metric, $raspberryPiId));
+
+        return view('home', ['metrics' => $metricArray]);
+    }
+
+    public function getAverageToday($raspberryPiId)
+    {
+        $metric = [];
+
         // Get data of today
-        $dataToday = TenSecondMetric::whereDate('created_at', '=', Carbon::today()->toDateString())
-            ->select(DB::raw(
-                    'avg(usage_now) avg_usage_now_today, 
-                    avg(solar_now) avg_solar_now_today, 
-                    avg(redelivery_now) avg_redelivery_now_today, 
-                    avg(usage_gas_now) avg_usage_gas_now_today, 
-                    sum(usage_now) sum_usage_now_today,
-                    sum(solar_now) sum_solar_now_today,
-                    sum(redelivery_now) sum_redelivery_now_today,
-                    sum(usage_gas_now) sum_usage_gas_now_today'))
-            ->first();
+        $dataToday = $this->getAveragePastDays(0, $raspberryPiId);
 
         // Set avg today
-        $metric['avg_usage_now_today'] = round($dataToday->avg_usage_now_today, 1);
-        $metric['avg_solar_now_today'] = round($dataToday->avg_solar_now_today, 1);
-        $metric['avg_redelivery_now_today'] = round($dataToday->avg_redelivery_now_today, 1);
-        $metric['avg_usage_gas_now_today'] = round($dataToday->avg_usage_gas_now_today, 1);
+        $metric['avg_usage_now_today'] = $dataToday['avg_usage_now_days'];
+        $metric['avg_solar_now_today'] = $dataToday['avg_solar_now_days'];
+        $metric['avg_redelivery_now_today'] = $dataToday['avg_redelivery_now_days'];
+        $metric['avg_usage_gas_now_today'] = $this->getAverageGasPastDays(0, $raspberryPiId);
 
-        // Set sum today
-        $metric['sum_usage_now_today'] = $dataToday->sum_usage_now_today;
-        $metric['sum_solar_now_today'] = $dataToday->sum_solar_now_today;
-        $metric['sum_redelivery_now_today'] = $dataToday->sum_redelivery_now_today;
-        $metric['sum_usage_gas_now_today'] = $dataToday->sum_usage_gas_now_today;
+        return $metric;
+    }
 
+    public function getTotalToday(TenSecondMetric $lastRecordToday, $raspberryPiId)
+    {
+        $metric = [];
+        $dataToday = $this->getTotalPastDays(0, $lastRecordToday, $raspberryPiId);
+
+        $metric['total_usage_now_today'] = $dataToday['total_usage_now_days'];
+        $metric['total_solar_now_today'] = $dataToday['total_solar_now_days'];
+        $metric['total_redelivery_now_today'] = $dataToday['total_redelivery_now_days'];
+        $metric['total_usage_gas_now_today'] = $dataToday['total_usage_gas_now_days'];
+
+        return $metric;
+    }
+
+    public function getAveragePastDays($days, $raspberryPiId)
+    {
         // Get data of past week
-        $dataPastWeek = TenSecondMetric::whereDate('created_at', '>', Carbon::now()->subDays(7)->toDateString())
+        $dataPastWeek = HourMetric::whereDate('created_at', '>=', Carbon::now()->subDays($days)->toDateString())
+            ->where('raspberry_pi_id', '=', $raspberryPiId)
             ->select(DB::raw(
-                'avg(usage_now) avg_usage_now_week, 
-                    avg(solar_now) avg_solar_now_week, 
-                    avg(redelivery_now) avg_redelivery_now_week, 
-                    avg(usage_gas_now) avg_usage_gas_now_week, 
-                    sum(usage_now) sum_usage_now_week,
-                    sum(solar_now) sum_solar_now_week,
-                    sum(redelivery_now) sum_redelivery_now_week,
-                    sum(usage_gas_now) sum_usage_gas_now_week'))
+                'avg(usage_now) avg_usage_now, 
+                avg(solar_now) avg_solar_now,
+                avg(redelivery_now) avg_redelivery_now,
+                avg(usage_gas_now) avg_usage_gas_now'))
             ->first();
 
         // Set avg past week
-        $metric['avg_usage_now_week'] = round($dataPastWeek->avg_usage_now_week, 1);
-        $metric['avg_solar_now_week'] = round($dataPastWeek->avg_solar_now_week, 1);
-        $metric['avg_redelivery_now_week'] = round($dataPastWeek->avg_redelivery_now_week, 1);
-        $metric['avg_usage_gas_now_week'] = round($dataPastWeek->avg_usage_gas_now_week, 1);
+        $metric['avg_usage_now_days'] = round($dataPastWeek->avg_usage_now, 0) / 1000;
+        $metric['avg_solar_now_days'] = round($dataPastWeek->avg_solar_now, 0) / 1000;
+        $metric['avg_redelivery_now_days'] = round($dataPastWeek->avg_redelivery_now, 0) / 1000;
+        $metric['avg_usage_gas_now_days'] = $this->getAverageGasPastDays($days, $raspberryPiId);
 
-        // Set sum past week
-        $metric['sum_usage_now_week'] = $dataPastWeek->sum_usage_now_week;
-        $metric['sum_solar_now_week'] = $dataPastWeek->sum_solar_now_week;
-        $metric['sum_redelivery_now_week'] = $dataPastWeek->sum_redelivery_now_week;
-        $metric['sum_usage_gas_now_week'] = $dataPastWeek->sum_usage_gas_now_week;
+        return $metric;
+    }
 
-        return view('home', ['lastMetric' => $metric]);
+    public function getAverageGasPastDays($days, $raspberryPiId)
+    {
+        // Get data of past week
+        $firstDataRow = HourMetric::whereDate('created_at', '>=', Carbon::now()->subDays($days)->toDateString())
+            ->where('raspberry_pi_id', '=', $raspberryPiId)
+            ->first();
+
+        // Get data of past week
+        $lastDataRow = HourMetric::whereDate('created_at', '>=', Carbon::now()->subDays($days)->toDateString())
+            ->where('raspberry_pi_id', '=', $raspberryPiId)
+            ->orderBy('created_at', 'DESC')
+            ->first();
+
+        $timeFirst  = strtotime($firstDataRow->created_at);
+        $timeSecond = strtotime($lastDataRow->created_at);
+        $differenceInSeconds = $timeSecond - $timeFirst;
+        $tenSecondDivider = round(($differenceInSeconds / 10), 0);
+
+        // Set avg past week
+        $avgGasUse = ($lastDataRow->usage_gas_total - $firstDataRow->usage_gas_total) / $tenSecondDivider;
+        return round($avgGasUse, 1) / 1000;
+    }
+
+    public function getTotalPastDays($days, TenSecondMetric $lastRecord, $raspberryPiId)
+    {
+        $metric = [];
+
+        // Get data of past week
+        $firstRecord = HourMetric::whereDate('created_at', '=', Carbon::now()->subDays($days + 1)->toDateString())
+            ->orderBy('created_at', 'DESC')
+            ->where('raspberry_pi_id', '=', $raspberryPiId)
+            ->first();
+
+//        dd([$firstRecord]);
+
+        $lastRecordTotalUsage = $lastRecord->usage_total_high + $lastRecord->usage_total_low;
+        $firstRecordTotalUsage = $firstRecord->usage_total_high + $firstRecord->usage_total_low;
+        $lastRecordTotalRedelivery = $lastRecord->redelivery_total_high + $lastRecord->redelivery_total_low;
+        $firstRecordTotalRedelivery = $firstRecord->redelivery_total_high + $firstRecord->redelivery_total_low;
+
+        $totalUsage = $lastRecordTotalUsage - $firstRecordTotalUsage;
+        $totalRedelivery = $lastRecordTotalRedelivery - $firstRecordTotalRedelivery;
+        $totalSolar = $lastRecord->solar_total - $firstRecord->solar_total;
+        $totalGas = $lastRecord->usage_gas_total - $firstRecord->usage_gas_total;
+
+        $metric['total_usage_now_days'] = round($totalUsage, 0) / 1000;
+        $metric['total_solar_now_days'] = round($totalSolar, 0) / 1000;
+        $metric['total_redelivery_now_days'] = round($totalRedelivery, 0) / 1000;
+        $metric['total_usage_gas_now_days'] = round($totalGas, 0) / 1000;
+
+        return $metric;
     }
 }
