@@ -63,10 +63,10 @@
                                 <p class="panel-title pull-left">Energieverbruik</p>
 
                                 <div class="btn-group pull-right" role="group" aria-label="...">
-                                    <button type="button" class="chartRangeSelector btn-now btn btn-default" onclick="this.blur();">Nu</button>
-                                    <button type="button" class="chartRangeSelector btn-hour btn btn-default" onclick="this.blur();">Uur</button>
-                                    <button type="button" class="chartRangeSelector btn-day btn btn-default active" onclick="this.blur();">Dag</button>
-                                    <button type="button" class="chartRangeSelector btn-week btn btn-default" onclick="this.blur();">Week</button>
+                                    <button type="button" class="chartRangeSelector btn-now btn btn-sm btn-default" onclick="this.blur();">Nu</button>
+                                    <button type="button" class="chartRangeSelector btn-hour btn btn-sm btn-default" onclick="this.blur();">Uur</button>
+                                    <button type="button" class="chartRangeSelector btn-day btn btn-sm btn-default active" onclick="this.blur();">Dag</button>
+                                    <button type="button" class="chartRangeSelector btn-week btn btn-sm btn-default" onclick="this.blur();">Week</button>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
@@ -84,10 +84,10 @@
                                 <p class="panel-title pull-left">Energieopwekking</p>
 
                                 <div class="btn-group pull-right" role="group" aria-label="...">
-                                    <button type="button" class="chartRangeSelector btn-now btn btn-default" onclick="this.blur();">Nu</button>
-                                    <button type="button" class="chartRangeSelector btn-hour btn btn-default" onclick="this.blur();">Uur</button>
-                                    <button type="button" class="chartRangeSelector btn-day btn btn-default active" onclick="this.blur();">Dag</button>
-                                    <button type="button" class="chartRangeSelector btn-week btn btn-default" onclick="this.blur();">Week</button>
+                                    <button type="button" class="chartRangeSelector btn-now btn btn-sm btn-default" onclick="this.blur();">Nu</button>
+                                    <button type="button" class="chartRangeSelector btn-hour btn btn-sm btn-default" onclick="this.blur();">Uur</button>
+                                    <button type="button" class="chartRangeSelector btn-day btn btn-sm btn-default active" onclick="this.blur();">Dag</button>
+                                    <button type="button" class="chartRangeSelector btn-week btn btn-sm btn-default" onclick="this.blur();">Week</button>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
@@ -105,10 +105,10 @@
                                 <p class="panel-title pull-left">Energielevering</p>
 
                                 <div class="btn-group pull-right" role="group" aria-label="...">
-                                    <button type="button" class="chartRangeSelector btn-now btn btn-default" onclick="this.blur();">Nu</button>
-                                    <button type="button" class="chartRangeSelector btn-hour btn btn-default" onclick="this.blur();">Uur</button>
-                                    <button type="button" class="chartRangeSelector btn-day btn btn-default active" onclick="this.blur();">Dag</button>
-                                    <button type="button" class="chartRangeSelector btn-week btn btn-default" onclick="this.blur();">Week</button>
+                                    <button type="button" class="chartRangeSelector btn-now btn btn-sm btn-default" onclick="this.blur();">Nu</button>
+                                    <button type="button" class="chartRangeSelector btn-hour btn btn-sm btn-default" onclick="this.blur();">Uur</button>
+                                    <button type="button" class="chartRangeSelector btn-day btn btn-sm btn-default active" onclick="this.blur();">Dag</button>
+                                    <button type="button" class="chartRangeSelector btn-week btn btn-sm btn-default" onclick="this.blur();">Week</button>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
@@ -126,10 +126,10 @@
                                 <p class="panel-title pull-left">Energieopname</p>
 
                                 <div class="btn-group pull-right" role="group" aria-label="...">
-                                    <button type="button" class="chartRangeSelector btn-now btn btn-default" onclick="this.blur();">Nu</button>
-                                    <button type="button" class="chartRangeSelector btn-hour btn btn-default" onclick="this.blur();">Uur</button>
-                                    <button type="button" class="chartRangeSelector btn-day btn btn-default active" onclick="this.blur();">Dag</button>
-                                    <button type="button" class="chartRangeSelector btn-week btn btn-default" onclick="this.blur();">Week</button>
+                                    <button type="button" class="chartRangeSelector btn-now btn btn-sm btn-default" onclick="this.blur();">Nu</button>
+                                    <button type="button" class="chartRangeSelector btn-hour btn btn-sm btn-default" onclick="this.blur();">Uur</button>
+                                    <button type="button" class="chartRangeSelector btn-day btn btn-sm btn-default active" onclick="this.blur();">Dag</button>
+                                    <button type="button" class="chartRangeSelector btn-week btn btn-sm btn-default" onclick="this.blur();">Week</button>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
