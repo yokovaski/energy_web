@@ -143,12 +143,21 @@ $(".chartRangeSelector").click(function(){
         $('.btn-day').addClass('active');
         getDayChart();
         stopUpdating = true;
-    } else  {
+    } else if($(this).hasClass('btn-hour'))  {
         $('.btn-hour').addClass('active');
         getHourChart();
+        stopUpdating = true;
+    } else {
+        $('.btn-now').addClass('active');
+        getNowChart();
         stopUpdating = false;
     }
 });
+
+function getNowChart() {
+    destroyCharts();
+    getEnergyDataOfLastMinutes(10);
+}
 
 function getHourChart() {
     destroyCharts();
@@ -240,6 +249,61 @@ function getLastEnergyUpdate() {
                 energyUseLineChart.data.labels = tempLabels;
 
                 energyUseLineChart.update();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log("ajax call to get_current_data results into error");
+                console.log(xhr.status);
+                console.log(thrownError);
+            }
+        });
+}
+
+function getEnergyDataOfLastMinutes(minutes) {
+    $.ajax(
+        {
+            type : 'GET',
+            url : 'api/energy/minutes/' + minutes,
+            dataType : 'JSON',
+            success : function(response) {
+                var chartEnergyUse = document.querySelector("#chartEnergyUse").getContext("2d");
+
+                dataEnergyUse.labels = response.data.timestamps;
+                dataEnergyUse.datasets[0].data = response.data.usage;
+
+                energyUseLineChart = new Chart(chartEnergyUse, {
+                    type: 'line',
+                    data: dataEnergyUse
+                });
+
+                var chartEnergySolar = document.querySelector("#chartEnergySolar").getContext("2d");
+
+                dataEnergySolar.labels = response.data.timestamps;
+                dataEnergySolar.datasets[0].data = response.data.solar;
+
+                energySolarLineChart = new Chart(chartEnergySolar, {
+                    type: 'line',
+                    data: dataEnergySolar
+                });
+
+                var chartEnergyRedelivery = document.querySelector("#chartEnergyRedelivery").getContext("2d");
+
+                dataEnergyRedelivery.labels = response.data.timestamps;
+                dataEnergyRedelivery.datasets[0].data = response.data.redelivery;
+
+                energyRedeliveryLineChart = new Chart(chartEnergyRedelivery, {
+                    type: 'line',
+                    data: dataEnergyRedelivery
+                });
+
+                var chartEnergyIntake = document.querySelector("#chartEnergyIntake").getContext("2d");
+
+                dataEnergyIntake.labels = response.data.timestamps;
+                dataEnergyIntake.datasets[0].data = response.data.intake;
+
+                energyIntakeLineChart = new Chart(chartEnergyIntake, {
+                    type: 'line',
+                    data: dataEnergyIntake
+                });
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log("ajax call to get_current_data results into error");
