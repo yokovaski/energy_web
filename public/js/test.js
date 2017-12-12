@@ -130,7 +130,7 @@ var energySolarLineChart;
 var energyRedeliveryLineChart;
 var energyIntakeLineChart;
 
-var stopUpdating = false;
+var stopUpdating = true;
 
 $(".chartRangeSelector").click(function(){
     $(".chartRangeSelector").removeClass('active');
