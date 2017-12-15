@@ -24,8 +24,23 @@ Route::get('/admin', 'AdminController@index');
  * Ajax routes
  */
 Route::group(['prefix' => '/api'], function () {
-    Route::get('/energy/days/{days}', 'AjaxController@getDataOfLastDays');
-    Route::get('/energy/hours/{hours}', 'AjaxController@getDataOfLastHours');
-    Route::get('/energy/minutes/{minutes}', 'AjaxController@getDataOfLastMinutes');
-    Route::get('/energy/last', 'AjaxController@getDataOfLastUpdate');
+
+    /**
+     * Averages
+     */
+    Route::group(['prefix' => '/average'], function () {
+        Route::get('/energy/days/{days}', 'ApiAveragesController@getDataOfLastDays');
+        Route::get('/energy/hours/{hours}', 'ApiAveragesController@getDataOfLastHours');
+        Route::get('/energy/minutes/{minutes}', 'ApiAveragesController@getDataOfLastMinutes');
+        Route::get('/energy/last', 'ApiAveragesController@getDataOfLastUpdate');
+    });
+
+    /**
+     * Totals
+     */
+    Route::group(['prefix' => '/total'], function () {
+        Route::get('/energy/days/{days}', 'ApiTotalsController@getDataInDays');
+        Route::get('/energy/months/{months}', 'ApiTotalsController@getDataInMonths');
+        Route::get('/energy/years/{years}', 'ApiTotalsController@getDataInYears');
+    });
 });

@@ -190,7 +190,7 @@ function getLastEnergyUpdate() {
     $.ajax(
         {
             type : 'GET',
-            url : 'api/energy/last',
+            url : 'api/average/energy/last',
             dataType : 'JSON',
             success : function(response) {
                 $("#usage_now").html(response.data.usage[0] + " Wh");
@@ -239,7 +239,7 @@ function getEnergyDataOfLastMinutes(minutes) {
     $.ajax(
         {
             type : 'GET',
-            url : 'api/energy/minutes/' + minutes,
+            url : 'api/average/energy/minutes/' + minutes,
             dataType : 'JSON',
             success : function(response) {
                 var chartEnergyUse = document.querySelector("#chartEnergyUse").getContext("2d");
@@ -294,7 +294,7 @@ function getEnergyDataOfLastHours(hours) {
     $.ajax(
         {
             type : 'GET',
-            url : 'api/energy/hours/' + hours,
+            url : 'api/average/energy/hours/' + hours,
             dataType : 'JSON',
             success : function(response) {
                 var chartEnergyUse = document.querySelector("#chartEnergyUse").getContext("2d");
@@ -349,7 +349,7 @@ function getEnergyDataOfLastDays(days) {
     $.ajax(
         {
             type : 'GET',
-            url : 'api/energy/days/' + days,
+            url : 'api/average/energy/days/' + days,
             dataType : 'JSON',
             success : function(response) {
                 var ctx = document.querySelector("#chartjsTest").getContext("2d");

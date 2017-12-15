@@ -6,12 +6,19 @@
             <div class="col-lg-8 col-lg-offset-2 col-md-12">
                 <div class="col-sm-9 col-xs-12 col">
                     <div class="panel panel-info">
+
                         <div class="panel-heading">
-                            Electricity
+                            <p class="panel-title pull-left">Energieverbruik</p>
+
+                            <div class="btn-group pull-right" role="group" aria-label="...">
+                                <button type="button" class="chartRangeSelector btn-day btn btn-sm btn-default active" onclick="this.blur();">Dagen</button>
+                                <button type="button" class="chartRangeSelector btn-month btn btn-sm btn-default" onclick="this.blur();">Maanden</button>
+                                <button type="button" class="chartRangeSelector btn-year btn btn-sm btn-default" onclick="this.blur();">Jaren</button>
+                            </div>
+                            <div class="clearfix"></div>
                         </div>
                         <div class="panel-body">
-                            Not yet implemented
-                            <canvas id="electricity-one" height=150></canvas>
+                            <canvas id="chartEnergyUse"></canvas>
                         </div>
                     </div>
                     <div class="panel panel-info">
@@ -49,7 +56,6 @@
     </div>
 @endsection
 @section('javascript')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src="{{ asset('js/test.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="{{ asset('js/history.js') }}"></script>
 @endsection
