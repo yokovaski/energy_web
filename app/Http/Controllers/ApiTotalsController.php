@@ -71,8 +71,8 @@ class ApiTotalsController extends Controller
                 ->format('Y-m-d');
             $data['intake'][] = $this->calculateTotalIntake($previousDay, $metric) / 1000;
             $data['redelivery'][]= $this->calculateTotalRedelivery($previousDay, $metric) / 1000;
-            $data['solar'][]= 0;
-            $data['usage'][] = 0;
+            $data['solar'][]= $this->calculateTotalSolar($previousDay, $metric) / 1000;
+            $data['usage'][] = $this->calculateTotalUsage($previousDay, $metric) / 1000;
 
             $previousDay = $metric;
         }
@@ -158,8 +158,8 @@ class ApiTotalsController extends Controller
                     ->format('Y-M');
                 $data['intake'][] = $this->calculateTotalIntake($previousMonth, $metric) / 1000;
                 $data['redelivery'][]= $this->calculateTotalRedelivery($previousMonth, $metric) / 1000;
-                $data['solar'][]= 0;
-                $data['usage'][] = 0;
+                $data['solar'][]= $this->calculateTotalSolar($previousMonth, $metric) / 1000;
+                $data['usage'][] = $this->calculateTotalUsage($previousMonth, $metric) / 1000;
 
                 $lastMonthNumber = $currentMonth;
                 $previousMonth = $metric;
@@ -172,8 +172,8 @@ class ApiTotalsController extends Controller
             ->format('Y-M');
         $data['intake'][] = $this->calculateTotalIntake($previousMonth, $lastMetric) / 1000;
         $data['redelivery'][]= $this->calculateTotalRedelivery($previousMonth, $lastMetric) / 1000;
-        $data['solar'][]= 0;
-        $data['usage'][] = 0;
+        $data['solar'][]= $this->calculateTotalSolar($previousMonth, $metric) / 1000;
+        $data['usage'][] = $this->calculateTotalUsage($previousMonth, $metric) / 1000;
 
         return $data;
     }
@@ -196,20 +196,19 @@ class ApiTotalsController extends Controller
 
     private function calculateTotalSolar($previous, $today)
     {
-        $totalPrevious = ($previous->usage_total_high + $previous->usage_total_low);
-        $totalCurrent = ($today->usage_total_high + $today->usage_total_low);
+        $totalSolar = $today->solar_total - $previous->solar_total;
 
-        return ($today->solar_total);
+        return $totalSolar;
     }
 
-    private function calculateTotalUsage($previous, $today)
+    private function calculateTotalUsage($previous, $current)
     {
-        $totalRedeliveryPrevious = $previous->redelivery_total_high + $previous->redelivery_total_low;
+        $redelivery = $this->calculateTotalRedelivery($previous, $current);
+        $intake = $this->calculateTotalIntake($previous, $current);
+        $solar = $this->calculateTotalSolar($previous, $current);
 
+        $usage = ($solar - $redelivery) + $intake;
 
-        $totalPrevious = ($previous->usage_total_high + $previous->usage_total_low);
-        $totalCurrent = ($today->usage_total_high + $today->usage_total_low);
-
-        return ($totalCurrent - $totalPrevious) / 1000;
+        return $usage;
     }
 }
