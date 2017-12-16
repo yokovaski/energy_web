@@ -21,13 +21,19 @@
                             <canvas id="chartEnergyUse"></canvas>
                         </div>
                     </div>
-                    <div class="panel panel-info">
+                    <div class="panel panel-danger">
                         <div class="panel-heading">
-                            Gas
+                            <p class="panel-title pull-left">Gasverbruik</p>
+
+                            <div class="btn-group pull-right" role="group" aria-label="...">
+                                <button type="button" class="chartRangeSelector btn-day btn btn-sm btn-default active" onclick="this.blur();">Dagen</button>
+                                <button type="button" class="chartRangeSelector btn-month btn btn-sm btn-default" onclick="this.blur();">Maanden</button>
+                                <button type="button" class="chartRangeSelector btn-year btn btn-sm btn-default" onclick="this.blur();">Jaren</button>
+                            </div>
+                            <div class="clearfix"></div>
                         </div>
                         <div class="panel-body">
-                            Not yet implemented
-                            <canvas id="electricity-one" height=150></canvas>
+                            <canvas id="chartGasUse"></canvas>
                         </div>
                     </div>
                 </div>

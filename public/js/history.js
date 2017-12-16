@@ -29,6 +29,18 @@ var dataEnergyUse = {
     ]
 };
 
+var dataGasUse = {
+    labels: null,
+    datasets: [
+        {
+            label: "Gasverbruik",
+            backgroundColor: "rgba(237, 206, 206, 1.0)",
+            borderColor: "rgba(247, 153, 153,1)",
+            data: null
+        }
+    ]
+};
+
 var energyUseBarChart;
 
 $(".chartRangeSelector").click(function(){
@@ -66,6 +78,10 @@ function getEnergyDataOfLastDays(days) {
                 var data = [response.data.usage, response.data.solar, response.data.redelivery, response.data.intake];
                 var canvas = document.querySelector("#chartEnergyUse").getContext("2d");
                 energyUseBarChart = writeDataToBarChart(canvas, dataEnergyUse, response.data.timestamps, data);
+
+                var dataGas = [response.data.gas];
+                canvas = document.querySelector("#chartGasUse").getContext("2d");
+                energyUseBarChart = writeDataToBarChart(canvas, dataGasUse, response.data.timestamps, dataGas);
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log("ajax call to get_current_data results into error");
@@ -85,6 +101,10 @@ function getEnergyDataOfLastMonths(months) {
                 var data = [response.data.usage, response.data.solar, response.data.redelivery, response.data.intake];
                 var canvas = document.querySelector("#chartEnergyUse").getContext("2d");
                 energyUseBarChart = writeDataToBarChart(canvas, dataEnergyUse, response.data.timestamps, data);
+
+                var dataGas = [response.data.gas];
+                canvas = document.querySelector("#chartGasUse").getContext("2d");
+                energyUseBarChart = writeDataToBarChart(canvas, dataGasUse, response.data.timestamps, dataGas);
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log("ajax call to get_current_data results into error");
@@ -105,7 +125,7 @@ function writeDataToBarChart(canvas, dataSet, labels, data) {
 
     barChart = new Chart(canvas, {
         type: 'bar',
-        data: dataEnergyUse,
+        data: dataSet,
         options: {
             responsive: true,
             legend: {
