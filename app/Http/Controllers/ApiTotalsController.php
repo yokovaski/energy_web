@@ -68,11 +68,12 @@ class ApiTotalsController extends Controller
             }
 
             $data['timestamps'][] = Carbon::createFromFormat('Y-m-d H:i:s', $metric->created_at)
-                ->format('Y-m-d');
+                ->format('d-m-Y');
             $data['intake'][] = $this->calculateTotalIntake($previousDay, $metric) / 1000;
             $data['redelivery'][]= $this->calculateTotalRedelivery($previousDay, $metric) / 1000;
             $data['solar'][]= $this->calculateTotalSolar($previousDay, $metric) / 1000;
             $data['usage'][] = $this->calculateTotalUsage($previousDay, $metric) / 1000;
+            $data['gas'][] = $this->calculateTotalGas($previousDay, $metric) / 1000;
 
             $previousDay = $metric;
         }
@@ -155,11 +156,12 @@ class ApiTotalsController extends Controller
 
             if ($currentMonth != $lastMonthNumber) {
                 $data['timestamps'][] = Carbon::createFromFormat('Y-m-d H:i:s', $previousMonth->created_at)
-                    ->format('Y-M');
+                    ->format('M-Y');
                 $data['intake'][] = $this->calculateTotalIntake($previousMonth, $metric) / 1000;
                 $data['redelivery'][]= $this->calculateTotalRedelivery($previousMonth, $metric) / 1000;
                 $data['solar'][]= $this->calculateTotalSolar($previousMonth, $metric) / 1000;
                 $data['usage'][] = $this->calculateTotalUsage($previousMonth, $metric) / 1000;
+                $data['gas'][] = $this->calculateTotalGas($previousMonth, $metric) / 1000;
 
                 $lastMonthNumber = $currentMonth;
                 $previousMonth = $metric;
@@ -169,11 +171,12 @@ class ApiTotalsController extends Controller
         }
 
         $data['timestamps'][] = Carbon::createFromFormat('Y-m-d H:i:s', $lastMetric->created_at)
-            ->format('Y-M');
+            ->format('M-Y');
         $data['intake'][] = $this->calculateTotalIntake($previousMonth, $lastMetric) / 1000;
         $data['redelivery'][]= $this->calculateTotalRedelivery($previousMonth, $lastMetric) / 1000;
         $data['solar'][]= $this->calculateTotalSolar($previousMonth, $metric) / 1000;
         $data['usage'][] = $this->calculateTotalUsage($previousMonth, $metric) / 1000;
+        $data['gas'][] = $this->calculateTotalGas($previousMonth, $metric) / 1000;
 
         return $data;
     }
@@ -210,5 +213,12 @@ class ApiTotalsController extends Controller
         $usage = ($solar - $redelivery) + $intake;
 
         return $usage;
+    }
+
+    private function calculateTotalGas($previous, $current)
+    {
+        $total = $current->usage_gas_total - $previous->usage_gas_total;
+
+        return $total;
     }
 }
