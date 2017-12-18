@@ -42,6 +42,7 @@ var dataGasUse = {
 };
 
 var energyUseBarChart;
+var gasUseBarChart;
 
 $(".chartRangeSelector").click(function(){
     $(".chartRangeSelector").removeClass('active');
@@ -65,6 +66,7 @@ function getDayChart() {
 
 function destroyCharts() {
     energyUseBarChart.destroy();
+    gasUseBarChart.destroy();
 }
 
 
@@ -81,7 +83,7 @@ function getEnergyDataOfLastDays(days) {
 
                 var dataGas = [response.data.gas];
                 canvas = document.querySelector("#chartGasUse").getContext("2d");
-                energyUseBarChart = writeDataToBarChart(canvas, dataGasUse, response.data.timestamps, dataGas);
+                gasUseBarChart = writeDataToBarChart(canvas, dataGasUse, response.data.timestamps, dataGas);
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log("ajax call to get_current_data results into error");
@@ -104,7 +106,7 @@ function getEnergyDataOfLastMonths(months) {
 
                 var dataGas = [response.data.gas];
                 canvas = document.querySelector("#chartGasUse").getContext("2d");
-                energyUseBarChart = writeDataToBarChart(canvas, dataGasUse, response.data.timestamps, dataGas);
+                gasUseBarChart = writeDataToBarChart(canvas, dataGasUse, response.data.timestamps, dataGas);
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log("ajax call to get_current_data results into error");
