@@ -209,6 +209,10 @@ class ApiTotalsController extends Controller
         $redelivery = $this->calculateTotalRedelivery($previous, $current);
         $intake = $this->calculateTotalIntake($previous, $current);
         $solar = $this->calculateTotalSolar($previous, $current);
+        
+        if ($solar < $redelivery) {
+            return 0;
+        }
 
         $usage = ($solar - $redelivery) + $intake;
 

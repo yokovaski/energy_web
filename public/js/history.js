@@ -1,5 +1,5 @@
 $(window).on('load', function() {
-    getEnergyDataOfLastDays(10);
+    getEnergyDataOfLastDays(20);
 });
 
 var dataEnergyUse = {
@@ -51,7 +51,7 @@ $(".chartRangeSelector").click(function(){
         $('.btn-year').addClass('active');
     } else if($(this).hasClass('btn-month')) {
         destroyCharts();
-        getEnergyDataOfLastMonths(5);
+        getEnergyDataOfLastMonths(12);
         $('.btn-month').addClass('active');
     } else {
         $('.btn-day').addClass('active');
