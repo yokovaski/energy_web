@@ -49,10 +49,10 @@ $(".chartRangeSelector").click(function(){
 
     if($(this).hasClass('btn-year')) {
         $('.btn-year').addClass('active');
+        getYearChart();
     } else if($(this).hasClass('btn-month')) {
-        destroyCharts();
-        getEnergyDataOfLastMonths(12);
         $('.btn-month').addClass('active');
+        getMonthChart();
     } else {
         $('.btn-day').addClass('active');
         getDayChart();
@@ -62,6 +62,16 @@ $(".chartRangeSelector").click(function(){
 function getDayChart() {
     destroyCharts();
     getEnergyDataOfLastDays(10);
+}
+
+function getMonthChart() {
+    destroyCharts();
+    getEnergyDataOfLastMonths(12);
+}
+
+function getYearChart() {
+    destroyCharts();
+    getEnergyDataOfLastYears(3);
 }
 
 function destroyCharts() {
@@ -98,6 +108,29 @@ function getEnergyDataOfLastMonths(months) {
         {
             type : 'GET',
             url : 'api/total/energy/months/' + months,
+            dataType : 'JSON',
+            success : function(response) {
+                var data = [response.data.usage, response.data.solar, response.data.redelivery, response.data.intake];
+                var canvas = document.querySelector("#chartEnergyUse").getContext("2d");
+                energyUseBarChart = writeDataToBarChart(canvas, dataEnergyUse, response.data.timestamps, data);
+
+                var dataGas = [response.data.gas];
+                canvas = document.querySelector("#chartGasUse").getContext("2d");
+                gasUseBarChart = writeDataToBarChart(canvas, dataGasUse, response.data.timestamps, dataGas);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log("ajax call to get_current_data results into error");
+                console.log(xhr.status);
+                console.log(thrownError);
+            }
+        });
+}
+
+function getEnergyDataOfLastYears(years) {
+    $.ajax(
+        {
+            type : 'GET',
+            url : 'api/total/energy/years/' + years,
             dataType : 'JSON',
             success : function(response) {
                 var data = [response.data.usage, response.data.solar, response.data.redelivery, response.data.intake];
