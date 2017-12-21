@@ -67,7 +67,7 @@ class ApiTotalsController extends Controller
                 continue;
             }
 
-            $data['timestamps'][] = Carbon::createFromFormat('Y-m-d H:i:s', $metric->created_at)
+            $data['timestamps'][] = Carbon::createFromFormat('Y-m-d H:i:s', $previousDay->created_at)
                 ->format('d-m-Y');
             $data['intake'][] = $this->calculateTotalIntake($previousDay, $metric) / 1000;
             $data['redelivery'][]= $this->calculateTotalRedelivery($previousDay, $metric) / 1000;
@@ -150,7 +150,8 @@ class ApiTotalsController extends Controller
                     continue;
                 }
 
-                $lastMonthNumber = $firstMonthNumber;
+                $lastMonthNumber = $currentMonth;
+                $previousMonth = $metric;
                 $firstMonth = false;
             }
 
@@ -177,6 +178,93 @@ class ApiTotalsController extends Controller
         $data['solar'][]= $this->calculateTotalSolar($previousMonth, $metric) / 1000;
         $data['usage'][] = $this->calculateTotalUsage($previousMonth, $metric) / 1000;
         $data['gas'][] = $this->calculateTotalGas($previousMonth, $metric) / 1000;
+
+        return $data;
+    }
+
+    /**
+     * Get energy data in months
+     *
+     * @param Request $request
+     * @param $years
+     * @return \Illuminate\Http\JsonResponse|string
+     */
+    public function getDataInYears(Request $request, $years)
+    {
+        $response = $this->checkIfRequestParamsAreValid($request, $years, 'years');
+
+        if ($response instanceof Response) {
+            return $response;
+        }
+
+        $raspberryPi = $request->user()->raspberryPi;
+        $data = $this->getDataFromYearMetric($raspberryPi->id, $years);
+
+        return response()->json(['data' => $data], Response::HTTP_OK);
+    }
+
+    private function getDataFromYearMetric($raspberryPiId, $years)
+    {
+        $metrics = DayMetric::where(
+            [
+                ['raspberry_pi_id', '=', $raspberryPiId],
+                ['created_at', '>=', \Carbon\Carbon::now(env('TIMEZONE'))->subYears($years + 1)],
+            ])
+            ->orderBy('created_at', 'DESC')
+            ->get()
+            ->reverse();
+
+        $firstYear = true;
+        $firstYearNumber = 0;
+        $previousYear = [];
+        $lastYearNumber = 0;
+
+        $data = [];
+        $lastMetric = [];
+
+        foreach ($metrics as $metric) {
+            $currentYear = Carbon::createFromFormat('Y-m-d H:i:s', $metric->created_at)->format('y');
+
+            if ($firstYear) {
+                if (empty($previousYear)) {
+                    $previousYear = $metric;
+                    $firstYearNumber = Carbon::createFromFormat('Y-m-d H:i:s', $metric->created_at)->format('y');
+                    continue;
+                }
+
+                if ($currentYear == $firstYearNumber) {
+                    $previousYear = $metric;
+                    continue;
+                }
+
+                $lastYearNumber = $currentYear;
+                $previousYear = $metric;
+                $firstYear = false;
+            }
+
+            if ($currentYear != $lastYearNumber) {
+                $data['timestamps'][] = Carbon::createFromFormat('Y-m-d H:i:s', $previousYear->created_at)
+                    ->format('Y');
+                $data['intake'][] = $this->calculateTotalIntake($previousYear, $metric) / 1000;
+                $data['redelivery'][]= $this->calculateTotalRedelivery($previousYear, $metric) / 1000;
+                $data['solar'][]= $this->calculateTotalSolar($previousYear, $metric) / 1000;
+                $data['usage'][] = $this->calculateTotalUsage($previousYear, $metric) / 1000;
+                $data['gas'][] = $this->calculateTotalGas($previousYear, $metric) / 1000;
+
+                $lastYearNumber = $currentYear;
+                $previousYear = $metric;
+            }
+
+            $lastMetric = $metric;
+        }
+
+        $data['timestamps'][] = Carbon::createFromFormat('Y-m-d H:i:s', $lastMetric->created_at)
+            ->format('Y');
+        $data['intake'][] = $this->calculateTotalIntake($previousYear, $lastMetric) / 1000;
+        $data['redelivery'][]= $this->calculateTotalRedelivery($previousYear, $lastMetric) / 1000;
+        $data['solar'][]= $this->calculateTotalSolar($previousYear, $metric) / 1000;
+        $data['usage'][] = $this->calculateTotalUsage($previousYear, $metric) / 1000;
+        $data['gas'][] = $this->calculateTotalGas($previousYear, $metric) / 1000;
 
         return $data;
     }
