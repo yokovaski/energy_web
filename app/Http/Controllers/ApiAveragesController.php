@@ -130,8 +130,10 @@ class ApiAveragesController extends Controller
 
         $data = array();
 
-        if ($hours > 12) {
-            $format = 'd-m H:m';
+        if($hours > 24) {
+            $format = 'd-m-Y H:i';
+        } elseif ($hours > 12) {
+            $format = 'H:m';
         } else {
             $format = 'H:i:s';
         }

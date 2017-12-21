@@ -112,7 +112,7 @@ class HomeController extends Controller
         $dataToday = $this->getTotalPastDays(0, $lastRecordToday, $raspberryPiId);
 
         $metric['total_usage_now_today'] = $dataToday['total_usage_now_days'];
-        $metric['total_solar_now_today'] = $dataToday['total_solar_now_days'];
+        $metric['total_solar_today'] = $dataToday['total_solar_days'];
         $metric['total_redelivery_now_today'] = $dataToday['total_redelivery_now_days'];
         $metric['total_usage_gas_now_today'] = $dataToday['total_usage_gas_now_days'];
 
@@ -168,7 +168,7 @@ class HomeController extends Controller
         $metric = [];
 
         // Get data of past week
-        $firstRecord = HourMetric::whereDate('created_at', '=', Carbon::now()->subDays($days + 1)->toDateString())
+        $firstRecord = DayMetric::whereDate('created_at', '=', Carbon::now()->subDays($days)->toDateString())
             ->orderBy('created_at', 'DESC')
             ->where('raspberry_pi_id', '=', $raspberryPiId)
             ->first();
@@ -182,14 +182,24 @@ class HomeController extends Controller
 
         $totalUsage = $lastRecordTotalUsage - $firstRecordTotalUsage;
         $totalRedelivery = $lastRecordTotalRedelivery - $firstRecordTotalRedelivery;
-        $totalSolar = $lastRecord->solar_total - $firstRecord->solar_total;
+        $totalSolar = $this->getLastRecordWithCorrectSolarTotal($raspberryPiId) - $firstRecord->solar_total;
         $totalGas = $lastRecord->usage_gas_total - $firstRecord->usage_gas_total;
 
         $metric['total_usage_now_days'] = round($totalUsage, 0) / 1000;
-        $metric['total_solar_now_days'] = round($totalSolar, 0) / 1000;
+        $metric['total_solar_days'] = round($totalSolar, 0) / 1000;
         $metric['total_redelivery_now_days'] = round($totalRedelivery, 0) / 1000;
         $metric['total_usage_gas_now_days'] = round($totalGas, 0) / 1000;
 
         return $metric;
+    }
+
+    public function getLastRecordWithCorrectSolarTotal($raspberryPiId) {
+        // Get data of past week
+        $firstRecord = TenSecondMetric::where('solar_total', '>', '0')
+            ->orderBy('created_at', 'DESC')
+            ->where('raspberry_pi_id', '=', $raspberryPiId)
+            ->first();
+
+        return $firstRecord->solar_total;
     }
 }

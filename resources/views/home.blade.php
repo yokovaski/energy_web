@@ -214,7 +214,7 @@
                                         Stroomopwekking
                                     </th>
                                     <td>
-                                        {{ $metrics['total_solar_now_today'] }} kWh
+                                        {{ $metrics['total_solar_today'] }} kWh
                                     </td>
                                 </tr>
                                 <tr>
@@ -308,7 +308,7 @@
                                         Stroomopwekking
                                     </th>
                                     <td>
-                                        {{ $metrics['total_solar_now_days'] }} kWh
+                                        {{ $metrics['total_solar_days'] }} kWh
                                     </td>
                                 </tr>
                                 <tr>
