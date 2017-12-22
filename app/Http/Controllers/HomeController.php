@@ -109,7 +109,7 @@ class HomeController extends Controller
     public function getTotalToday(TenSecondMetric $lastRecordToday, $raspberryPiId)
     {
         $metric = [];
-        $dataToday = $this->getTotalPastDays(0, $lastRecordToday, $raspberryPiId);
+        $dataToday = $this->getTotalPastDays(1, $lastRecordToday, $raspberryPiId);
 
         $metric['total_usage_now_today'] = $dataToday['total_usage_now_days'];
         $metric['total_solar_today'] = $dataToday['total_solar_days'];
