@@ -147,6 +147,10 @@ class HomeController extends Controller
             ->where('raspberry_pi_id', '=', $raspberryPiId)
             ->first();
 
+        if(empty($firstDataRow)) {
+            return 0;
+        }
+
         // Get data of past week
         $lastDataRow = HourMetric::whereDate('created_at', '>=', Carbon::now()->subDays($days)->toDateString())
             ->where('raspberry_pi_id', '=', $raspberryPiId)
