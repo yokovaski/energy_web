@@ -62,16 +62,36 @@
                             <div class="panel-heading">
                                 <p class="panel-title pull-left">Energieverbruik</p>
 
+                                <button data-toggle="collapse" data-target=".chart-settings" style="margin-left: 1em" type="button" class="chartRangeChanger pull-right btn btn-sm btn-default" onclick="this.blur();">
+                                    <span class="glyphicon glyphicon-cog"></span>
+                                </button>
+
                                 <div class="btn-group pull-right" role="group" aria-label="...">
                                     <button type="button" class="chartRangeSelector btn-now btn btn-sm btn-default" onclick="this.blur();">Nu</button>
                                     <button type="button" class="chartRangeSelector btn-hour btn btn-sm btn-default" onclick="this.blur();">Uur</button>
                                     <button type="button" class="chartRangeSelector btn-day btn btn-sm btn-default active" onclick="this.blur();">Dag</button>
                                     <button type="button" class="chartRangeSelector btn-week btn btn-sm btn-default" onclick="this.blur();">Week</button>
                                 </div>
+
+
                                 <div class="clearfix"></div>
                             </div>
                             <div class="panel-body">
                                 <canvas id="chartEnergyUse"></canvas>
+                            </div>
+
+                            <div class="panel-footer chart-settings collapse">
+                                <div class="btn-group pull-left" role="group" aria-label="...">
+                                    <button type="button" class="chartRangeChanger btn-minus btn btn-sm btn-default" onclick="this.blur();">
+                                        <span class="glyphicon glyphicon-minus"></span>
+                                    </button>
+                                    <button type="button" class="chartRangeChanger btn-plus btn btn-sm btn-default" onclick="this.blur();">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </button>
+                                </div>
+
+                                <p class="pull-right">Hours</p>
+                                <div class="clearfix"></div>
                             </div>
                         </div>
                     </div>
@@ -147,7 +167,7 @@
                     <div class="panel-heading">
                         <p class="panel-title pull-left">Dag gemiddelde</p>
                         <button data-toggle="collapse" data-target="#day-average" class="btn btn-sm btn-default pull-right" onclick="this.blur();">
-                            <span class="glyphicon glyphicon-plus"></span>
+                            <span class="glyphicon glyphicon-chevron-down"></span>
                         </button>
                         <div class="clearfix"></div>
                     </div>
@@ -194,7 +214,7 @@
                     <div class="panel-heading">
                         <p class="panel-title pull-left">Dag totaal</p>
                         <button data-toggle="collapse" data-target="#day-total" class="btn btn-sm btn-default pull-right" onclick="this.blur();">
-                            <span class="glyphicon glyphicon-plus"></span>
+                            <span class="glyphicon glyphicon-chevron-down"></span>
                         </button>
                         <div class="clearfix"></div>
                     </div>
@@ -241,7 +261,7 @@
                     <div class="panel-heading">
                         <p class="panel-title pull-left">Week gemiddelde</p>
                         <button data-toggle="collapse" data-target="#week-average" class="btn btn-sm btn-default pull-right" onclick="this.blur();">
-                            <span class="glyphicon glyphicon-plus"></span>
+                            <span class="glyphicon glyphicon-chevron-down"></span>
                         </button>
                         <div class="clearfix"></div>
                     </div>
@@ -288,7 +308,7 @@
                     <div class="panel-heading">
                         <p class="panel-title pull-left">Week totaal</p>
                         <button data-toggle="collapse" data-target="#week-total" class="btn btn-sm btn-default pull-right" onclick="this.blur();">
-                            <span class="glyphicon glyphicon-plus"></span>
+                            <span class="glyphicon glyphicon-chevron-down"></span>
                         </button>
                         <div class="clearfix"></div>
                     </div>
@@ -335,7 +355,7 @@
                     <div class="panel-heading">
                         <p class="panel-title pull-left">Meterstanden</p>
                         <button data-toggle="collapse" data-target="#meter-reading" class="btn btn-sm btn-default pull-right" onclick="this.blur();">
-                            <span class="glyphicon glyphicon-plus"></span>
+                            <span class="glyphicon glyphicon-chevron-down"></span>
                         </button>
                         <div class="clearfix"></div>
                     </div>

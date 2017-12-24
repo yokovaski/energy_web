@@ -46,7 +46,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         @if (!Auth::guest())
-                            <li><a href="{{ url('history') }}">@lang('defaultpage.history')</a></li>
+                            <li><a href="{{ url('history') }}"> @lang('defaultpage.history')</a></li>
                             <li><a href="{{ url('admin') }}">@lang('defaultpage.admin')</a></li>
                         @endif
                     </ul>

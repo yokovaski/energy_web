@@ -131,6 +131,8 @@ var energyIntakeLineChart;
 
 var stopUpdating = true;
 
+// $(".chartRangeChanger").
+
 $(".chartRangeSelector").click(function(){
     $(".chartRangeSelector").removeClass('active');
 

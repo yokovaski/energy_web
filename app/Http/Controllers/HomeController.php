@@ -147,6 +147,10 @@ class HomeController extends Controller
             ->where('raspberry_pi_id', '=', $raspberryPiId)
             ->first();
 
+        if (empty($firstDataRow)) {
+            return 0;
+        }
+
         // Get data of past week
         $lastDataRow = HourMetric::whereDate('created_at', '>=', Carbon::now()->subDays($days)->toDateString())
             ->where('raspberry_pi_id', '=', $raspberryPiId)
@@ -173,7 +177,14 @@ class HomeController extends Controller
             ->where('raspberry_pi_id', '=', $raspberryPiId)
             ->first();
 
-//        dd([$firstRecord]);
+        if (empty($firstRecord)) {
+            $metric['total_usage_now_days'] = 0;
+            $metric['total_solar_now_days'] = 0;
+            $metric['total_redelivery_now_days'] = 0;
+            $metric['total_usage_gas_now_days'] = 0;
+
+            return $metric;
+        }
 
         $lastRecordTotalUsage = $lastRecord->usage_total_high + $lastRecord->usage_total_low;
         $firstRecordTotalUsage = $firstRecord->usage_total_high + $firstRecord->usage_total_low;
