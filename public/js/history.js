@@ -152,8 +152,6 @@ function getEnergyDataOfLastYears(years) {
 function writeDataToBarChart(canvas, dataSet, labels, data) {
     dataSet.labels = labels;
 
-    console.log(data);
-
     $.each(data, function (index, value) {
         dataSet.datasets[index].data = value;
     });
