@@ -211,6 +211,10 @@ class HomeController extends Controller
             ->where('raspberry_pi_id', '=', $raspberryPiId)
             ->first();
 
+        if (empty($firstRecord)) {
+            return 0;
+        }
+
         return $firstRecord->solar_total;
     }
 }
