@@ -205,13 +205,13 @@ class HomeController extends Controller
     }
 
     public function getLastRecordWithCorrectSolarTotal($raspberryPiId) {
-        // Get data of past week
-        $firstRecord = TenSecondMetric::where('solar_total', '>', '0')
-            ->orderBy('created_at', 'DESC')
-            ->where('raspberry_pi_id', '=', $raspberryPiId)
-            ->first();
-
-        if (empty($firstRecord)) {
+        if (RaspberryPi::find($raspberryPiId)->solar) {
+            // Get data of past week
+            $firstRecord = TenSecondMetric::where('solar_total', '>', '0')
+                ->orderBy('created_at', 'DESC')
+                ->where('raspberry_pi_id', '=', $raspberryPiId)
+                ->first();
+        } else {
             return 0;
         }
 
