@@ -67,7 +67,7 @@ class ApiTotalsController extends Controller
                 continue;
             }
 
-            $data['timestamps'][] = Carbon::createFromFormat('Y-m-d H:i:s', $previousDay->created_at)
+            $data['timestamps'][] = Carbon::createFromFormat('Y-m-d H:i:s', $metric->created_at)
                 ->format('d-m-Y');
             $data['intake'][] = $this->calculateTotalIntake($previousDay, $metric) / 1000;
             $data['redelivery'][]= $this->calculateTotalRedelivery($previousDay, $metric) / 1000;
