@@ -121,6 +121,8 @@ class HomeController extends Controller
 
     public function getAveragePastDays($days, $raspberryPiId)
     {
+        $metric = [];
+
         // Get data of past week
         $dataPastWeek = HourMetric::whereDate('created_at', '>=', Carbon::now()->subDays($days)->toDateString())
             ->where('raspberry_pi_id', '=', $raspberryPiId)
@@ -196,15 +198,6 @@ class HomeController extends Controller
             $metric['total_usage_gas_now_days'] = 0;
 
             return $metric;
-        }
-
-        if (empty($dataPastWeek)) {
-            return [
-                'total_usage_now_days' => 0,
-                'total_solar_days' => 0,
-                'total_redelivery_now_days' => 0,
-                'total_usage_gas_now_days' => 0,
-            ];
         }
 
         $lastRecordTotalUsage = $lastRecord->usage_total_high + $lastRecord->usage_total_low;
