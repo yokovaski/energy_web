@@ -109,7 +109,7 @@ class HomeController extends Controller
     public function getTotalToday(TenSecondMetric $lastRecordToday, $raspberryPiId)
     {
         $metric = [];
-        $dataToday = $this->getTotalPastDays(0, $lastRecordToday, $raspberryPiId);
+        $dataToday = $this->getTotalPastDays(1, $lastRecordToday, $raspberryPiId);
 
         $metric['total_usage_now_today'] = $dataToday['total_usage_now_days'];
         $metric['total_solar_today'] = $dataToday['total_solar_days'];
@@ -156,6 +156,10 @@ class HomeController extends Controller
             ->where('raspberry_pi_id', '=', $raspberryPiId)
             ->first();
 
+        if(empty($firstDataRow)) {
+            return 0;
+        }
+
         // Get data of past week
         $lastDataRow = HourMetric::whereDate('created_at', '>=', Carbon::now()->subDays($days)->toDateString())
             ->where('raspberry_pi_id', '=', $raspberryPiId)
@@ -185,7 +189,14 @@ class HomeController extends Controller
             ->where('raspberry_pi_id', '=', $raspberryPiId)
             ->first();
 
-//        dd([$firstRecord]);
+        if (empty($firstRecord)) {
+            $metric['total_usage_now_days'] = 0;
+            $metric['total_solar_days'] = 0;
+            $metric['total_redelivery_now_days'] = 0;
+            $metric['total_usage_gas_now_days'] = 0;
+
+            return $metric;
+        }
 
         if (empty($dataPastWeek)) {
             return [
@@ -215,11 +226,15 @@ class HomeController extends Controller
     }
 
     public function getLastRecordWithCorrectSolarTotal($raspberryPiId) {
-        // Get data of past week
-        $firstRecord = TenSecondMetric::where('solar_total', '>', '0')
-            ->orderBy('created_at', 'DESC')
-            ->where('raspberry_pi_id', '=', $raspberryPiId)
-            ->first();
+        if (RaspberryPi::find($raspberryPiId)->solar) {
+            // Get data of past week
+            $firstRecord = TenSecondMetric::where('solar_total', '>', '0')
+                ->orderBy('created_at', 'DESC')
+                ->where('raspberry_pi_id', '=', $raspberryPiId)
+                ->first();
+        } else {
+            return 0;
+        }
 
         if (empty($firstRecord))
             return 0;
