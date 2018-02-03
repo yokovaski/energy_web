@@ -126,8 +126,7 @@ var energyIntakeLineChart;
 var stopUpdating = true;
 
 $(window).on('load', function() {
-    initCharts();
-    getHourChart();
+    getAllEnergyData('hours', 1, true);
     updateChart();
 });
 
@@ -154,68 +153,39 @@ $(".chartRangeSelector").click(function(){
 });
 
 function getNowChart() {
-    updateAllCharts('minutes', 10);
+    getAllEnergyData('minutes', 10, false);
 }
 
 function getHourChart() {
-    updateAllCharts('hours', 1);
+    getAllEnergyData('hours', 1, false);
 }
 
 function getDayChart() {
-    updateAllCharts('hours', 24);
+    getAllEnergyData('hours', 24, false);
 }
 
 function getWeekChart() {
-    updateAllCharts('hours', 168);
-}
-
-function destroyCharts() {
-    energyUseLineChart.destroy();
-    energySolarLineChart.destroy();
-    energyRedeliveryLineChart.destroy();
-    energyIntakeLineChart.destroy();
+    getAllEnergyData('hours', 168, false);
 }
 
 function updateChart() {
     setInterval(function() {
-        getLastEnergyUpdate();
+        getLastEnergyData();
     }, 10000);
 }
 
-function initCharts() {
-    energyUseLineChart = initChart("#chartEnergyUse", dataEnergyUse);
-    energySolarLineChart = initChart("#chartEnergySolar", dataEnergySolar);
-    energyRedeliveryLineChart = initChart("#chartEnergyRedelivery", dataEnergyRedelivery);
-    energyIntakeLineChart = initChart("#chartEnergyIntake", dataEnergyIntake);
-}
-
-function initChart(canvasId, chartData) {
-    var canvas = document.querySelector(canvasId).getContext("2d");
-
-    chartData.labels = [];
-    chartData.datasets[0].data = [];
-
-    chart = new Chart(canvas, {
-        type: 'line',
-        data: chartData
-    });
-
-    return chart;
-}
-
-function updateAllCharts(timeUnit, time) {
+function getAllEnergyData(timeUnit, time, initChart) {
     $.ajax(
         {
             type : 'GET',
             url : 'api/average/energy/' + timeUnit + '/' + time,
             dataType : 'JSON',
             success : function(response) {
-                var lastEnergyData = response.data;
-
-                updateChartData(energyUseLineChart, lastEnergyData.usage, lastEnergyData.timestamps);
-                updateChartData(energySolarLineChart, lastEnergyData.solar, lastEnergyData.timestamps);
-                updateChartData(energyRedeliveryLineChart, lastEnergyData.redelivery, lastEnergyData.timestamps);
-                updateChartData(energyIntakeLineChart, lastEnergyData.intake, lastEnergyData.timestamps);
+                if(initChart){
+                    initCharts(response.data);
+                } else {
+                    updateAllCharts(response.data);
+                }
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log("ajax call to get_current_data results into error");
@@ -225,6 +195,37 @@ function updateAllCharts(timeUnit, time) {
         });
 }
 
+function initCharts(energyData) {
+    console.log(energyData);
+    timeStamps = energyData.timestamps;
+
+    energyUseLineChart = initChart("#chartEnergyUse", dataEnergyUse, energyData.usage, timeStamps);
+    energySolarLineChart = initChart("#chartEnergySolar", dataEnergySolar, energyData.solar, timeStamps);
+    energyRedeliveryLineChart = initChart("#chartEnergyRedelivery", dataEnergyRedelivery, energyData.redelivery, timeStamps);
+    energyIntakeLineChart = initChart("#chartEnergyIntake", dataEnergyIntake, energyData.intake, timeStamps);
+}
+
+function initChart(canvasId, chartData, data, labels) {
+    var canvas = document.querySelector(canvasId).getContext("2d");
+
+    chartData.datasets[0].data = data;
+    chartData.labels = labels;
+
+    chart = new Chart(canvas, {
+        type: 'line',
+        data: chartData
+    });
+
+    return chart;
+}
+
+function updateAllCharts(energyData) {
+    updateChartData(energyUseLineChart, energyData.usage, energyData.timestamps);
+    updateChartData(energySolarLineChart, energyData.solar, energyData.timestamps);
+    updateChartData(energyRedeliveryLineChart, energyData.redelivery, energyData.timestamps);
+    updateChartData(energyIntakeLineChart, energyData.intake, energyData.timestamps);
+}
+
 function updateChartData(lineChart, data, labels) {
     lineChart.data.datasets[0].data = data;
     lineChart.data.labels = labels;
@@ -232,7 +233,7 @@ function updateChartData(lineChart, data, labels) {
     lineChart.update();
 }
 
-function getLastEnergyUpdate() {
+function getLastEnergyData() {
     $.ajax(
         {
             type : 'GET',
