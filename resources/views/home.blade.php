@@ -64,8 +64,8 @@
 
                                 <div class="btn-group pull-right" role="group" aria-label="...">
                                     <button type="button" class="chartRangeSelector btn-now btn btn-sm btn-default" onclick="this.blur();">Nu</button>
-                                    <button type="button" class="chartRangeSelector btn-hour btn btn-sm btn-default" onclick="this.blur();">Uur</button>
-                                    <button type="button" class="chartRangeSelector btn-day btn btn-sm btn-default active" onclick="this.blur();">Dag</button>
+                                    <button type="button" class="chartRangeSelector btn-hour btn btn-sm btn-default active" onclick="this.blur();">Uur</button>
+                                    <button type="button" class="chartRangeSelector btn-day btn btn-sm btn-default" onclick="this.blur();">Dag</button>
                                     <button type="button" class="chartRangeSelector btn-week btn btn-sm btn-default" onclick="this.blur();">Week</button>
                                 </div>
                                 <div class="clearfix"></div>
@@ -85,8 +85,8 @@
 
                                 <div class="btn-group pull-right" role="group" aria-label="...">
                                     <button type="button" class="chartRangeSelector btn-now btn btn-sm btn-default" onclick="this.blur();">Nu</button>
-                                    <button type="button" class="chartRangeSelector btn-hour btn btn-sm btn-default" onclick="this.blur();">Uur</button>
-                                    <button type="button" class="chartRangeSelector btn-day btn btn-sm btn-default active" onclick="this.blur();">Dag</button>
+                                    <button type="button" class="chartRangeSelector btn-hour btn btn-sm btn-default active" onclick="this.blur();">Uur</button>
+                                    <button type="button" class="chartRangeSelector btn-day btn btn-sm btn-default" onclick="this.blur();">Dag</button>
                                     <button type="button" class="chartRangeSelector btn-week btn btn-sm btn-default" onclick="this.blur();">Week</button>
                                 </div>
                                 <div class="clearfix"></div>
@@ -106,8 +106,8 @@
 
                                 <div class="btn-group pull-right" role="group" aria-label="...">
                                     <button type="button" class="chartRangeSelector btn-now btn btn-sm btn-default" onclick="this.blur();">Nu</button>
-                                    <button type="button" class="chartRangeSelector btn-hour btn btn-sm btn-default" onclick="this.blur();">Uur</button>
-                                    <button type="button" class="chartRangeSelector btn-day btn btn-sm btn-default active" onclick="this.blur();">Dag</button>
+                                    <button type="button" class="chartRangeSelector btn-hour btn btn-sm btn-default active" onclick="this.blur();">Uur</button>
+                                    <button type="button" class="chartRangeSelector btn-day btn btn-sm btn-default" onclick="this.blur();">Dag</button>
                                     <button type="button" class="chartRangeSelector btn-week btn btn-sm btn-default" onclick="this.blur();">Week</button>
                                 </div>
                                 <div class="clearfix"></div>
@@ -127,8 +127,8 @@
 
                                 <div class="btn-group pull-right" role="group" aria-label="...">
                                     <button type="button" class="chartRangeSelector btn-now btn btn-sm btn-default" onclick="this.blur();">Nu</button>
-                                    <button type="button" class="chartRangeSelector btn-hour btn btn-sm btn-default" onclick="this.blur();">Uur</button>
-                                    <button type="button" class="chartRangeSelector btn-day btn btn-sm btn-default active" onclick="this.blur();">Dag</button>
+                                    <button type="button" class="chartRangeSelector btn-hour btn btn-sm btn-default active" onclick="this.blur();">Uur</button>
+                                    <button type="button" class="chartRangeSelector btn-day btn btn-sm btn-default" onclick="this.blur();">Dag</button>
                                     <button type="button" class="chartRangeSelector btn-week btn btn-sm btn-default" onclick="this.blur();">Week</button>
                                 </div>
                                 <div class="clearfix"></div>

@@ -131,6 +131,15 @@ class HomeController extends Controller
                 avg(usage_gas_now) avg_usage_gas_now'))
             ->first();
 
+        if (empty($dataPastWeek)) {
+            return [
+                'avg_usage_now_days' => 0,
+                'avg_solar_now_days' => 0,
+                'avg_redelivery_now_days' => 0,
+                'avg_usage_gas_now_days' => 0,
+            ];
+        }
+
         // Set avg past week
         $metric['avg_usage_now_days'] = round($dataPastWeek->avg_usage_now, 0) / 1000;
         $metric['avg_solar_now_days'] = round($dataPastWeek->avg_solar_now, 0) / 1000;
@@ -156,6 +165,9 @@ class HomeController extends Controller
             ->where('raspberry_pi_id', '=', $raspberryPiId)
             ->orderBy('created_at', 'DESC')
             ->first();
+
+        if (empty($firstDataRow))
+            return 0;
 
         $timeFirst  = strtotime($firstDataRow->created_at);
         $timeSecond = strtotime($lastDataRow->created_at);
@@ -186,6 +198,15 @@ class HomeController extends Controller
             return $metric;
         }
 
+        if (empty($dataPastWeek)) {
+            return [
+                'total_usage_now_days' => 0,
+                'total_solar_days' => 0,
+                'total_redelivery_now_days' => 0,
+                'total_usage_gas_now_days' => 0,
+            ];
+        }
+
         $lastRecordTotalUsage = $lastRecord->usage_total_high + $lastRecord->usage_total_low;
         $firstRecordTotalUsage = $firstRecord->usage_total_high + $firstRecord->usage_total_low;
         $lastRecordTotalRedelivery = $lastRecord->redelivery_total_high + $lastRecord->redelivery_total_low;
@@ -214,6 +235,9 @@ class HomeController extends Controller
         } else {
             return 0;
         }
+
+        if (empty($firstRecord))
+            return 0;
 
         return $firstRecord->solar_total;
     }
