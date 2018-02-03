@@ -1,7 +1,3 @@
-$(window).on('load', function() {
-    getEnergyDataOfLastDays(20);
-});
-
 var dataEnergyUse = {
     labels: null,
     datasets: [
@@ -44,6 +40,11 @@ var dataGasUse = {
 var energyUseBarChart;
 var gasUseBarChart;
 
+$(window).on('load', function() {
+    initAllCharts();
+    getDayChart();
+});
+
 $(".chartRangeSelector").click(function(){
     $(".chartRangeSelector").removeClass('active');
 
@@ -60,18 +61,15 @@ $(".chartRangeSelector").click(function(){
 });
 
 function getDayChart() {
-    destroyCharts();
-    getEnergyDataOfLastDays(10);
+    updateAllCharts('days', 10);
 }
 
 function getMonthChart() {
-    destroyCharts();
-    getEnergyDataOfLastMonths(12);
+    updateAllCharts('months', 12);
 }
 
 function getYearChart() {
-    destroyCharts();
-    getEnergyDataOfLastYears(3);
+    updateAllCharts('years', 3);
 }
 
 function destroyCharts() {
@@ -79,84 +77,13 @@ function destroyCharts() {
     gasUseBarChart.destroy();
 }
 
-
-function getEnergyDataOfLastDays(days) {
-    $.ajax(
-        {
-            type : 'GET',
-            url : 'api/total/energy/days/' + days,
-            dataType : 'JSON',
-            success : function(response) {
-                var data = [response.data.usage, response.data.solar, response.data.redelivery, response.data.intake];
-                var canvas = document.querySelector("#chartEnergyUse").getContext("2d");
-                energyUseBarChart = writeDataToBarChart(canvas, dataEnergyUse, response.data.timestamps, data);
-
-                var dataGas = [response.data.gas];
-                canvas = document.querySelector("#chartGasUse").getContext("2d");
-                gasUseBarChart = writeDataToBarChart(canvas, dataGasUse, response.data.timestamps, dataGas);
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                console.log("ajax call to get_current_data results into error");
-                console.log(xhr.status);
-                console.log(thrownError);
-            }
-        });
+function initAllCharts() {
+    energyUseBarChart = initChart('#chartEnergyUse', dataEnergyUse);
+    gasUseBarChart = initChart('#chartGasUse', dataGasUse);
 }
 
-function getEnergyDataOfLastMonths(months) {
-    $.ajax(
-        {
-            type : 'GET',
-            url : 'api/total/energy/months/' + months,
-            dataType : 'JSON',
-            success : function(response) {
-                var data = [response.data.usage, response.data.solar, response.data.redelivery, response.data.intake];
-                var canvas = document.querySelector("#chartEnergyUse").getContext("2d");
-                energyUseBarChart = writeDataToBarChart(canvas, dataEnergyUse, response.data.timestamps, data);
-
-                var dataGas = [response.data.gas];
-                canvas = document.querySelector("#chartGasUse").getContext("2d");
-                gasUseBarChart = writeDataToBarChart(canvas, dataGasUse, response.data.timestamps, dataGas);
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                console.log("ajax call to get_current_data results into error");
-                console.log(xhr.status);
-                console.log(thrownError);
-            }
-        });
-}
-
-function getEnergyDataOfLastYears(years) {
-    $.ajax(
-        {
-            type : 'GET',
-            url : 'api/total/energy/years/' + years,
-            dataType : 'JSON',
-            success : function(response) {
-                var data = [response.data.usage, response.data.solar, response.data.redelivery, response.data.intake];
-                var canvas = document.querySelector("#chartEnergyUse").getContext("2d");
-                energyUseBarChart = writeDataToBarChart(canvas, dataEnergyUse, response.data.timestamps, data);
-
-                var dataGas = [response.data.gas];
-                canvas = document.querySelector("#chartGasUse").getContext("2d");
-                gasUseBarChart = writeDataToBarChart(canvas, dataGasUse, response.data.timestamps, dataGas);
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                console.log("ajax call to get_current_data results into error");
-                console.log(xhr.status);
-                console.log(thrownError);
-            }
-        });
-}
-
-function writeDataToBarChart(canvas, dataSet, labels, data) {
-    dataSet.labels = labels;
-
-    console.log(data);
-
-    $.each(data, function (index, value) {
-        dataSet.datasets[index].data = value;
-    });
+function initChart(canvasId, dataSet) {
+    canvas = document.querySelector(canvasId).getContext("2d");
 
     barChart = new Chart(canvas, {
         type: 'bar',
@@ -170,4 +97,37 @@ function writeDataToBarChart(canvas, dataSet, labels, data) {
     });
 
     return barChart;
+}
+
+function updateAllCharts(timeUnit, time) {
+    $.ajax(
+        {
+            type : 'GET',
+            url : 'api/total/energy/' + timeUnit + '/' + time,
+            dataType : 'JSON',
+            success : function(response) {
+                var data = [response.data.usage, response.data.solar, response.data.redelivery, response.data.intake];
+                var timestamps = response.data.timestamps;
+                writeDataToBarChart(energyUseBarChart, dataEnergyUse, timestamps, data);
+
+                var dataGas = [response.data.gas];
+                writeDataToBarChart(gasUseBarChart, dataGasUse, timestamps, dataGas);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log("ajax call to get_current_data results into error");
+                console.log(xhr.status);
+                console.log(thrownError);
+            }
+        });
+}
+
+function writeDataToBarChart(barChart, dataSet, labels, data) {
+    dataSet.labels = labels;
+
+    $.each(data, function (index, value) {
+        dataSet.datasets[index].data = value;
+    });
+
+    barChart.data = dataSet;
+    barChart.update();
 }
