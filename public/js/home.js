@@ -249,13 +249,7 @@ function getLastEnergyData() {
                     return;
                 }
 
-                var lastEnergyData = response.data
-                var timestamp = lastEnergyData.timestamps[0];
-
-                addDataToChart(energyUseLineChart, lastEnergyData.usage[0], timestamp);
-                addDataToChart(energySolarLineChart, lastEnergyData.solar[0], timestamp);
-                addDataToChart(energyRedeliveryLineChart, lastEnergyData.redelivery[0], timestamp);
-                addDataToChart(energyIntakeLineChart, lastEnergyData.intake[0], timestamp);
+                getNowChart();
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log("ajax call to get_current_data results into error");
