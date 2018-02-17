@@ -1,9 +1,3 @@
-$(window).on('load', function() {
-    getEnergyDataOfLastHours(24);
-    getLastEnergyUpdate();
-    updateChart();
-});
-
 var dataEnergyUse = {
     labels: null,
     datasets: [
@@ -131,6 +125,11 @@ var energyIntakeLineChart;
 
 var stopUpdating = true;
 
+$(window).on('load', function() {
+    getAllEnergyData('hours', 1, true);
+    updateChart();
+});
+
 $(".chartRangeSelector").click(function(){
     $(".chartRangeSelector").removeClass('active');
 
@@ -154,39 +153,87 @@ $(".chartRangeSelector").click(function(){
 });
 
 function getNowChart() {
-    destroyCharts();
-    getEnergyDataOfLastMinutes(10);
+    getAllEnergyData('minutes', 10, false);
 }
 
 function getHourChart() {
-    destroyCharts();
-    getEnergyDataOfLastHours(1);
+    getAllEnergyData('hours', 1, false);
 }
 
 function getDayChart() {
-    destroyCharts();
-    getEnergyDataOfLastHours(24);
+    getAllEnergyData('hours', 24, false);
 }
 
 function getWeekChart() {
-    destroyCharts();
-    getEnergyDataOfLastHours(168);
-}
-
-function destroyCharts() {
-    energyUseLineChart.destroy();
-    energySolarLineChart.destroy();
-    energyRedeliveryLineChart.destroy();
-    energyIntakeLineChart.destroy();
+    getAllEnergyData('hours', 168, false);
 }
 
 function updateChart() {
     setInterval(function() {
-        getLastEnergyUpdate();
+        getLastEnergyData();
     }, 10000);
 }
 
-function getLastEnergyUpdate() {
+function getAllEnergyData(timeUnit, time, initChart) {
+    $.ajax(
+        {
+            type : 'GET',
+            url : 'api/average/energy/' + timeUnit + '/' + time,
+            dataType : 'JSON',
+            success : function(response) {
+                if(initChart){
+                    initCharts(response.data);
+                } else {
+                    updateAllCharts(response.data);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log("ajax call to get_current_data results into error");
+                console.log(xhr.status);
+                console.log(thrownError);
+            }
+        });
+}
+
+function initCharts(energyData) {
+    console.log(energyData);
+    timeStamps = energyData.timestamps;
+
+    energyUseLineChart = initChart("#chartEnergyUse", dataEnergyUse, energyData.usage, timeStamps);
+    energySolarLineChart = initChart("#chartEnergySolar", dataEnergySolar, energyData.solar, timeStamps);
+    energyRedeliveryLineChart = initChart("#chartEnergyRedelivery", dataEnergyRedelivery, energyData.redelivery, timeStamps);
+    energyIntakeLineChart = initChart("#chartEnergyIntake", dataEnergyIntake, energyData.intake, timeStamps);
+}
+
+function initChart(canvasId, chartData, data, labels) {
+    var canvas = document.querySelector(canvasId).getContext("2d");
+
+    chartData.datasets[0].data = data;
+    chartData.labels = labels;
+
+    chart = new Chart(canvas, {
+        type: 'line',
+        data: chartData
+    });
+
+    return chart;
+}
+
+function updateAllCharts(energyData) {
+    updateChartData(energyUseLineChart, energyData.usage, energyData.timestamps);
+    updateChartData(energySolarLineChart, energyData.solar, energyData.timestamps);
+    updateChartData(energyRedeliveryLineChart, energyData.redelivery, energyData.timestamps);
+    updateChartData(energyIntakeLineChart, energyData.intake, energyData.timestamps);
+}
+
+function updateChartData(lineChart, data, labels) {
+    lineChart.data.datasets[0].data = data;
+    lineChart.data.labels = labels;
+
+    lineChart.update();
+}
+
+function getLastEnergyData() {
     $.ajax(
         {
             type : 'GET',
@@ -202,13 +249,7 @@ function getLastEnergyUpdate() {
                     return;
                 }
 
-                var lastEnergyData = response.data
-                var timestamp = lastEnergyData.timestamps[0];
-
-                updateChartWithDataSet(energyUseLineChart, lastEnergyData.usage[0], timestamp);
-                updateChartWithDataSet(energySolarLineChart, lastEnergyData.solar[0], timestamp);
-                updateChartWithDataSet(energyRedeliveryLineChart, lastEnergyData.redelivery[0], timestamp);
-                updateChartWithDataSet(energyIntakeLineChart, lastEnergyData.intake[0], timestamp);
+                getNowChart();
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log("ajax call to get_current_data results into error");
@@ -218,12 +259,12 @@ function getLastEnergyUpdate() {
         });
 }
 
-function updateChartWithDataSet(lineChart, data, timestamp) {
+function addDataToChart(lineChart, data, labels) {
     var tempData = lineChart.data.datasets[0].data;
     var tempLabels = lineChart.data.labels;
 
     tempData.push(data);
-    tempLabels.push(timestamp);
+    tempLabels.push(labels);
 
     // Remove first element
     tempData.shift();
@@ -233,166 +274,4 @@ function updateChartWithDataSet(lineChart, data, timestamp) {
     lineChart.data.labels = tempLabels;
 
     lineChart.update();
-}
-
-function getEnergyDataOfLastMinutes(minutes) {
-    $.ajax(
-        {
-            type : 'GET',
-            url : 'api/average/energy/minutes/' + minutes,
-            dataType : 'JSON',
-            success : function(response) {
-                var chartEnergyUse = document.querySelector("#chartEnergyUse").getContext("2d");
-
-                dataEnergyUse.labels = response.data.timestamps;
-                dataEnergyUse.datasets[0].data = response.data.usage;
-
-                energyUseLineChart = new Chart(chartEnergyUse, {
-                    type: 'line',
-                    data: dataEnergyUse
-                });
-
-                var chartEnergySolar = document.querySelector("#chartEnergySolar").getContext("2d");
-
-                dataEnergySolar.labels = response.data.timestamps;
-                dataEnergySolar.datasets[0].data = response.data.solar;
-
-                energySolarLineChart = new Chart(chartEnergySolar, {
-                    type: 'line',
-                    data: dataEnergySolar
-                });
-
-                var chartEnergyRedelivery = document.querySelector("#chartEnergyRedelivery").getContext("2d");
-
-                dataEnergyRedelivery.labels = response.data.timestamps;
-                dataEnergyRedelivery.datasets[0].data = response.data.redelivery;
-
-                energyRedeliveryLineChart = new Chart(chartEnergyRedelivery, {
-                    type: 'line',
-                    data: dataEnergyRedelivery
-                });
-
-                var chartEnergyIntake = document.querySelector("#chartEnergyIntake").getContext("2d");
-
-                dataEnergyIntake.labels = response.data.timestamps;
-                dataEnergyIntake.datasets[0].data = response.data.intake;
-
-                energyIntakeLineChart = new Chart(chartEnergyIntake, {
-                    type: 'line',
-                    data: dataEnergyIntake
-                });
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                console.log("ajax call to get_current_data results into error");
-                console.log(xhr.status);
-                console.log(thrownError);
-            }
-        });
-}
-
-function getEnergyDataOfLastHours(hours) {
-    $.ajax(
-        {
-            type : 'GET',
-            url : 'api/average/energy/hours/' + hours,
-            dataType : 'JSON',
-            success : function(response) {
-                var chartEnergyUse = document.querySelector("#chartEnergyUse").getContext("2d");
-
-                dataEnergyUse.labels = response.data.timestamps;
-                dataEnergyUse.datasets[0].data = response.data.usage;
-
-                energyUseLineChart = new Chart(chartEnergyUse, {
-                    type: 'line',
-                    data: dataEnergyUse
-                });
-
-                var chartEnergySolar = document.querySelector("#chartEnergySolar").getContext("2d");
-
-                dataEnergySolar.labels = response.data.timestamps;
-                dataEnergySolar.datasets[0].data = response.data.solar;
-
-                energySolarLineChart = new Chart(chartEnergySolar, {
-                    type: 'line',
-                    data: dataEnergySolar
-                });
-
-                var chartEnergyRedelivery = document.querySelector("#chartEnergyRedelivery").getContext("2d");
-
-                dataEnergyRedelivery.labels = response.data.timestamps;
-                dataEnergyRedelivery.datasets[0].data = response.data.redelivery;
-
-                energyRedeliveryLineChart = new Chart(chartEnergyRedelivery, {
-                    type: 'line',
-                    data: dataEnergyRedelivery
-                });
-
-                var chartEnergyIntake = document.querySelector("#chartEnergyIntake").getContext("2d");
-
-                dataEnergyIntake.labels = response.data.timestamps;
-                dataEnergyIntake.datasets[0].data = response.data.intake;
-
-                energyIntakeLineChart = new Chart(chartEnergyIntake, {
-                    type: 'line',
-                    data: dataEnergyIntake
-                });
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                console.log("ajax call to get_current_data results into error");
-                console.log(xhr.status);
-                console.log(thrownError);
-            }
-        });
-}
-
-function getEnergyDataOfLastDays(days) {
-    $.ajax(
-        {
-            type : 'GET',
-            url : 'api/average/energy/days/' + days,
-            dataType : 'JSON',
-            success : function(response) {
-                var ctx = document.querySelector("#chartjsTest").getContext("2d");
-
-                var data = {
-                    labels: response.data.timestamps,
-                    datasets: [
-                        {
-                            label: "Gebruik",
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            fill: true,
-                            lineTension: 0.1,
-                            backgroundColor: "rgba(75,192,192,0.4)",
-                            borderColor: "rgba(75,192,192,1)",
-                            borderCapStyle: 'butt',
-                            borderDash: [],
-                            borderDashOffset: 0.0,
-                            borderJoinStyle: 'miter',
-                            pointBorderColor: "rgba(75,192,192,1)",
-                            pointBackgroundColor: "#fff",
-                            pointBorderWidth: 1,
-                            pointHoverRadius: 5,
-                            pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                            pointHoverBorderColor: "rgba(220,220,220,1)",
-                            pointHoverBorderWidth: 2,
-                            pointRadius: 1,
-                            pointHitRadius: 10,
-                            data: response.data.usage,
-                            spanGaps: false,
-                        }
-                    ]
-                };
-
-                energyUseLineChart = new Chart(ctx, {
-                    type: 'line',
-                    data: data
-                });
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                console.log("ajax call to get_current_data results into error");
-                console.log(xhr.status);
-                console.log(thrownError);
-            }
-        });
 }

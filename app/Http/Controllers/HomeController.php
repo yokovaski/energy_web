@@ -121,6 +121,8 @@ class HomeController extends Controller
 
     public function getAveragePastDays($days, $raspberryPiId)
     {
+        $metric = [];
+
         // Get data of past week
         $dataPastWeek = HourMetric::whereDate('created_at', '>=', Carbon::now()->subDays($days)->toDateString())
             ->where('raspberry_pi_id', '=', $raspberryPiId)
@@ -130,6 +132,15 @@ class HomeController extends Controller
                 avg(redelivery_now) avg_redelivery_now,
                 avg(usage_gas_now) avg_usage_gas_now'))
             ->first();
+
+        if (empty($dataPastWeek)) {
+            return [
+                'avg_usage_now_days' => 0,
+                'avg_solar_now_days' => 0,
+                'avg_redelivery_now_days' => 0,
+                'avg_usage_gas_now_days' => 0,
+            ];
+        }
 
         // Set avg past week
         $metric['avg_usage_now_days'] = round($dataPastWeek->avg_usage_now, 0) / 1000;
@@ -156,6 +167,9 @@ class HomeController extends Controller
             ->where('raspberry_pi_id', '=', $raspberryPiId)
             ->orderBy('created_at', 'DESC')
             ->first();
+
+        if (empty($firstDataRow))
+            return 0;
 
         $timeFirst  = strtotime($firstDataRow->created_at);
         $timeSecond = strtotime($lastDataRow->created_at);
@@ -214,6 +228,9 @@ class HomeController extends Controller
         } else {
             return 0;
         }
+
+        if (empty($firstRecord))
+            return 0;
 
         return $firstRecord->solar_total;
     }
