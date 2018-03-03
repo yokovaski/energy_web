@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -35,37 +37,5 @@ class User extends Authenticatable
     public function raspberryPi()
     {
         return $this->hasOne('App\Models\RaspberryPi');
-    }
-
-    /**
-     * A user can have many roles.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function roles()
-    {
-        return $this->belongsToMany('App\Models\Role')->withTimestamps();
-    }
-
-    public function isAdmin()
-    {
-        foreach ($this->roles()->get() as $role) {
-            if ($role->name == 'admin') {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public function hasRole($roleName)
-    {
-        foreach ($this->roles()->get() as $role) {
-            if ($role->name == $roleName) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

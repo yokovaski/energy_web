@@ -11,7 +11,7 @@
                     </div>
                     <div class="panel-body">
                         <h4 id="usage_now">
-                            {{ $metrics['usage_now'] / 1000 }} kW
+                            {{ $metrics['usage_now'] }} kW
                         </h4>
                     </div>
                 </div>
@@ -23,7 +23,7 @@
                     </div>
                     <div class="panel-body">
                         <h4 id="solar_now">
-                            {{ $metrics['solar_now'] / 1000 }} kW
+                            {{ $metrics['solar_now'] }} kW
                         </h4>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                     </div>
                     <div class="panel-body">
                         <h4 id="redelivery_now">
-                            {{ $metrics['redelivery_now'] / 1000 }} kW
+                            {{ $metrics['redelivery_now'] }} kW
                         </h4>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="panel-body">
                         <h4 id="intake_now">
-                            {{ $metrics['intake_now'] / 1000 }} kW
+                            {{ $metrics['intake_now'] }} kW
                         </h4>
                     </div>
                 </div>

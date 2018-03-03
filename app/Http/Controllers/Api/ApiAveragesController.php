@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\DayMetric;
 use App\Models\HourMetric;
 use App\Models\MinuteMetric;
 use App\Models\TenSecondMetric;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\Paginator;
 use Symfony\Component\HttpFoundation\Response;
 
-class AjaxController extends Controller
+class ApiAveragesController extends Controller
 {
     use ResponseTrait;
 
@@ -131,8 +131,10 @@ class AjaxController extends Controller
 
         $data = array();
 
-        if ($hours > 12) {
-            $format = 'd-m H:m';
+        if($hours > 24) {
+            $format = 'd-m-Y H:i';
+        } elseif ($hours > 12) {
+            $format = 'H:m';
         } else {
             $format = 'H:i:s';
         }
@@ -185,7 +187,7 @@ class AjaxController extends Controller
         $metrics = TenSecondMetric::where(
             [
                 ['raspberry_pi_id', '=', $raspberryPi->id],
-                ['created_at', '>=', \Carbon\Carbon::now(env('TIMEZONE'))->subMinutes(intval($minutes))],
+                ['created_at', '>=', \Carbon\Carbon::now(env('APP_TIMEZONE'))->subMinutes(intval($minutes))],
             ])
             ->orderBy('created_at', 'DESC')
             ->get()

@@ -13,27 +13,39 @@
                             <thead>
                             <tr>
                                 <th>
-                                    <p>ID</p>
+                                    ID
                                 </th>
                                 <th>
-                                    <p>@lang('defaultpage.name')</p>
+                                    @lang('defaultpage.name')
                                 </th>
                                 <th>
-                                    <p>Email</p>
+                                    Email
                                 </th>
+                                <th></th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach ($users as $user)
-                                <tr>
+                                <tr id="{{$user->id}}" class="user-acounts">
                                     <td>
                                         <p>{{$user->id}}</p>
                                     </td>
                                     <td>
-                                        <p>{{$user->name}}</p>
+                                        <p id="user-name-{{$user->id}}">{{$user->name}}</p>
                                     </td>
                                     <td>
-                                        <p>{{$user->email}}</p>
+                                        <p id="user-email-{{$user->id}}">{{$user->email}}</p>
+                                    </td>
+                                    <td id="edit-user-button-{{$user->id}}">
+                                        <button class="btn btn-sm btn-default edit-user" onclick="this.blur();">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-default delete-user" onclick="this.blur();">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -89,7 +101,5 @@
     </div>
 @endsection
 @section('javascript')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src="{{ asset('js/test.js') }}"></script>
+    <script src="{{ asset('js/manage.js') }}"></script>
 @endsection

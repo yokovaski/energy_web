@@ -48,7 +48,9 @@
                     <ul class="nav navbar-nav">
                         @if (!Auth::guest())
                             <li><a href="{{ url('history') }}">@lang('defaultpage.history')</a></li>
-                            <li><a href="{{ url('admin') }}">@lang('defaultpage.admin')</a></li>
+                            @role('admin')
+                                <li><a href="{{ url('admin') }}">@lang('defaultpage.admin')</a></li>
+                            @endrole
                         @endif
                     </ul>
 
@@ -64,7 +66,9 @@
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="{{ route('register') }}">@lang('defaultpage.register')</a></li>
+                                    @role('admin')
+                                        <li><a href="{{ route('register') }}">@lang('defaultpage.register')</a></li>
+                                    @endrole
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();

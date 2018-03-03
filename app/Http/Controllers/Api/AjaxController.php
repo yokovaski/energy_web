@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\DayMetric;
 use App\Models\HourMetric;
 use App\Models\MinuteMetric;
@@ -10,7 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ApiAveragesController extends Controller
+class AjaxController extends Controller
 {
     use ResponseTrait;
 
@@ -130,10 +131,8 @@ class ApiAveragesController extends Controller
 
         $data = array();
 
-        if($hours > 24) {
-            $format = 'd-m-Y H:i';
-        } elseif ($hours > 12) {
-            $format = 'H:m';
+        if ($hours > 12) {
+            $format = 'd-m H:m';
         } else {
             $format = 'H:i:s';
         }

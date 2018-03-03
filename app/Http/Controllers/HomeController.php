@@ -33,9 +33,8 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $id = Auth::user()->id;
-        $currentUser = User::find($id);
-
+        $userId = Auth::user()->id;
+        $currentUser = User::find($userId);
 
         if (empty($currentUser->raspberryPi)) {
             // No raspberryPi connected to User
@@ -50,44 +49,96 @@ class HomeController extends Controller
 
             if ($availableRaspberryPi instanceof RaspberryPi) {
                 $currentUser->raspberryPi()->save($availableRaspberryPi);
-            } else {
-                App::abort(400);
             }
         }
 
-        $currentUser = User::find($id);
+        $metrics = $this->getIndexMetrics($userId);
+
+        return view('home', ['metrics' => $metrics]);
+    }
+
+    public function getIndexMetrics($userId)
+    {
+        $currentUser = User::find($userId);
+
+        if (empty($currentUser->raspberryPi)) {
+            return $this->emptyMetrics();
+        }
+
         $raspberryPiId = $currentUser->raspberryPi->id;
 
         $metric = TenSecondMetric::where('raspberry_pi_id', '=', $currentUser->raspberryPi->id)
             ->orderBy('created_at', 'DESC')
             ->first();
 
-        // Calculate energy use from solar panel.
-        $differenceSolarAndRedelivery = ($metric->solar_now - $metric->redelivery_now);
-        $metric['intake_now'] = $metric->usage_now;
-        $metric->usage_now += $differenceSolarAndRedelivery;
-
         $metricArray = [];
-        $metricArray['usage_now'] = $metric->usage_now;
-        $metricArray['redelivery_now'] = $metric->redelivery_now;
-        $metricArray['solar_now'] = $metric->solar_now;
-        $metricArray['intake_now'] = $metric->intake_now;
-        $metricArray['usage_gas_now'] = $metric->usage_gas_now;
-        $metricArray['usage_total_high'] = $metric->usage_total_high;
-        $metricArray['redelivery_total_high'] = $metric->redelivery_total_high;
-        $metricArray['usage_total_low'] = $metric->usage_total_low;
-        $metricArray['redelivery_total_low'] = $metric->redelivery_total_low;
-        $metricArray['usage_gas_total'] = $metric->usage_gas_total;
-        $metricArray['solar_total'] = $metric->solar_total;
-        $metricArray['created_at'] = $metric->created_at;
-        $metricArray['updated_at'] = $metric->updated_at;
 
-        $metricArray = array_merge($metricArray, $this->getAverageToday($raspberryPiId));
-        $metricArray = array_merge($metricArray, $this->getTotalToday($metric, $raspberryPiId));
-        $metricArray = array_merge($metricArray, $this->getAveragePastDays(7, $raspberryPiId));
-        $metricArray = array_merge($metricArray, $this->getTotalPastDays(7, $metric, $raspberryPiId));
+        if (empty($metric)){
+            return $this->emptyMetrics();
+        } else {
+            // Calculate energy use from solar panel.
+            $differenceSolarAndRedelivery = ($metric->solar_now - $metric->redelivery_now);
+            $metric['intake_now'] = $metric->usage_now;
+            $metric->usage_now += $differenceSolarAndRedelivery;
 
-        return view('home', ['metrics' => $metricArray]);
+            $metricArray['usage_now'] = $metric->usage_now / 1000;
+            $metricArray['redelivery_now'] = $metric->redelivery_now / 1000;
+            $metricArray['solar_now'] = $metric->solar_now / 1000;
+            $metricArray['intake_now'] = $metric->intake_now / 1000;
+            $metricArray['usage_gas_now'] = $metric->usage_gas_now;
+            $metricArray['usage_total_high'] = $metric->usage_total_high;
+            $metricArray['redelivery_total_high'] = $metric->redelivery_total_high;
+            $metricArray['usage_total_low'] = $metric->usage_total_low;
+            $metricArray['redelivery_total_low'] = $metric->redelivery_total_low;
+            $metricArray['usage_gas_total'] = $metric->usage_gas_total;
+            $metricArray['solar_total'] = $metric->solar_total;
+            $metricArray['created_at'] = $metric->created_at;
+            $metricArray['updated_at'] = $metric->updated_at;
+
+            $metricArray = array_merge($metricArray, $this->getAverageToday($raspberryPiId));
+            $metricArray = array_merge($metricArray, $this->getTotalToday($metric, $raspberryPiId));
+            $metricArray = array_merge($metricArray, $this->getTotalPastDays(7, $metric, $raspberryPiId));
+            $metricArray = array_merge($metricArray, $this->getAveragePastDays(7, $raspberryPiId));
+        }
+
+        return $metricArray;
+    }
+
+    private function emptyMetrics()
+    {
+        $metricArray = [];
+
+        $metricArray['usage_now'] = "N/A";
+        $metricArray['redelivery_now'] = "N/A";
+        $metricArray['solar_now'] = "N/A";
+        $metricArray['intake_now'] = "N/A";
+        $metricArray['usage_gas_now'] = "N/A";
+        $metricArray['usage_total_high'] = "N/A";
+        $metricArray['redelivery_total_high'] = "N/A";
+        $metricArray['usage_total_low'] = "N/A";
+        $metricArray['redelivery_total_low'] = "N/A";
+        $metricArray['usage_gas_total'] = "N/A";
+        $metricArray['solar_total'] = "N/A";
+        $metricArray['created_at'] = "N/A";
+        $metricArray['updated_at'] = "N/A";
+        $metricArray['total_usage_now_today'] = "N/A";
+        $metricArray['total_solar_today'] = "N/A";
+        $metricArray['total_redelivery_now_today'] = "N/A";
+        $metricArray['total_usage_gas_now_today'] = "N/A";
+        $metricArray['avg_usage_now_today'] = "N/A";
+        $metricArray['avg_solar_now_today'] = "N/A";
+        $metricArray['avg_redelivery_now_today'] = "N/A";
+        $metricArray['avg_usage_gas_now_today'] = "N/A";
+        $metricArray['total_usage_now_days'] = "N/A";
+        $metricArray['total_solar_days'] = "N/A";
+        $metricArray['total_redelivery_now_days'] = "N/A";
+        $metricArray['total_usage_gas_now_days'] = "N/A";
+        $metricArray['avg_usage_now_days'] = "N/A";
+        $metricArray['avg_solar_now_days'] = "N/A";
+        $metricArray['avg_redelivery_now_days'] = "N/A";
+        $metricArray['avg_usage_gas_now_days'] = "N/A";
+
+        return $metricArray;
     }
 
     public function getAverageToday($raspberryPiId)
@@ -135,10 +186,10 @@ class HomeController extends Controller
 
         if (empty($dataPastWeek)) {
             return [
-                'avg_usage_now_days' => 0,
-                'avg_solar_now_days' => 0,
-                'avg_redelivery_now_days' => 0,
-                'avg_usage_gas_now_days' => 0,
+                'avg_usage_now_days' => "N/A",
+                'avg_solar_now_days' => "N/A",
+                'avg_redelivery_now_days' => "N/A",
+                'avg_usage_gas_now_days' => "N/A",
             ];
         }
 
@@ -192,10 +243,10 @@ class HomeController extends Controller
             ->first();
 
         if (empty($firstRecord)) {
-            $metric['total_usage_now_days'] = 0;
-            $metric['total_solar_days'] = 0;
-            $metric['total_redelivery_now_days'] = 0;
-            $metric['total_usage_gas_now_days'] = 0;
+            $metric['total_usage_now_days'] = "N/A";
+            $metric['total_solar_days'] = "N/A";
+            $metric['total_redelivery_now_days'] = "N/A";
+            $metric['total_usage_gas_now_days'] = "N/A";
 
             return $metric;
         }
@@ -218,7 +269,8 @@ class HomeController extends Controller
         return $metric;
     }
 
-    public function getLastRecordWithCorrectSolarTotal($raspberryPiId) {
+    public function getLastRecordWithCorrectSolarTotal($raspberryPiId)
+    {
         if (RaspberryPi::find($raspberryPiId)->solar) {
             // Get data of past week
             $firstRecord = TenSecondMetric::where('solar_total', '>', '0')

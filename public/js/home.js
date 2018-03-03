@@ -23,7 +23,7 @@ var dataEnergyUse = {
             pointRadius: 1,
             pointHitRadius: 10,
             data: null,
-            spanGaps: false,
+            spanGaps: false
         }
     ]
 };
@@ -53,7 +53,7 @@ var dataEnergySolar = {
             pointRadius: 1,
             pointHitRadius: 10,
             data: null,
-            spanGaps: false,
+            spanGaps: false
         }
     ]
 };
@@ -83,7 +83,7 @@ var dataEnergyRedelivery = {
             pointRadius: 1,
             pointHitRadius: 10,
             data: null,
-            spanGaps: false,
+            spanGaps: false
         }
     ]
 };
@@ -113,7 +113,7 @@ var dataEnergyIntake = {
             pointRadius: 1,
             pointHitRadius: 10,
             data: null,
-            spanGaps: false,
+            spanGaps: false
         }
     ]
 };
@@ -240,10 +240,10 @@ function getLastEnergyData() {
             url : 'api/average/energy/last',
             dataType : 'JSON',
             success : function(response) {
-                $("#usage_now").html(response.data.usage[0] + " Wh");
-                $("#solar_now").html(response.data.solar[0] + " Wh");
-                $("#redelivery_now").html(response.data.redelivery[0] + " Wh");
-                $("#intake_now").html(response.data.intake[0] + " Wh");
+                $("#usage_now").html(response.data.usage[0] + " kW");
+                $("#solar_now").html(response.data.solar[0] + " kW");
+                $("#redelivery_now").html(response.data.redelivery[0] + " kW");
+                $("#intake_now").html(response.data.intake[0] + " kW");
 
                 if (stopUpdating) {
                     return;

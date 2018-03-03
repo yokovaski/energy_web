@@ -29,18 +29,26 @@ Route::group(['prefix' => '/api'], function () {
      * Averages
      */
     Route::group(['prefix' => '/average'], function () {
-        Route::get('/energy/days/{days}', 'ApiAveragesController@getDataOfLastDays');
-        Route::get('/energy/hours/{hours}', 'ApiAveragesController@getDataOfLastHours');
-        Route::get('/energy/minutes/{minutes}', 'ApiAveragesController@getDataOfLastMinutes');
-        Route::get('/energy/last', 'ApiAveragesController@getDataOfLastUpdate');
+        Route::get('/energy/days/{days}', 'Api\ApiAveragesController@getDataOfLastDays');
+        Route::get('/energy/hours/{hours}', 'Api\ApiAveragesController@getDataOfLastHours');
+        Route::get('/energy/minutes/{minutes}', 'Api\ApiAveragesController@getDataOfLastMinutes');
+        Route::get('/energy/last', 'Api\ApiAveragesController@getDataOfLastUpdate');
     });
 
     /**
      * Totals
      */
     Route::group(['prefix' => '/total'], function () {
-        Route::get('/energy/days/{days}', 'ApiTotalsController@getDataInDays');
-        Route::get('/energy/months/{months}', 'ApiTotalsController@getDataInMonths');
-        Route::get('/energy/years/{years}', 'ApiTotalsController@getDataInYears');
+        Route::get('/energy/days/{days}', 'Api\ApiTotalsController@getDataInDays');
+        Route::get('/energy/months/{months}', 'Api\ApiTotalsController@getDataInMonths');
+        Route::get('/energy/years/{years}', 'Api\ApiTotalsController@getDataInYears');
+    });
+
+    /**
+     * Users
+     */
+    Route::group(['prefix' => '/users'], function () {
+        Route::delete('{userId}', 'UserController@destroy');
+        Route::put('{userId}', 'UserController@update');
     });
 });

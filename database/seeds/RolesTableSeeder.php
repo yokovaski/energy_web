@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RolesTableSeeder extends Seeder
 {
@@ -12,16 +14,16 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-        $role = \App\Models\Role::create([
-            'name' => 'admin',
-        ]);
+        // permissions
+        $editUser = Permission::create(['name' => 'edit-user']);
+        $deleteUser = Permission::create(['name' => 'delete-user']);
 
-        $role->save();
+        // roles
+        $adminRole = Role::create(['name' => 'admin']);
+        $adminRole->givePermissionTo($editUser);
+        $adminRole->givePermissionTo($deleteUser);
 
-        $role = \App\Models\Role::create([
-            'name' => 'client',
-        ]);
-
-        $role->save();
+        $user = \App\Models\User::where('email', 'erwinlenting@outlook.com')->first();
+        $user->assignRole($adminRole);
     }
 }

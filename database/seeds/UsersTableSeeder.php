@@ -18,8 +18,8 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt(env('ADMIN_USER_PASSWORD', 'password')),
         ]);
 
-        $user->roles()->attach(\App\Models\Role::where('name', 'admin')->first());
-
         $user->save();
+
+        $user->assignRole('admin');
     }
 }
