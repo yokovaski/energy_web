@@ -177,7 +177,13 @@ class HomeController extends Controller
         $tenSecondDivider = round(($differenceInSeconds / 10), 0);
 
         // Set avg past week
+
+        if ($tenSecondDivider == 0) {
+            return 0;
+        }
+
         $avgGasUse = ($lastDataRow->usage_gas_total - $firstDataRow->usage_gas_total) / $tenSecondDivider;
+
         return round($avgGasUse, 1) / 1000;
     }
 
