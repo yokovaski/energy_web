@@ -1,57 +1,131 @@
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 46);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ 46:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(47);
+
+
+/***/ }),
+
+/***/ 47:
+/***/ (function(module, exports) {
+
 var dataEnergyUse = {
     labels: null,
-    datasets: [
-        {
-            label: "Verbruik",
-            backgroundColor: "rgba(213, 236, 246, 1.0)",
-            borderColor: "rgba(169, 225, 249, 1)",
-            data: null
-        },{
-            label: "Opwekking",
-            backgroundColor: "rgba(220, 239, 217, 1.0)",
-            borderColor: "rgba(177, 237, 168, 1)",
-            data: null
-        },{
-            label: "Levering",
-            backgroundColor: "rgba(255, 233, 165, 1.0)",
-            borderColor: "rgba(255, 218, 107, 1)",
-            data: null
-        },{
-            label: "Opname",
-            backgroundColor: "rgba(237, 206, 206, 1.0)",
-            borderColor: "rgba(247, 153, 153,1)",
-            data: null
-        }
-    ]
+    datasets: [{
+        label: "Verbruik",
+        backgroundColor: "rgba(213, 236, 246, 1.0)",
+        borderColor: "rgba(169, 225, 249, 1)",
+        data: null
+    }, {
+        label: "Opwekking",
+        backgroundColor: "rgba(220, 239, 217, 1.0)",
+        borderColor: "rgba(177, 237, 168, 1)",
+        data: null
+    }, {
+        label: "Levering",
+        backgroundColor: "rgba(255, 233, 165, 1.0)",
+        borderColor: "rgba(255, 218, 107, 1)",
+        data: null
+    }, {
+        label: "Opname",
+        backgroundColor: "rgba(237, 206, 206, 1.0)",
+        borderColor: "rgba(247, 153, 153,1)",
+        data: null
+    }]
 };
 
 var dataGasUse = {
     labels: null,
-    datasets: [
-        {
-            label: "Gasverbruik",
-            backgroundColor: "rgba(237, 206, 206, 1.0)",
-            borderColor: "rgba(247, 153, 153,1)",
-            data: null
-        }
-    ]
+    datasets: [{
+        label: "Gasverbruik",
+        backgroundColor: "rgba(237, 206, 206, 1.0)",
+        borderColor: "rgba(247, 153, 153,1)",
+        data: null
+    }]
 };
 
 var energyUseBarChart;
 var gasUseBarChart;
 
-$(window).on('load', function() {
+$(window).on('load', function () {
     getAllEnergyData('days', 10, true);
     getDayChart();
 });
 
-$(".chartRangeSelector").click(function(){
+$(".chartRangeSelector").click(function () {
     $(".chartRangeSelector").removeClass('active');
 
-    if($(this).hasClass('btn-year')) {
+    if ($(this).hasClass('btn-year')) {
         $('.btn-year').addClass('active');
         getYearChart();
-    } else if($(this).hasClass('btn-month')) {
+    } else if ($(this).hasClass('btn-month')) {
         $('.btn-month').addClass('active');
         getMonthChart();
     } else {
@@ -73,24 +147,23 @@ function getYearChart() {
 }
 
 function getAllEnergyData(timeUnit, time, initChart) {
-    $.ajax(
-        {
-            type : 'GET',
-            url : 'api/total/energy/' + timeUnit + '/' + time,
-            dataType : 'JSON',
-            success : function(response) {
-                if(initChart) {
-                    initAllCharts(response.data);
-                } else {
-                    updateAllCharts(response.data);
-                }
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                console.log("ajax call to get_current_data results into error");
-                console.log(xhr.status);
-                console.log(thrownError);
+    $.ajax({
+        type: 'GET',
+        url: 'api/total/energy/' + timeUnit + '/' + time,
+        dataType: 'JSON',
+        success: function success(response) {
+            if (initChart) {
+                initAllCharts(response.data);
+            } else {
+                updateAllCharts(response.data);
             }
-        });
+        },
+        error: function error(xhr, ajaxOptions, thrownError) {
+            console.log("ajax call to get_current_data results into error");
+            console.log(xhr.status);
+            console.log(thrownError);
+        }
+    });
 }
 
 function initAllCharts(energyData) {
@@ -144,3 +217,7 @@ function writeDataToBarChart(barChart, dataSet, labels, data) {
     barChart.data = dataSet;
     barChart.update();
 }
+
+/***/ })
+
+/******/ });
