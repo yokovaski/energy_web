@@ -1,3 +1,5 @@
+window.$ = window.jQuery = require('jquery');
+
 var dataEnergyUse = {
     labels: null,
     datasets: [
@@ -128,29 +130,33 @@ var stopUpdating = true;
 $(window).on('load', function() {
     getAllEnergyData('hours', 1, true);
     updateChart();
+
+    registerClickListeners();
 });
 
-$(".chartRangeSelector").click(function(){
-    $(".chartRangeSelector").removeClass('active');
+function registerClickListeners() {
+    $(".chartRangeSelector").click(function(){
+        $(".chartRangeSelector").removeClass('active');
 
-    if($(this).hasClass('btn-week')) {
-        $('.btn-week').addClass('active');
-        getWeekChart();
-        stopUpdating = true;
-    } else if($(this).hasClass('btn-day')) {
-        $('.btn-day').addClass('active');
-        getDayChart();
-        stopUpdating = true;
-    } else if($(this).hasClass('btn-hour'))  {
-        $('.btn-hour').addClass('active');
-        getHourChart();
-        stopUpdating = true;
-    } else {
-        $('.btn-now').addClass('active');
-        getNowChart();
-        stopUpdating = false;
-    }
-});
+        if($(this).hasClass('btn-week')) {
+            $('.btn-week').addClass('active');
+            getWeekChart();
+            stopUpdating = true;
+        } else if($(this).hasClass('btn-day')) {
+            $('.btn-day').addClass('active');
+            getDayChart();
+            stopUpdating = true;
+        } else if($(this).hasClass('btn-hour'))  {
+            $('.btn-hour').addClass('active');
+            getHourChart();
+            stopUpdating = true;
+        } else {
+            $('.btn-now').addClass('active');
+            getNowChart();
+            stopUpdating = false;
+        }
+    });
+}
 
 function getNowChart() {
     getAllEnergyData('minutes', 10, false);
@@ -196,7 +202,6 @@ function getAllEnergyData(timeUnit, time, initChart) {
 }
 
 function initCharts(energyData) {
-    console.log(energyData);
     timeStamps = energyData.timestamps;
 
     energyUseLineChart = initChart("#chartEnergyUse", dataEnergyUse, energyData.usage, timeStamps);

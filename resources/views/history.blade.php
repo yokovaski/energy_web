@@ -1,60 +1,55 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container col-sm-12">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-12">
-                <div class="col-sm-9 col-xs-12 col">
-                    <div class="panel panel-info">
+            <div class="col-md-9">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white font-weight-bold">
+                        Energieverbruik
 
-                        <div class="panel-heading">
-                            <p class="panel-title pull-left">Energieverbruik</p>
-
-                            <div class="btn-group pull-right" role="group" aria-label="...">
-                                <button type="button" class="chartRangeSelector btn-day btn btn-sm btn-default active" onclick="this.blur();">Dagen</button>
-                                <button type="button" class="chartRangeSelector btn-month btn btn-sm btn-default" onclick="this.blur();">Maanden</button>
-                                <button type="button" class="chartRangeSelector btn-year btn btn-sm btn-default" onclick="this.blur();">Jaren</button>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="panel-body">
-                            <canvas id="chartEnergyUse"></canvas>
+                        <div class="btn-group float-right" role="group" aria-label="...">
+                            <button type="button" class="chartRangeSelector btn-day btn btn-sm btn-secondary active" onclick="this.blur();">Dagen</button>
+                            <button type="button" class="chartRangeSelector btn-month btn btn-sm btn-secondary" onclick="this.blur();">Maanden</button>
+                            <button type="button" class="chartRangeSelector btn-year btn btn-sm btn-secondary" onclick="this.blur();">Jaren</button>
                         </div>
                     </div>
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
-                            <p class="panel-title pull-left">Gasverbruik</p>
-
-                            <div class="btn-group pull-right" role="group" aria-label="...">
-                                <button type="button" class="chartRangeSelector btn-day btn btn-sm btn-default active" onclick="this.blur();">Dagen</button>
-                                <button type="button" class="chartRangeSelector btn-month btn btn-sm btn-default" onclick="this.blur();">Maanden</button>
-                                <button type="button" class="chartRangeSelector btn-year btn btn-sm btn-default" onclick="this.blur();">Jaren</button>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="panel-body">
-                            <canvas id="chartGasUse"></canvas>
-                        </div>
+                    <div class="card-body">
+                        <canvas id="chartEnergyUse"></canvas>
                     </div>
                 </div>
-                <div class="col-lg-3 col-sm-3 col-xs-12">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            Electricity sidebar
-                        </div>
-                        <div class="panel-body">
-                            Not yet implemented
-                            <canvas id="gas-one" height=150></canvas>
+                <div class="card mb-4">
+                    <div class="card-header bg-danger text-white font-weight-bold">
+                        Gasverbruik
+
+                        <div class="btn-group float-right" role="group" aria-label="...">
+                            <button type="button" class="chartRangeSelector btn-day btn btn-sm btn-secondary active" onclick="this.blur();">Dagen</button>
+                            <button type="button" class="chartRangeSelector btn-month btn btn-sm btn-secondary" onclick="this.blur();">Maanden</button>
+                            <button type="button" class="chartRangeSelector btn-year btn btn-sm btn-secondary" onclick="this.blur();">Jaren</button>
                         </div>
                     </div>
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            Gas sidebar
-                        </div>
-                        <div class="panel-body">
-                            Not yet implemented
-                            <canvas id="gas-one" height=150></canvas>
-                        </div>
+                    <div class="card-body">
+                        <canvas id="chartGasUse"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white font-weight-bold">
+                        Electricity sidebar
+                    </div>
+                    <div class="card-body">
+                        Not yet implemented
+                        <canvas id="gas-one" height=150></canvas>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white font-weight-bold">
+                        Gas sidebar
+                    </div>
+                    <div class="card-body">
+                        Not yet implemented
+                        <canvas id="gas-one" height=150></canvas>
                     </div>
                 </div>
             </div>
