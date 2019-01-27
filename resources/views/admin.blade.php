@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container col-sm-12">
+    <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-12">
-                <div class="panel panel-info">
-                    <div class="panel-heading">
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white font-weight-bold">
                         Users
                     </div>
-                    <div class="panel-body">
-                        <table class="table table-responsive table-striped">
+                    <div class="card-body">
+                        <table class="table table-striped table-hover">
                             <thead>
                             <tr>
                                 <th>
@@ -41,12 +41,16 @@
                         </table>
                     </div>
                 </div>
-                <div class="panel panel-info">
-                    <div class="panel-heading">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white font-weight-bold">
                         Raspberry Pi's
                     </div>
-                    <div class="panel-body">
-                        <table class="table table-responsive table-striped">
+                    <div class="card-body">
+                        <table class="table table-striped table-hover">
                             <thead>
                             <tr>
                                 <th>
@@ -89,7 +93,4 @@
     </div>
 @endsection
 @section('javascript')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src="{{ asset('js/test.js') }}"></script>
 @endsection
