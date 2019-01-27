@@ -1,3 +1,5 @@
+window.$ = window.jQuery = require('jquery');
+
 var dataEnergyUse = {
     labels: null,
     datasets: [
@@ -43,21 +45,21 @@ var gasUseBarChart;
 $(window).on('load', function() {
     getAllEnergyData('days', 10, true);
     getDayChart();
-});
 
-$(".chartRangeSelector").click(function(){
-    $(".chartRangeSelector").removeClass('active');
+    $(".chartRangeSelector").click(function(){
+        $(".chartRangeSelector").removeClass('active');
 
-    if($(this).hasClass('btn-year')) {
-        $('.btn-year').addClass('active');
-        getYearChart();
-    } else if($(this).hasClass('btn-month')) {
-        $('.btn-month').addClass('active');
-        getMonthChart();
-    } else {
-        $('.btn-day').addClass('active');
-        getDayChart();
-    }
+        if($(this).hasClass('btn-year')) {
+            $('.btn-year').addClass('active');
+            getYearChart();
+        } else if($(this).hasClass('btn-month')) {
+            $('.btn-month').addClass('active');
+            getMonthChart();
+        } else {
+            $('.btn-day').addClass('active');
+            getDayChart();
+        }
+    });
 });
 
 function getDayChart() {
