@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRoleUserTable extends Migration
+class AddRpiKeyToRaspberryPisTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class CreateRoleUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('role_user', function (Blueprint $table) {
-            $table->integer('role_id');
-            $table->integer('user_id');
-            $table->timestamps();
+        Schema::table('raspberry_pis', function (Blueprint $table) {
+            $table->string('rpi_key');
         });
     }
 
@@ -27,6 +25,8 @@ class CreateRoleUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('role_user');
+        Schema::table('raspberry_pis', function (Blueprint $table) {
+            $table->dropColumn('rpi_key');
+        });
     }
 }
