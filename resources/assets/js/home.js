@@ -245,10 +245,10 @@ function getLastEnergyData() {
             url : 'api/average/energy/last',
             dataType : 'JSON',
             success : function(response) {
-                $("#usage_now").html(response.data.usage[0] + " kW");
-                $("#solar_now").html(response.data.solar[0] + " kW");
-                $("#redelivery_now").html(response.data.redelivery[0] + " kW");
-                $("#intake_now").html(response.data.intake[0] + " kW");
+                $("#usage_now").html(response.data.usage[0]);
+                $("#solar_now").html(response.data.solar[0]);
+                $("#redelivery_now").html(response.data.redelivery[0]);
+                $("#intake_now").html(response.data.intake[0]);
 
                 if (stopUpdating) {
                     return;
