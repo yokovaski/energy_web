@@ -5,49 +5,41 @@
     <div class="row">
         <div class="col-sm-3 mb-4">
             <div class="card">
-                <div class="card-header bg-primary text-white font-weight-bold">
-                    Energieverbruik
-                </div>
                 <div class="card-body">
-                    <h4 id="usage_now">
+                    <h4 id="usage_now" class="text-center font-weight-bold">
                         {{ $metrics['usage_now'] / 1000 }} kW
                     </h4>
+                    <p class="card-text text-center"><small class="text-primary font-weight-bold">Verbruik</small></p>
                 </div>
             </div>
         </div>
         <div class="col-sm-3 mb-4">
             <div class="card">
-                <div class="card-header bg-success text-white font-weight-bold">
-                    Energieopwekking
-                </div>
                 <div class="card-body">
-                    <h4 id="solar_now">
+                    <h4 id="solar_now" class="text-center font-weight-bold">
                         {{ $metrics['solar_now'] / 1000 }} kW
                     </h4>
+                    <p class="card-text text-center"><small class="text-success font-weight-bold">Opwekking</small></p>
                 </div>
             </div>
         </div>
         <div class="col-sm-3 mb-4">
             <div class="card">
-                <div class="card-header bg-warning text-white font-weight-bold">
-                    Energielevering
-                </div>
                 <div class="card-body">
-                    <h4 id="redelivery_now">
+                    <h4 id="redelivery_now" class="text-center font-weight-bold">
                         {{ $metrics['redelivery_now'] / 1000 }} kW
                     </h4>
+                    <p class="card-text text-center"><small class="text-warning font-weight-bold">Levering</small></p>
                 </div>
             </div>
         </div>
         <div class="col-sm-3 mb-4">
             <div class="card">
-                <div class="card-header bg-danger text-white font-weight-bold">
-                    Energieopname
-                </div>
                 <div class="card-body">
-                    <h4 id="intake_now">
+                    <h4 id="intake_now" class="text-center font-weight-bold">
                         {{ $metrics['intake_now'] / 1000 }} kW
                     </h4>
+                    <p class="card-text text-center"><small class="text-danger font-weight-bold">Opwekking</small></p>
                 </div>
             </div>
         </div>
