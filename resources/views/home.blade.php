@@ -126,27 +126,27 @@
         <div class="col-md-4">
 
             <div class="card mb-4">
-                <div class="card-body text-center">
+                <div class="card-body text-center shadow-sm">
                     <h5><small class="text-secondary font-weight-bold">Opname vandaag</small></h5>
                     <h1 class="text-secondary font-weight-bold">{{ $metrics['total_usage_now_today'] }}<h4><small class="text-muted">kW</small></h4></h1>
                 </div>
             </div>
 
             <div class="card mb-4">
-                <div class="card-body text-center">
+                <div class="card-body text-center shadow-sm">
                     <h5><small class="text-secondary font-weight-bold">Levering vandaag</small></h5>
                     <h1 class="text-secondary font-weight-bold">{{ $metrics['total_redelivery_now_today'] }}<h4><small class="text-muted">kW</small></h4></h1>
                 </div>
             </div>
 
             <div class="card mb-4">
-                <div class="card-body text-center">
+                <div class="card-body text-center shadow-sm">
                     <h5><small class="text-secondary font-weight-bold">Gas vandaag</small></h5>
                     <h1 class="text-secondary font-weight-bold">{{ $metrics['total_usage_gas_now_today'] }}<h4><small class="text-muted">M&sup3;</small></h4></h1>
                 </div>
             </div>
             <div class="card mb-4">
-                <div class="card-body">
+                <div class="card-body shadow-sm">
                     <div class="text-center text-secondary">
                         <h5><small class="font-weight-bold">Meterstanden</small></h5>
                     </div>
