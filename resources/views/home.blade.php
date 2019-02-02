@@ -18,7 +18,7 @@
             <div class="card shadow-sm">
                 <div class="card-body">
                     <h5 class="card-text text-center"><small class="text-success font-weight-bold">Opwekking</small></h5>
-                    <h1 id="usage_now" class="text-center font-weight-bold text-secondary">
+                    <h1 id="solar_now" class="text-center font-weight-bold text-secondary">
                         {{ $metrics['solar_now'] / 1000 }}
                     </h1>
                     <h4 class="text-center text-muted"><small>kW</small></h4>
@@ -29,7 +29,7 @@
             <div class="card shadow-sm">
                 <div class="card-body">
                     <h5 class="card-text text-center"><small class="text-warning font-weight-bold">Levering</small></h5>
-                    <h1 id="usage_now" class="text-center font-weight-bold text-secondary">
+                    <h1 id="redelivery_now" class="text-center font-weight-bold text-secondary">
                         {{ $metrics['redelivery_now'] / 1000 }}
                     </h1>
                     <h4 class="text-center text-muted"><small>kW</small></h4>
@@ -40,7 +40,7 @@
             <div class="card shadow-sm">
                 <div class="card-body">
                     <h5 class="card-text text-center"><small class="text-danger font-weight-bold">Opname</small></h5>
-                    <h1 id="usage_now" class="text-center font-weight-bold text-secondary">
+                    <h1 id="intake_now" class="text-center font-weight-bold text-secondary">
                         {{ $metrics['intake_now'] / 1000 }}
                     </h1>
                     <h4 class="text-center text-muted"><small>kW</small></h4>
