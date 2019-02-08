@@ -88,7 +88,7 @@
 
             <div class="row">
                 <div class="col-12">
-                    <div class="card mb-4">
+                    <div class="card mb-4 shadow-sm">
                         <div class="card-body">
                             <canvas id="chartEnergyRedelivery"></canvas>
                             <div class="text-center">
@@ -106,7 +106,7 @@
 
             <div class="row">
                 <div class="col-12">
-                    <div class="card mb-4">
+                    <div class="card mb-4 shadow-sm">
                         <div class="card-body">
                             <canvas id="chartEnergyIntake"></canvas>
                             <div class="text-center">
@@ -145,15 +145,15 @@
                     <h1 class="text-secondary font-weight-bold">{{ $metrics['total_usage_gas_now_today'] }}<h4><small class="text-muted">M&sup3;</small></h4></h1>
                 </div>
             </div>
-            <div class="card mb-4">
-                <div class="card-body shadow-sm">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
                     <div class="text-center text-secondary">
                         <h5><small class="font-weight-bold">Meterstanden</small></h5>
                     </div>
                     <table class="table">
                         <tr>
                             <th class="text-muted">
-                                Stroomopname hoog
+                                Opname hoog
                             </th>
                             <td>
                                 {{ $metrics['usage_total_high'] }}
@@ -161,7 +161,7 @@
                         </tr>
                         <tr>
                             <th class="text-muted">
-                                Stroomopname laag
+                                Opname laag
                             </th>
                             <td>
                                 {{ $metrics['usage_total_low'] }}
@@ -169,7 +169,7 @@
                         </tr>
                         <tr>
                             <th class="text-muted">
-                                Stroomlevering hoog
+                                Levering hoog
                             </th>
                             <td>
                                 {{ $metrics['redelivery_total_high'] }}
@@ -177,7 +177,7 @@
                         </tr>
                         <tr>
                             <th class="text-muted">
-                                Stroomlevering laag
+                                Levering laag
                             </th>
                             <td>
                                 {{ $metrics['redelivery_total_low'] }}
