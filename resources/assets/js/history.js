@@ -90,7 +90,7 @@ function getDayChart() {
 }
 
 function getMonthChart() {
-    getAllEnergyData('months', 12, false);
+    getAllEnergyData('months', 13, false);
 }
 
 function getYearChart() {
