@@ -1,5 +1,28 @@
 window.$ = window.jQuery = require('jquery');
 
+Chart.scaleService.updateScaleDefaults('linear', {
+    ticks: {
+        min: 0,
+        precision: 0,
+        beginAtZero: true,
+        suggestedMax: 10
+    }
+});
+
+var defaultChartOptions = {
+    responsive: true,
+    legend: {
+        display: false
+    },
+    tooltips: {
+        callbacks: {
+            label: function (tooltipItem) {
+                return tooltipItem.yLabel;
+            }
+        }
+    }
+};
+
 var dataEnergyUse = {
     labels: null,
     datasets: [
@@ -116,12 +139,7 @@ function initChart(canvasId, dataSet, labels, data) {
     barChart = new Chart(canvas, {
         type: 'bar',
         data: dataSet,
-        options: {
-            responsive: true,
-            legend: {
-                position: 'top'
-            }
-        }
+        options: defaultChartOptions
     });
 
     return barChart;

@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4">
-                    <div class="card-header bg-primary text-white font-weight-bold">
+                    <div class="card-header bg-dark text-white font-weight-bold">
                         Users
                     </div>
                     <div class="card-body">
@@ -46,7 +46,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4">
-                    <div class="card-header bg-primary text-white font-weight-bold">
+                    <div class="card-header bg-dark text-white font-weight-bold">
                         Raspberry Pi's
                     </div>
                     <div class="card-body">

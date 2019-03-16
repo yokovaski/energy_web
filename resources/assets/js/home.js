@@ -1,5 +1,27 @@
 window.$ = window.jQuery = require('jquery');
 
+Chart.scaleService.updateScaleDefaults('linear', {
+    ticks: {
+        min: 0,
+        precision: 0,
+        beginAtZero: true,
+        suggestedMax: 1
+    }
+});
+
+var defaultChartOptions = {
+    legend: {
+        display: false
+    },
+    tooltips: {
+        callbacks: {
+            label: function (tooltipItem) {
+                return tooltipItem.yLabel;
+            }
+        }
+    }
+};
+
 var dataEnergyUse = {
     labels: null,
     datasets: [
@@ -218,7 +240,8 @@ function initChart(canvasId, chartData, data, labels) {
 
     chart = new Chart(canvas, {
         type: 'line',
-        data: chartData
+        data: chartData,
+        options: defaultChartOptions
     });
 
     return chart;
