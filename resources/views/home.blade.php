@@ -54,6 +54,7 @@
                 <div class="col-12">
                     <div class="card mb-4 shadow-sm">
                         <div class="card-body">
+                            <h5 class="text-center"><small class="text-secondary font-weight-bold">Verbruik</small></h5>
                             <canvas id="chartEnergyUse"></canvas>
                             <div class="text-center">
                                 <div class="btn-group btn-group-sm" role="group">
@@ -72,6 +73,7 @@
                 <div class="col-12">
                     <div class="card mb-4 shadow-sm">
                         <div class="card-body">
+                            <h5 class="text-center"><small class="text-secondary font-weight-bold">Opwekking</small></h5>
                             <canvas id="chartEnergySolar"></canvas>
                             <div class="text-center">
                                 <div class="btn-group btn-group-sm" role="group" aria-label="...">
@@ -90,6 +92,7 @@
                 <div class="col-12">
                     <div class="card mb-4 shadow-sm">
                         <div class="card-body">
+                            <h5 class="text-center"><small class="text-secondary font-weight-bold">Levering</small></h5>
                             <canvas id="chartEnergyRedelivery"></canvas>
                             <div class="text-center">
                                 <div class="btn-group btn-group-sm" role="group" aria-label="...">
@@ -108,6 +111,7 @@
                 <div class="col-12">
                     <div class="card mb-4 shadow-sm">
                         <div class="card-body">
+                            <h5 class="text-center"><small class="text-secondary font-weight-bold">Opname</small></h5>
                             <canvas id="chartEnergyIntake"></canvas>
                             <div class="text-center">
                                 <div class="btn-group btn-group-sm" role="group" aria-label="...">
@@ -121,8 +125,8 @@
                     </div>
                 </div>
             </div>
-
         </div>
+
         <div class="col-md-4">
 
             <div class="card mb-4">

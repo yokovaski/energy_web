@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
-                        <h4 class="text-center">Stroom</h4>
+                        <h5 class="text-center"><small class="text-secondary font-weight-bold">Stroom</small></h5>
                         <canvas id="chartEnergyUse"></canvas>
                         <div class="text-center">
                             <div class="btn-group btn-group-sm" role="group">
@@ -23,7 +23,7 @@
             <div class="col-12">
                 <div class="card mb-4 shadow-sm">
                     <div class="card-body">
-                        <h4 class="text-center">Gas</h4>
+                        <h5 class="text-center"><small class="text-secondary font-weight-bold">Gas</small></h5>
                         <canvas id="chartGasUse"></canvas>
                         <div class="text-center">
                             <div class="btn-group btn-group-sm" role="group">
